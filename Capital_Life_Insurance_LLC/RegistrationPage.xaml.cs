@@ -16,15 +16,18 @@ using System.Windows.Shapes;
 namespace Capital_Life_Insurance_LLC
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для RegistrationPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RegistrationPage : Page
     {
-        public MainWindow()
+        public RegistrationPage()
         {
             InitializeComponent();
-            MainFrame.Navigate(new LoginPage());
-            Manager.MainFrame = MainFrame;
+        }
+
+        private void Registration_end_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

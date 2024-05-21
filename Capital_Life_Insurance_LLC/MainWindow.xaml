@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="900" FontFamily="Arial" Icon="Res/logo.jpg">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+           
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Background="OrangeRed"></TextBlock>
+        <TextBlock Grid.Row="0" Background="White" Height="45" Margin="2.5 0 2.5 0"></TextBlock>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Source="Res/logo.jpg" HorizontalAlignment="Left" Width="40" Height="40" ></Image>
+            <TextBlock Text="ООО 'Капитал Лайф Страхование Жизни'" Grid.Row="0" FontSize="40" Margin="10 0 0 0"/>
+        </StackPanel>
+
+        <Frame Grid.Row="1" Grid.RowSpan="2" Name="MainFrame"  NavigationUIVisibility="Hidden"/>
+        
         
     </Grid>
 </Window>

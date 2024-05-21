@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace Capital_Life_Insurance_LLC
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для СandidatePage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class СandidatePage : Page
     {
-        public MainWindow()
+        public СandidatePage()
         {
             InitializeComponent();
-            MainFrame.Navigate(new LoginPage());
-            Manager.MainFrame = MainFrame;
         }
     }
 }
