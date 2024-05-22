@@ -11,15 +11,33 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
+        <!-- Разметка всех параметров для регистрации, кроме логина и пароля -->
+        <TextBlock Text="Авторизация" FontSize="20" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" FontFamily="HelveticaFont" HorizontalAlignment="Center"></TextBlock>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Логин:" Width="150" FontFamily="HelveticaFont"/>
+                <TextBox Name="LoginTB" Height="20" Width="125" FontFamily="HelveticaFont"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Пароль:" Width="150" FontFamily="HelveticaFont"/>
+                <TextBox Name="PasswordTB" Height="20" Width="125" FontFamily="HelveticaFont"/>
+            </StackPanel>
+        </StackPanel>
+
 
         
-        <TextBlock Text="Это LoginPage"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-
-
-        <Button Name="GoRegistrarion" Content="Зарегестрироваться" Height="50" Width="120" VerticalAlignment="Bottom" Margin="10 10 10 10" Click="GoRegistrarion_Click"/>
-    </Grid>
+        <StackPanel Orientation="Vertical"  Grid.Row="2" Grid.Column="1" >
+            <Button Name="LoginBT"  Content="Авторизироваться" Height="50" Width="120" VerticalAlignment="Bottom"  Click="LoginBT_Click" FontFamily="HelveticaFont"/>
+            <Button Name="RegistrarionBT" Content="Зарегестрироваться" Height="50" Width="120" VerticalAlignment="Bottom"  Click="RegistrarionBT_Click" FontFamily="HelveticaFont"/>
+            <TextBlock Text="Это LoginPage" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="HelveticaFont"></TextBlock>
+        </StackPanel>
+       </Grid>
 </Page>

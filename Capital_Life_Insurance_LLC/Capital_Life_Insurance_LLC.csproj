@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,12 +64,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CandidateCard.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Capital_Life_Insurance_LLCModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Capital_Life_Insurance_LLCModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Capital_Life_Insurance_LLCModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Grade.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
+    <Compile Include="Quashions.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Users.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="СandidatePage.xaml.cs">
       <DependentUpon>СandidatePage.xaml</DependentUpon>
@@ -108,6 +150,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Capital_Life_Insurance_LLCModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Capital_Life_Insurance_LLCModel.edmx.diagram">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -118,6 +168,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Res\logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Res\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Capital_Life_Insurance_LLCModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
