@@ -20,7 +20,7 @@ namespace Capital_Life_Insurance_LLC
     /// </summary>
     public partial class СandidatePage : Page
     {
-        public СandidatePage()
+        public СandidatePage(int id)
         {
             InitializeComponent();
         }

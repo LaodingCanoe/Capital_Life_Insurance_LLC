@@ -28,7 +28,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Пароль:" Width="150" FontFamily="HelveticaFont"/>
-                <TextBox Name="PasswordTB" Height="20" Width="125" FontFamily="HelveticaFont"/>
+                <PasswordBox Name="PasswordTB" Height="20" Width="125" FontFamily="HelveticaFont"/>
             </StackPanel>
         </StackPanel>
 
