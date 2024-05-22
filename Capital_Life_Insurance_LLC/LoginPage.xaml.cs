@@ -25,9 +25,14 @@ namespace Capital_Life_Insurance_LLC
             InitializeComponent();
         }
 
-        private void GoRegistrarion_Click(object sender, RoutedEventArgs e)
+        private void RegistrarionBT_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new RegistrationPage());
+        }
+
+        private void LoginBT_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

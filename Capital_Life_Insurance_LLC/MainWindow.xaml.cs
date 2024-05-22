@@ -26,5 +26,26 @@ namespace Capital_Life_Insurance_LLC
             MainFrame.Navigate(new LoginPage());
             Manager.MainFrame = MainFrame;
         }
+
+        private void BackBT_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.GoBack();
+        }
+        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                BackBT.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                BackBT.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void MainFrame_ContentRendered_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
