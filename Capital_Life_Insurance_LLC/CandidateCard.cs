@@ -19,9 +19,30 @@ namespace Capital_Life_Insurance_LLC
         {
             this.Grade = new HashSet<Grade>();
         }
-    
+
+        public string FIO
+        {
+            get
+            {
+                return FirstName + " " + Name + " " + Patranomic;
+            }
+        }
+        public string PositionToString
+        {
+            get
+            {
+                return Positions.PositionsTitle;
+            }
+        }
+        public string Date
+        {
+            get
+            {
+                return Bithday.ToString();
+            }
+        }
+
         public int CandidateID { get; set; }
-        public int EducationDocumentID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
         public string Patranomic { get; set; }
@@ -31,7 +52,6 @@ namespace Capital_Life_Insurance_LLC
         public int Position { get; set; }
         public string PhotoPath { get; set; }
     
-        public virtual EducationDocument EducationDocument { get; set; }
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
