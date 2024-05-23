@@ -66,15 +66,29 @@ namespace Capital_Life_Insurance_LLC
                 }
                 if (currentUser.Count == 0)
                 {
-
+                    MessageBox.Show("Данного пользователя не существует");
+                    await Task.Run(() => LoginBtn_Sleep());
                 }
                 else if (currentUser.Count == 1)
                 {
                     currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
                     UserID.ID = currentUser[userID - 1].RoleID;
-                    Manager.MainFrame.Navigate(new СandidatePage(userID - 1));
+                    if (currentUser[userID-1].RoleID == 2) 
+                    {
+                        Manager.MainFrame.Navigate(new UsersPage(userID - 1));
+                    }
+                    else
+                    {
+                        Manager.MainFrame.Navigate(new СandidatePage(userID - 1));
+                    }
+                    
                 }
             }
+        }
+
+        private void A_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new UserEditPage(null));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -17,32 +18,56 @@ using System.Windows.Shapes;
 namespace Capital_Life_Insurance_LLC
 {
     /// <summary>
-    /// Логика взаимодействия для RegistrationPage.xaml
+    /// Логика взаимодействия для UserEditPage.xaml
     /// </summary>
-    public partial class RegistrationPage : Page
+    /// Users UserSelected
+
+    public partial class UserEditPage : Page
     {
-        private Users _users = new Users();
-        public RegistrationPage()
+        private Users _currentUsers = new Users();
+        public UserEditPage(Users UserSelected)
         {
             InitializeComponent();
-            DataContext = _users;
-        }
+            var _currentRole = Capital_Life_Insurance_LLCEntities.GetContext().Role.ToList();
+            RoleCB.ItemsSource = _currentRole;
+            if (UserSelected != null)
+            {
+                this._currentUsers = UserSelected;
+                LoginTBl.Visibility = Visibility.Hidden;
+                LoginTB.Visibility = Visibility.Hidden;
+                PasswordTBl.Visibility = Visibility.Hidden;
+                PasswordTB.Visibility = Visibility.Hidden;
+                DeleteBT.Visibility = Visibility.Visible;
+                RoleCB.SelectedIndex = UserSelected.RoleID-1;
+            }
+            
+            DataContext = _currentUsers;
+            PhoneTB.Loaded += (s, e) =>
+            {
+                DataObject.AddPastingHandler(PhoneTB, PhoneNumberTextBox_Pasting);
+            };
 
-        private void Registration_end_Click(object sender, RoutedEventArgs e)
+        }        
+        private void AddBT_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(FirstName.Text))
+            if (string.IsNullOrWhiteSpace(FirstNameTB.Text))
                 errors.AppendLine("Укажите фамилию");
-            if (string.IsNullOrWhiteSpace(Name.Text))
+            if (string.IsNullOrWhiteSpace(NameTB.Text))
                 errors.AppendLine("Укажите имя");
-            if (Phone.Text.Length < 10)
+            if (PhoneTB.Text.Length < 12)
                 errors.AppendLine("Укажите верный номер телефона");
-            if (!IsValidEmail(Email.Text))
+            if (!IsValidEmail(EmailTB.Text))
                 errors.AppendLine("Укажите верный email");
-            if (Password.Password.Length < 6)
-                errors.AppendLine("Пароль должен быть больше 6 символов");
-            if (!Password.Password.Any(char.IsDigit))
-                errors.AppendLine("Пароль должен содержать цифры");
+            if (RoleCB.SelectedItem == null)
+                errors.AppendLine("Укажите роль пользователя");
+            if (_currentUsers.UserID == 0)
+            {
+                if (PasswordTB.Password.Length < 6)
+                    errors.AppendLine("Пароль должен быть больше 6 символов");
+                if (!PasswordTB.Password.Any(char.IsDigit))
+                    errors.AppendLine("Пароль должен содержать цифры");
+            }
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
@@ -50,40 +75,39 @@ namespace Capital_Life_Insurance_LLC
             }
             else
             {
-                _users.FirstName = FirstName.Text;
-                _users.Name = Name.Text;
-                _users.Patranomic = Patronomic.Text;
-                _users.Phone = "+7" + Phone.Text;
-                _users.Email = Email.Text;
-                _users.Login = Login.Text;
-                _users.Password = Password.Password;
-                _users.RoleID = 4;
-                var AllUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-                AllUsers = AllUsers.Where(p => p.Login == Login.Text).ToList();
-
-                if (AllUsers.Count == 0)
+                _currentUsers.FirstName = FirstNameTB.Text;
+                _currentUsers.Name = NameTB.Text;
+                _currentUsers.Patranomic = PatranomicTB.Text;
+                _currentUsers.Phone = PhoneTB.Text;
+                _currentUsers.Email = EmailTB.Text;
+                _currentUsers.RoleID = RoleCB.SelectedIndex+1;
+                if(_currentUsers.UserID == 0)
                 {
-                    if (_users.UserID == 0)
-                        Capital_Life_Insurance_LLCEntities.GetContext().Users.Add(_users);
-                    try
+                    _currentUsers.Login = LoginTB.Text;
+                    _currentUsers.Password = PasswordTB.Password;
+                    var AllUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
+                    AllUsers = AllUsers.Where(p => p.Login == LoginTB.Text).ToList();
+                    if(AllUsers.Count>0)
                     {
-                        Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
-                        MessageBox.Show("Регистрация успешна");
-                        Manager.MainFrame.Navigate(new СandidatePage(_users.UserID - 1));
+                        MessageBox.Show("Данный пользователь уже существует");
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message.ToString());
-                    }
-                }
-                else
+                }                
+                if (_currentUsers.UserID == 0)
+                    Capital_Life_Insurance_LLCEntities.GetContext().Users.Add(_currentUsers);
+                try
                 {
-                    MessageBox.Show("Данный пользователь уже существует");
+                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Пользователь добавлен");
+                    Manager.MainFrame.GoBack();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+                
             }
+            
         }
-
-        // Проверка корректности email
         private bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -94,7 +118,10 @@ namespace Capital_Life_Insurance_LLC
 
             // Убедитесь, что @ находится перед точкой,
             // и обе эти символы присутствуют, и после @ и точки есть символы
-            return atIndex > 0 && dotIndex > atIndex && email.Length > dotIndex + 1;
+            return atIndex > 0 &&
+                   dotIndex > atIndex + 1 &&  // Проверяем, что после @ есть символ
+                   email.Length > dotIndex + 1 &&  // Проверяем, что после точки есть символ
+                   !email.Substring(dotIndex + 1).Contains('.'); // Проверяем, что после точки нет других точек
         }
 
 
@@ -120,7 +147,7 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-        
+
         // Обработчик для запрета вставки пробелов через клавиши (например, Ctrl+V)
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -155,7 +182,7 @@ namespace Capital_Life_Insurance_LLC
         {
             TextBox textBox = sender as TextBox;
 
-            if (!IsTextNumber(e.Text) || textBox.Text.Length >= 10)
+            if (!IsTextNumber(e.Text) || textBox.Text.Length >= 12)
             {
                 e.Handled = true;
             }
@@ -187,15 +214,43 @@ namespace Capital_Life_Insurance_LLC
             }
         }
 
-        // Проверка допустимого текста (только цифры)
         private bool IsTextNumber(string text)
         {
-            Regex regex = new Regex(@"^[0-9]+$"); // Только цифры
+            Regex regex = new Regex(@"^[0-9]+$");
             return regex.IsMatch(text);
         }
+        private void PhoneTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
 
-        
+            if (!textBox.Text.StartsWith("+7"))
+            {
+                textBox.TextChanged -= PhoneTB_TextChanged;
+                textBox.Text = "+7" + textBox.Text;
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.TextChanged += PhoneTB_TextChanged;
+            }
+        }
+
+
+
+        private void DeleteBT_Click(object sender, RoutedEventArgs e)
+        {
+            var currentDelete = (sender as Button).DataContext as Users;
+            if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    Capital_Life_Insurance_LLCEntities.GetContext().Users.Remove(currentDelete);
+                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+        }
     }
-
 }
-
