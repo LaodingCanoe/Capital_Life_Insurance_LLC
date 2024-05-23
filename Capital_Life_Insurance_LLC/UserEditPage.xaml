@@ -57,9 +57,9 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <TextBlock Name="LoginTBl" FontFamily="HelveticaFont"  Text="Логин: " Margin="5, 5, 5, 0" FontSize="14" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <TextBox Name="LoginTB" FontFamily="HelveticaFont" Width="150" Height="25" Margin="5, 5, 0, 0" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
+                <TextBox Name="LoginTB" FontFamily="HelveticaFont" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                 <TextBlock Name="PasswordTBl" FontFamily="HelveticaFont"  Text="Пароль: " Margin="5, 5, 5, 0" FontSize="14" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <PasswordBox Name="PasswordTB" FontFamily="HelveticaFont" Width="150" Height="25" Margin="5, 5, 0, 0" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left"></PasswordBox>
+                <PasswordBox Name="PasswordTB" FontFamily="HelveticaFont" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left"></PasswordBox>
             </Grid> 
             
         </StackPanel>
