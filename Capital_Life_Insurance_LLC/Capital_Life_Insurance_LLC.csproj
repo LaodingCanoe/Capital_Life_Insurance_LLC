@@ -82,7 +82,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="EducationDocument.cs">
+    <Compile Include="Education.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Grade.cs">
@@ -199,6 +199,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Res\picture.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
@@ -209,6 +212,9 @@
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
       <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="photo\1.jpg" />
+    <Resource Include="photo\2.jpg" />
+    <Resource Include="photo\3.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

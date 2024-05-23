@@ -23,6 +23,23 @@ namespace Capital_Life_Insurance_LLC
         public СandidatePage(int id)
         {
             InitializeComponent();
+            var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();            
+            CandidateList.ItemsSource = currentCandidate;
+        }
+
+        private void FiterCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SortCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
