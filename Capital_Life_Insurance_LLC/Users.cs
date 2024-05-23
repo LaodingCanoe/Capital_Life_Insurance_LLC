@@ -19,7 +19,6 @@ namespace Capital_Life_Insurance_LLC
         {
             this.Grade = new HashSet<Grade>();
         }
-
         public string UserRoleString
         {
             get
@@ -38,11 +37,10 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-                string s = Phone.ToString().Replace("+7","");
+                string s = Phone.ToString().Replace("+7", "");
                 return s;
             }
         }
-
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

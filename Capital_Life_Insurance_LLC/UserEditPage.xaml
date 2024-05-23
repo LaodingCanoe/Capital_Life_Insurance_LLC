@@ -37,22 +37,22 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Фамилия: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <TextBox FontSize="20" FontFamily="HelveticaFont" Name="FirstNameTB" Text="{Binding FirstName}" Width="150" Height="25" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
+                <TextBox FontSize="20" FontFamily="HelveticaFont" Name="FirstNameTB" Text="{Binding FirstName}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
                 <TextBlock Text="Имя: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14"  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <TextBox Name="NameTB" FontFamily="HelveticaFont" Text="{Binding Name}" Width="150" Height="25" Margin="5, 5, 0, 0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
+                <TextBox Name="NameTB" FontFamily="HelveticaFont" Text="{Binding Name}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
                 <TextBlock Text="Отчество: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <TextBox Name="PatranomicTB" FontFamily="HelveticaFont" Text="{Binding Patranomic}" Width="150" Height="25" Margin="5, 5, 0, 0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
+                <TextBox Name="PatranomicTB" FontFamily="HelveticaFont" Text="{Binding Patranomic}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
                 <TextBlock Text="Телефон: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <StackPanel Orientation="Horizontal" Margin="5, 5, 0, 0" Grid.Row="3" Grid.Column="1">
-                    <TextBox Name="PhoneTB" FontFamily="HelveticaFont" Text="{Binding Phone}" Width="150" Height="25" TextChanged="PhoneTB_TextChanged" PreviewTextInput="PhoneNumberTextBox_PreviewTextInput" PreviewKeyDown="PhoneNumberTextBox_PreviewKeyDown"></TextBox>
+                    <TextBox Name="PhoneTB" FontFamily="HelveticaFont" Text="{Binding Phone}" Width="200" Height="25" TextChanged="PhoneTB_TextChanged" PreviewTextInput="PhoneNumberTextBox_PreviewTextInput" PreviewKeyDown="PhoneNumberTextBox_PreviewKeyDown"></TextBox>
                 </StackPanel>
                 <TextBlock Text="Email: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <TextBox Name="EmailTB" FontFamily="HelveticaFont" Text="{Binding Email}" Width="150" Height="25" Margin="5, 5, 0, 0" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
+                <TextBox Name="EmailTB" FontFamily="HelveticaFont" Text="{Binding Email}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                 <TextBlock Text="Роль: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <ComboBox Name="RoleCB" FontFamily="HelveticaFont" FontSize="12"   Width="150" Height="30" Margin="5, 5, 0, 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" >
+                <ComboBox Name="RoleCB" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Role_Name}" FontSize="12" FontFamily="HelveticaFont"></Label>                         
+                            <Label Content="{Binding Role_Name}" FontSize="14" FontFamily="HelveticaFont"></Label>                         
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
