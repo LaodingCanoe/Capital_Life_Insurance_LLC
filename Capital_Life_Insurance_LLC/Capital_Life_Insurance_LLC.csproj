@@ -82,6 +82,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EducationDocument.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Grade.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
@@ -89,6 +92,9 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
+    <Compile Include="Positions.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Quashions.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
@@ -96,6 +102,9 @@
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Speciality.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">
@@ -184,20 +193,22 @@
     <Resource Include="Res\logo.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Res\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Capital_Life_Insurance_LLCModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
       <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Res\back.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

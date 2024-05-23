@@ -21,7 +21,7 @@ namespace Capital_Life_Insurance_LLC
         public Nullable<int> Grade1 { get; set; }
     
         public virtual CandidateCard CandidateCard { get; set; }
-        public virtual Quashions Quashions { get; set; }
         public virtual Users Users { get; set; }
+        public virtual Quashions Quashions { get; set; }
     }
 }

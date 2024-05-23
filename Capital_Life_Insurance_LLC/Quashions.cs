@@ -22,9 +22,9 @@ namespace Capital_Life_Insurance_LLC
     
         public int QuashionID { get; set; }
         public string Title { get; set; }
-        public string QuashionFirst { get; set; }
-        public string QuashionSecond { get; set; }
-        public string QuashionThrid { get; set; }
+        public string AnswerFirst { get; set; }
+        public string AnswerSecond { get; set; }
+        public string AnswerThrid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
