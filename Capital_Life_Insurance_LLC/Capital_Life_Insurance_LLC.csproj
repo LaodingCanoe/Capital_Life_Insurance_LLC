@@ -170,9 +170,6 @@
     <Resource Include="Res\logo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Res\back.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
@@ -183,6 +180,7 @@
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
       <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Res\back.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
