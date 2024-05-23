@@ -3,13 +3,110 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
              StartupUri="MainWindow.xaml">
+
     <Application.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5"></Setter>
-            <Setter Property="Width" Value="175"></Setter>
-            <Setter Property="Height" Value="30"></Setter>
-            <Setter Property="Background" Value="#D30512"></Setter>
-            <Setter Property="FontSize" Value="10"></Setter>
+        <FontFamily x:Key="HelveticaBolt">/Capital_Life_Insurance_LLC;component/Fonts/#helvetica_bold</FontFamily>
+        <FontFamily x:Key="HelveticaFont">/Capital_Life_Insurance_LLC;component/Fonts/#helvetica_regular</FontFamily>
+        <Style x:Key="AccentButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1"
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#0B57D0"/>
+            <Setter Property="BorderBrush" Value="#0B57D0"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontFamily" Value="HelveticaBolt"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0E4EB5"/>
+                    <!-- Изменение цвета фона при наведении -->
+                    <Setter Property="BorderBrush" Value="#0E4EB5"/>
+                    <!-- Изменение цвета границы при наведении -->
+                    <Setter Property="Foreground" Value="#F0FAFB"/>
+                    <!-- Изменение цвета текста при наведении -->
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#A9A9A9"/>
+                    <Setter Property="BorderBrush" Value="#A9A9A9"/>
+                    <Setter Property="Foreground" Value="#D3D3D3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RegularButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="1"
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontFamily" Value="HelveticaBolt"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#0B57D0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5F8FD"/>
+                    <!-- Изменение цвета фона при наведении -->
+                    <Setter Property="BorderBrush" Value="#F5F8FD"/>
+                    <!-- Изменение цвета границы при наведении -->
+                    <Setter Property="Foreground" Value="#0B57D2"/>
+                    <!-- Изменение цвета текста при наведении -->
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RoundButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="1"
+                            CornerRadius="25">
+                            <!-- Установите CornerRadius на половину высоты и ширины -->
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5F8FD"/>
+                    <!-- Изменение цвета фона при наведении -->
+                    <Setter Property="BorderBrush" Value="#F5F8FD"/>
+                    <!-- Изменение цвета границы при наведении -->
+                    <Setter Property="Foreground" Value="#0B57D2"/>
+                    <!-- Изменение цвета текста при наведении -->
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Application.Resources>
+
 </Application>
