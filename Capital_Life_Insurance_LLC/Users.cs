@@ -24,7 +24,22 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-                return Role.Role_Name.ToString();
+                if (Role != null)
+                {
+                    return Role.Role_Name.ToString();
+                }
+                else
+                {
+                    return string.Empty; // или другое значение по умолчанию
+                }
+            }
+        }
+        public string PhoneString
+        {
+            get
+            {
+                string s = Phone.ToString().Replace("+7","");
+                return s;
             }
         }
 
