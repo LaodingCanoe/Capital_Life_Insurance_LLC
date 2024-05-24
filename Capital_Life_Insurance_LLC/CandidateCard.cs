@@ -6,7 +6,7 @@
 //     Изменения, вносимые в этот файл вручную, будут перезаписаны при повторном создании кода.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.Linq;
 namespace Capital_Life_Insurance_LLC
 {
     using System;
@@ -15,10 +15,6 @@ namespace Capital_Life_Insurance_LLC
     public partial class CandidateCard
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CandidateCard()
-        {
-            this.Grade = new HashSet<Grade>();
-        }
         public string FIO
         {
             get
@@ -30,7 +26,7 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-                return Positions.PositionsTitle;
+                return Positions.PositionsTitle.ToString();
             }
         }
         public string Date
@@ -40,31 +36,26 @@ namespace Capital_Life_Insurance_LLC
                 return Bithday.ToString();
             }
         }
-
-        /*public string Education
+        public string EduТName
         {
             get
             {
-                return GetEducation(); // Получаем образование из метода
+
+                string s = string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
+                if (s == "")
+                {
+                    return "Нет";
+                }
+                else
+                    return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
-
-        private string GetEducation()
+        public CandidateCard()
         {
-            // Логика для получения образования
-            *//*using (var context = new Capital_Life_Insurance_LLCEntities())
-            {
-                var education = (from ce in context.CandidateEducation
-                                 join e in context.Education
-                                 on ce.Education equals e.EducationID
-                                 where ce.Candidate == this.CandidateID
-                                 select e.EducationName).FirstOrDefault();
-
-                return education ?? "Нет данных";
-            }*//*
-        }*/
-
-
+            this.Grade = new HashSet<Grade>();
+            this.CandidateEducation = new HashSet<CandidateEducation>();
+        }
+    
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
@@ -78,5 +69,7 @@ namespace Capital_Life_Insurance_LLC
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateEducation> CandidateEducation { get; set; }
     }
 }

@@ -15,7 +15,6 @@ namespace Capital_Life_Insurance_LLC
     
     public partial class Capital_Life_Insurance_LLCEntities : DbContext
     {
-
         public static Capital_Life_Insurance_LLCEntities _context;
         public static Capital_Life_Insurance_LLCEntities GetContext()
         {
@@ -23,7 +22,6 @@ namespace Capital_Life_Insurance_LLC
                 _context = new Capital_Life_Insurance_LLCEntities();
             return _context;
         }
-
         public Capital_Life_Insurance_LLCEntities()
             : base("name=Capital_Life_Insurance_LLCEntities")
         {
@@ -41,6 +39,8 @@ namespace Capital_Life_Insurance_LLC
         public virtual DbSet<Quashions> Quashions { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Speciality> Speciality { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<CandidateEducation> CandidateEducation { get; set; }
     }
 }

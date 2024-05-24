@@ -12,19 +12,20 @@ namespace Capital_Life_Insurance_LLC
     using System;
     using System.Collections.Generic;
     
-    public partial class Education
+    public partial class CandidateEducation
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Education()
+        public int CandidateEducationID { get; set; }
+        public Nullable<int> Candidate { get; set; }
+        public Nullable<int> Education { get; set; }
+    
+        public virtual CandidateCard CandidateCard { get; set; }
+        public virtual Education Education1 { get; set; }
+        public string EducationNameString
         {
-            this.CandidateEducation = new HashSet<CandidateEducation>();
+            get
+            {
+                return Education1.EducationLevel.ToString();
+            }
         }
-    
-        public int EducationID { get; set; }
-        public string EducationLevel { get; set; }
-        public string EducationDocument { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CandidateEducation> CandidateEducation { get; set; }
     }
 }

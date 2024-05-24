@@ -65,53 +65,59 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CandidateCard.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Capital_Life_Insurance_LLC.Context.cs">
+    <Compile Include="CandidateEducation.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Capital_Life_Insurance_LLCModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Capital_Life_Insurance_LLC.Context.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Capital_Life_Insurance_LLC.cs">
+    <Compile Include="Capital_Life_Insurance_LLCModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Capital_Life_Insurance_LLC.Designer.cs">
+    <Compile Include="Capital_Life_Insurance_LLCModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Capital_Life_Insurance_LLC.edmx</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Education.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Grade.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs" />
     <Compile Include="Positions.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Quashions.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Speciality.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserEditPage.xaml.cs">
       <DependentUpon>UserEditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
-      <DependentUpon>Capital_Life_Insurance_LLC.tt</DependentUpon>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UsersPage.xaml.cs">
       <DependentUpon>UsersPage.xaml</DependentUpon>
@@ -170,12 +176,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Capital_Life_Insurance_LLC.edmx">
+    <EntityDeploy Include="Capital_Life_Insurance_LLCModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Capital_Life_Insurance_LLC.Designer.cs</LastGenOutput>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Capital_Life_Insurance_LLC.edmx.diagram">
-      <DependentUpon>Capital_Life_Insurance_LLC.edmx</DependentUpon>
+    <None Include="Capital_Life_Insurance_LLCModel.edmx.diagram">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -204,17 +210,19 @@
     <Resource Include="photo\3.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Capital_Life_Insurance_LLC.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Capital_Life_Insurance_LLC.edmx</DependentUpon>
-      <LastGenOutput>Capital_Life_Insurance_LLC.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Capital_Life_Insurance_LLC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Capital_Life_Insurance_LLC.edmx</DependentUpon>
-      <LastGenOutput>Capital_Life_Insurance_LLC.cs</LastGenOutput>
-    </Content>
     <Resource Include="photo\egor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Capital_Life_Insurance_LLCModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

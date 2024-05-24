@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b0bd1a58731d4424a1ea92ff2a2c6c5c" Name="Diagram1">
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.CandidateCard" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Education" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Grade" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Positions" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Quashions" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Role" Width="1.5" PointX="0.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Speciality" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Users" Width="1.5" PointX="3" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.CandidateEducation" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK__Candidate__Posit__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK__Grade__Candidate__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK_CandidateEducation_CandidateCard" ManuallyRouted="false" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK_CandidateEducation_Education" ManuallyRouted="false" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK__Grade__UserID__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK_Grade_Quashions" ManuallyRouted="false" />
+        <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK__Users__RoleID__3C69FB99" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

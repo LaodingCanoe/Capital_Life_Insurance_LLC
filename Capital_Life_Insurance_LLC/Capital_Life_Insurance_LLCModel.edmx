@@ -20,11 +20,15 @@
           <Property Name="PhotoPath" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
-предупреждение 6013: Первичный ключ в таблице или представлении "Capital_Life_Insurance_LLC.dbo.CandidateEducation" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+предупреждение 6002: В таблице или представлении "Capital_Life_Insurance_LLC.dbo.CandidateEducation" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="CandidateEducation">
+          <Key>
+            <PropertyRef Name="CandidateEducationID" />
+          </Key>
+          <Property Name="CandidateEducationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Candidate" Type="int" />
           <Property Name="Education" Type="int" />
-        </EntityType>-->
+        </EntityType>
         <EntityType Name="Education">
           <Key>
             <PropertyRef Name="EducationID" />
@@ -74,6 +78,16 @@
           <Property Name="SpecialityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SpecialityTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SpecialityInfo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -137,12 +151,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Ошибки, обнаруженные при создании:
-ошибка 6004: Невозможно найти таблицу "Capital_Life_Insurance_LLC.dbo.CandidateEducation", на которую ссылается связь.
-        <Association Name="FK_CandidateEducation_CandidateCard" />-->
-        <!--Ошибки, обнаруженные при создании:
-ошибка 6004: Невозможно найти таблицу "Capital_Life_Insurance_LLC.dbo.CandidateEducation", на которую ссылается связь.
-        <Association Name="FK_CandidateEducation_Education" />-->
+        <Association Name="FK_CandidateEducation_CandidateCard">
+          <End Role="CandidateCard" Type="Self.CandidateCard" Multiplicity="0..1" />
+          <End Role="CandidateEducation" Type="Self.CandidateEducation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateCard">
+              <PropertyRef Name="CandidateID" />
+            </Principal>
+            <Dependent Role="CandidateEducation">
+              <PropertyRef Name="Candidate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateEducation_Education">
+          <End Role="Education" Type="Self.Education" Multiplicity="0..1" />
+          <End Role="CandidateEducation" Type="Self.CandidateEducation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Education">
+              <PropertyRef Name="EducationID" />
+            </Principal>
+            <Dependent Role="CandidateEducation">
+              <PropertyRef Name="Education" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Grade_Quashions">
           <End Role="Quashions" Type="Self.Quashions" Multiplicity="1" />
           <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
@@ -163,7 +195,15 @@
           <EntitySet Name="Quashions" EntityType="Self.Quashions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Speciality" EntityType="Self.Speciality" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateEducation" EntityType="Self.CandidateEducation" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CandidateEducation].[CandidateEducationID] AS [CandidateEducationID], 
+    [CandidateEducation].[Candidate] AS [Candidate], 
+    [CandidateEducation].[Education] AS [Education]
+    FROM [dbo].[CandidateEducation] AS [CandidateEducation]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Candidate__Posit__787EE5A0" Association="Self.FK__Candidate__Posit__787EE5A0">
             <End Role="Positions" EntitySet="Positions" />
             <End Role="CandidateCard" EntitySet="CandidateCard" />
@@ -179,6 +219,14 @@
           <AssociationSet Name="FK__Users__RoleID__3C69FB99" Association="Self.FK__Users__RoleID__3C69FB99">
             <End Role="Role" EntitySet="Role" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateEducation_CandidateCard" Association="Self.FK_CandidateEducation_CandidateCard">
+            <End Role="CandidateCard" EntitySet="CandidateCard" />
+            <End Role="CandidateEducation" EntitySet="CandidateEducation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateEducation_Education" Association="Self.FK_CandidateEducation_Education">
+            <End Role="Education" EntitySet="Education" />
+            <End Role="CandidateEducation" EntitySet="CandidateEducation" />
           </AssociationSet>
           <AssociationSet Name="FK_Grade_Quashions" Association="Self.FK_Grade_Quashions">
             <End Role="Quashions" EntitySet="Quashions" />
@@ -205,6 +253,7 @@
           <Property Name="PhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Positions" Relationship="Self.FK__Candidate__Posit__787EE5A0" FromRole="CandidateCard" ToRole="Positions" />
           <NavigationProperty Name="Grade" Relationship="Self.FK__Grade__Candidate__7E37BEF6" FromRole="CandidateCard" ToRole="Grade" />
+          <NavigationProperty Name="CandidateEducation" Relationship="Self.FK_CandidateEducation_CandidateCard" FromRole="CandidateCard" ToRole="CandidateEducation" />
         </EntityType>
         <EntityType Name="Education">
           <Key>
@@ -213,6 +262,7 @@
           <Property Name="EducationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EducationLevel" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EducationDocument" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CandidateEducation" Relationship="Self.FK_CandidateEducation_Education" FromRole="Education" ToRole="CandidateEducation" />
         </EntityType>
         <EntityType Name="Grade">
           <Key>
@@ -262,6 +312,16 @@
           <Property Name="SpecialityTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SpecialityInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -277,6 +337,16 @@
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Grade" Relationship="Self.FK__Grade__UserID__49C3F6B7" FromRole="Users" ToRole="Grade" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Users__RoleID__3C69FB99" FromRole="Users" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="CandidateEducation">
+          <Key>
+            <PropertyRef Name="CandidateEducationID" />
+          </Key>
+          <Property Name="CandidateEducationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Candidate" Type="Int32" />
+          <Property Name="Education" Type="Int32" />
+          <NavigationProperty Name="CandidateCard" Relationship="Self.FK_CandidateEducation_CandidateCard" FromRole="CandidateEducation" ToRole="CandidateCard" />
+          <NavigationProperty Name="Education1" Relationship="Self.FK_CandidateEducation_Education" FromRole="CandidateEducation" ToRole="Education" />
         </EntityType>
         <Association Name="FK__Candidate__Posit__787EE5A0">
           <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
@@ -299,6 +369,30 @@
             </Principal>
             <Dependent Role="Grade">
               <PropertyRef Name="CandidateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateEducation_CandidateCard">
+          <End Role="CandidateCard" Type="Self.CandidateCard" Multiplicity="0..1" />
+          <End Role="CandidateEducation" Type="Self.CandidateEducation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateCard">
+              <PropertyRef Name="CandidateID" />
+            </Principal>
+            <Dependent Role="CandidateEducation">
+              <PropertyRef Name="Candidate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CandidateEducation_Education">
+          <End Role="Education" Type="Self.Education" Multiplicity="0..1" />
+          <End Role="CandidateEducation" Type="Self.CandidateEducation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Education">
+              <PropertyRef Name="EducationID" />
+            </Principal>
+            <Dependent Role="CandidateEducation">
+              <PropertyRef Name="Education" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -346,7 +440,9 @@
           <EntitySet Name="Quashions" EntityType="Self.Quashions" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="Speciality" EntityType="Self.Speciality" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="CandidateEducation" EntityType="Self.CandidateEducation" />
           <AssociationSet Name="FK__Candidate__Posit__787EE5A0" Association="Self.FK__Candidate__Posit__787EE5A0">
             <End Role="Positions" EntitySet="Positions" />
             <End Role="CandidateCard" EntitySet="CandidateCard" />
@@ -354,6 +450,14 @@
           <AssociationSet Name="FK__Grade__Candidate__7E37BEF6" Association="Self.FK__Grade__Candidate__7E37BEF6">
             <End Role="CandidateCard" EntitySet="CandidateCard" />
             <End Role="Grade" EntitySet="Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateEducation_CandidateCard" Association="Self.FK_CandidateEducation_CandidateCard">
+            <End Role="CandidateCard" EntitySet="CandidateCard" />
+            <End Role="CandidateEducation" EntitySet="CandidateEducation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CandidateEducation_Education" Association="Self.FK_CandidateEducation_Education">
+            <End Role="Education" EntitySet="Education" />
+            <End Role="CandidateEducation" EntitySet="CandidateEducation" />
           </AssociationSet>
           <AssociationSet Name="FK__Grade__UserID__49C3F6B7" Association="Self.FK__Grade__UserID__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
@@ -445,6 +549,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.Users">
               <MappingFragment StoreEntitySet="Users">
@@ -457,6 +572,15 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateEducation">
+            <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.CandidateEducation">
+              <MappingFragment StoreEntitySet="CandidateEducation">
+                <ScalarProperty Name="CandidateEducationID" ColumnName="CandidateEducationID" />
+                <ScalarProperty Name="Candidate" ColumnName="Candidate" />
+                <ScalarProperty Name="Education" ColumnName="Education" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

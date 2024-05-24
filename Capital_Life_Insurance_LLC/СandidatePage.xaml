@@ -115,9 +115,10 @@
                             <TextBlock Text="{Binding PositionToString}"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-                            
+                            <TextBlock Text="Образование: "></TextBlock>
+                            <TextBlock Text="{Binding EduТName}"></TextBlock>
                         </StackPanel>
-                        
+
                         <StackPanel Name="ButtonSP" Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Visibility="Hidden">
                             <Button Name="EditProdBT" Content="Редактировать" HorizontalAlignment="Left"></Button>
                             <Button Name="DeleteProdBT" Content="Удалить" HorizontalAlignment="Right"></Button>
