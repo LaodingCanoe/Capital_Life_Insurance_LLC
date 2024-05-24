@@ -20,7 +20,7 @@ namespace Capital_Life_Insurance_LLC
     
         public virtual CandidateCard CandidateCard { get; set; }
         public virtual Education Education1 { get; set; }
-        public string EducationNameString 
+        public string EducationNameString
         {
             get
             {

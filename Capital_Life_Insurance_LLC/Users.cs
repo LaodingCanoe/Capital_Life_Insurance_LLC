@@ -15,10 +15,6 @@ namespace Capital_Life_Insurance_LLC
     public partial class Users
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
-        {
-            this.Grade = new HashSet<Grade>();
-        }
         public string UserRoleString
         {
             get
@@ -41,6 +37,11 @@ namespace Capital_Life_Insurance_LLC
                 return s;
             }
         }
+        public Users()
+        {
+            this.Grade = new HashSet<Grade>();
+        }
+    
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

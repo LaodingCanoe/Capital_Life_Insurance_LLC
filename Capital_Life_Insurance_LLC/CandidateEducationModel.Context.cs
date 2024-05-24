@@ -15,13 +15,6 @@ namespace Capital_Life_Insurance_LLC
     
     public partial class Capital_Life_Insurance_LLCEntities : DbContext
     {
-        public static Capital_Life_Insurance_LLCEntities _context;
-        public static Capital_Life_Insurance_LLCEntities GetContext()
-        {
-            if (_context == null)
-                _context = new Capital_Life_Insurance_LLCEntities();
-            return _context;
-        }
         public Capital_Life_Insurance_LLCEntities()
             : base("name=Capital_Life_Insurance_LLCEntities")
         {

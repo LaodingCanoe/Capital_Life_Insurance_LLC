@@ -15,12 +15,6 @@ namespace Capital_Life_Insurance_LLC
     public partial class CandidateCard
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CandidateCard()
-        {
-            this.Grade = new HashSet<Grade>();
-            this.CandidateEducation = new HashSet<CandidateEducation>();
-        }
-
         public string FIO
         {
             get
@@ -42,21 +36,13 @@ namespace Capital_Life_Insurance_LLC
                 return Bithday.ToString();
             }
         }
-        public string EducationName
-        {
-            get
-            {
-                return GetEducation();
-            }
-        }
-
         public string EduТName
         {
             get
             {
-                
+
                 string s = string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
-                if (s=="")
+                if (s == "")
                 {
                     return "Нет";
                 }
@@ -64,7 +50,12 @@ namespace Capital_Life_Insurance_LLC
                     return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
-        
+        public CandidateCard()
+        {
+            this.Grade = new HashSet<Grade>();
+            this.CandidateEducation = new HashSet<CandidateEducation>();
+        }
+    
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
@@ -78,5 +69,7 @@ namespace Capital_Life_Insurance_LLC
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateEducation> CandidateEducation { get; set; }
     }
 }

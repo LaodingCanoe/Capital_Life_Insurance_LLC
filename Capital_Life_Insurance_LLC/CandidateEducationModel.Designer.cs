@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\egorb\source\repos\Capital_Life_Insurance_LLC\Capital_Life_Insurance_LLC\Capital_Life_Insurance_LLCModel.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\egorb\source\repos\Capital_Life_Insurance_LLC\Capital_Life_Insurance_LLC\CandidateEducationModel.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.
