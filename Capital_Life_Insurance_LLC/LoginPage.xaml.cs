@@ -29,6 +29,8 @@ namespace Capital_Life_Insurance_LLC
         public LoginPage()
         {
             InitializeComponent();
+            LoginTB.Text = "iskan123";
+            PasswordTB.Password = "qwerty1";
         }
 
         private void RegistrarionBT_Click(object sender, RoutedEventArgs e)

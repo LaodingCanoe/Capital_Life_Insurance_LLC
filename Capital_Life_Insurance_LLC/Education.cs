@@ -14,8 +14,17 @@ namespace Capital_Life_Insurance_LLC
     
     public partial class Education
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Education()
+        {
+            this.CandidateEducation = new HashSet<CandidateEducation>();
+        }
+    
         public int EducationID { get; set; }
         public string EducationLevel { get; set; }
         public string EducationDocument { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CandidateEducation> CandidateEducation { get; set; }
     }
 }

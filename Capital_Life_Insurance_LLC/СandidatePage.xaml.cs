@@ -23,8 +23,10 @@ namespace Capital_Life_Insurance_LLC
         public СandidatePage(int id)
         {
             InitializeComponent();
-            var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();            
-            CandidateList.ItemsSource = currentCandidate;
+            CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();            
+            CandidateList.ItemsSource = CandidateCardsPage;
+            FiterCB.SelectedIndex = 0;
+            SortCB.SelectedIndex = 0;
         }
 
         private void FiterCB_SelectionChanged(object sender, SelectionChangedEventArgs e)

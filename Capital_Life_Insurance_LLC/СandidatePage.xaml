@@ -54,15 +54,16 @@
             </StackPanel>
         </WrapPanel>
 
-        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="CandidateList" >
+        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Name="CandidateList" >
             
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="500"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -99,7 +100,8 @@
                             <TextBlock Text="{Binding PositionToString}"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-                            
+                            <TextBlock Text="Образование: "></TextBlock>
+                            <TextBlock Text="{Binding EduТName}"></TextBlock>
                         </StackPanel>
                         
                         <StackPanel Name="ButtonSP" Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Visibility="Hidden">

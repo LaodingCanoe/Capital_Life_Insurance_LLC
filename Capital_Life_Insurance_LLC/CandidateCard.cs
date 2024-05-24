@@ -6,7 +6,7 @@
 //     Изменения, вносимые в этот файл вручную, будут перезаписаны при повторном создании кода.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.Linq;
 namespace Capital_Life_Insurance_LLC
 {
     using System;
@@ -18,6 +18,7 @@ namespace Capital_Life_Insurance_LLC
         public CandidateCard()
         {
             this.Grade = new HashSet<Grade>();
+            this.CandidateEducation = new HashSet<CandidateEducation>();
         }
 
         public string FIO
@@ -31,7 +32,7 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-                return Positions.PositionsTitle;
+                return Positions.PositionsTitle.ToString();
             }
         }
         public string Date
@@ -41,7 +42,29 @@ namespace Capital_Life_Insurance_LLC
                 return Bithday.ToString();
             }
         }
+        public string EducationName
+        {
+            get
+            {
+                return GetEducation();
+            }
+        }
 
+        public string EduТName
+        {
+            get
+            {
+                
+                string s = string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
+                if (s=="")
+                {
+                    return "Нет";
+                }
+                else
+                    return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
+            }
+        }
+        
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
