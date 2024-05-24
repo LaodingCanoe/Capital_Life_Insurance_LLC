@@ -34,23 +34,34 @@
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
 
-                <TextBox Width="250" Name="SearchTB" Margin="5, 0, 5, 0" TextChanged="SearchTB_TextChanged"></TextBox>
-                <ComboBox Name="FiterCB" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="FiterCB_SelectionChanged"  >
-                    <ComboBoxItem Content="Всё"></ComboBoxItem>
-                    <ComboBoxItem Content="Страховой агент"></ComboBoxItem>
-                    <ComboBoxItem Content="Бухгалтер"></ComboBoxItem>
-                    <ComboBoxItem Content="Менеджер по рекламе"></ComboBoxItem>
-                    <ComboBoxItem Content="Менеджер по маркетингу"></ComboBoxItem>
-                    <ComboBoxItem Content="Менеджер по работе с клиентами"></ComboBoxItem>
-                    <ComboBoxItem Content="Менеджер по продажам"></ComboBoxItem>
-                    <ComboBoxItem Content="Специалист по урегулированию убытков"></ComboBoxItem>
-                    <ComboBoxItem Content="HR-специалист"></ComboBoxItem>
-                </ComboBox>
-                <ComboBox Name="SortCB" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="SortCB_SelectionChanged">
-                    <ComboBoxItem Content="Сортировка"></ComboBoxItem>
-                    <ComboBoxItem Content="По возрастанию баллов"></ComboBoxItem>
-                    <ComboBoxItem Content="По убыванию баллов"></ComboBoxItem>
-                </ComboBox>
+                <StackPanel>
+                    <TextBlock Text="Начните вводить для поиска" Margin="5, 0, 5, 0"></TextBlock>
+                    <TextBox Width="250" Name="SearchTB" Margin="5, 0, 5, 0" TextChanged="SearchTB_TextChanged"></TextBox>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Text="Выберите для фильтрации должности" Margin="5, 0, 5, 0" ></TextBlock>
+                    <ComboBox Name="FiterCB" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="FiterCB_SelectionChanged"  >
+                        <ComboBoxItem Content="Всё"></ComboBoxItem>
+                        <ComboBoxItem Content="Страховой агент"></ComboBoxItem>
+                        <ComboBoxItem Content="Бухгалтер"></ComboBoxItem>
+                        <ComboBoxItem Content="Менеджер по рекламе"></ComboBoxItem>
+                        <ComboBoxItem Content="Менеджер по маркетингу"></ComboBoxItem>
+                        <ComboBoxItem Content="Менеджер по работе с клиентами"></ComboBoxItem>
+                        <ComboBoxItem Content="Менеджер по продажам"></ComboBoxItem>
+                        <ComboBoxItem Content="Специалист по урегулированию убытков"></ComboBoxItem>
+                        <ComboBoxItem Content="HR-специалист"></ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel>
+                    <TextBlock Text="Выберите для сортировки" Margin="5, 0, 5, 0"></TextBlock>
+                    <ComboBox Name="SortCB" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="SortCB_SelectionChanged">
+                        <ComboBoxItem Content="Все"></ComboBoxItem>
+                        <ComboBoxItem Content="По возрастанию баллов"></ComboBoxItem>
+                        <ComboBoxItem Content="По убыванию баллов"></ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
         </WrapPanel>
 
@@ -61,8 +72,9 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="400"></ColumnDefinition>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition Width="50"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -72,7 +84,11 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Column="0" Grid.RowSpan="6" Width="150" Height="150">
+                        <TextBlock Grid.ColumnSpan="4" Grid.RowSpan="6" Background="Red"></TextBlock>
+                        <TextBlock Grid.ColumnSpan="4" Grid.RowSpan="6" Background="White" Margin="5 5 5 5"></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.RowSpan="6" Background="Red" Margin="0 0 4 0"></TextBlock>
+                        <TextBlock Grid.Column="0" Grid.RowSpan="6" Background="White" Margin="5 5 5 5"></TextBlock>
+                        <Image Grid.Column="0" Grid.RowSpan="6" Width="150" Height="150" Stretch="Uniform" Margin="5 5 5 5">
                             <Image.Source>
                                 <Binding Path="PhotoPath">
                                     <Binding.TargetNullValue>

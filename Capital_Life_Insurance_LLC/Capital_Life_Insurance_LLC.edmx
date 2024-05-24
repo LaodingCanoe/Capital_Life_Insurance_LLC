@@ -75,16 +75,6 @@
           <Property Name="SpecialityTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SpecialityInfo" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -123,7 +113,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Grade__UserID__7D439ABD">
+        <Association Name="FK__Grade__UserID__49C3F6B7">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
           <ReferentialConstraint>
@@ -173,7 +163,6 @@
           <EntitySet Name="Quashions" EntityType="Self.Quashions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Speciality" EntityType="Self.Speciality" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Candidate__Posit__787EE5A0" Association="Self.FK__Candidate__Posit__787EE5A0">
             <End Role="Positions" EntitySet="Positions" />
@@ -183,7 +172,7 @@
             <End Role="CandidateCard" EntitySet="CandidateCard" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
-          <AssociationSet Name="FK__Grade__UserID__7D439ABD" Association="Self.FK__Grade__UserID__7D439ABD">
+          <AssociationSet Name="FK__Grade__UserID__49C3F6B7" Association="Self.FK__Grade__UserID__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
@@ -235,7 +224,7 @@
           <Property Name="QuashionID" Type="Int32" Nullable="false" />
           <Property Name="Grade1" Type="Int32" />
           <NavigationProperty Name="CandidateCard" Relationship="Self.FK__Grade__Candidate__7E37BEF6" FromRole="Grade" ToRole="CandidateCard" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Grade__UserID__7D439ABD" FromRole="Grade" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Grade__UserID__49C3F6B7" FromRole="Grade" ToRole="Users" />
           <NavigationProperty Name="Quashions" Relationship="Self.FK_Grade_Quashions" FromRole="Grade" ToRole="Quashions" />
         </EntityType>
         <EntityType Name="Positions">
@@ -273,16 +262,6 @@
           <Property Name="SpecialityTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SpecialityInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -296,7 +275,7 @@
           <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Grade" Relationship="Self.FK__Grade__UserID__7D439ABD" FromRole="Users" ToRole="Grade" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK__Grade__UserID__49C3F6B7" FromRole="Users" ToRole="Grade" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Users__RoleID__3C69FB99" FromRole="Users" ToRole="Role" />
         </EntityType>
         <Association Name="FK__Candidate__Posit__787EE5A0">
@@ -323,7 +302,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Grade__UserID__7D439ABD">
+        <Association Name="FK__Grade__UserID__49C3F6B7">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
           <ReferentialConstraint>
@@ -367,7 +346,6 @@
           <EntitySet Name="Quashions" EntityType="Self.Quashions" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="Speciality" EntityType="Self.Speciality" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK__Candidate__Posit__787EE5A0" Association="Self.FK__Candidate__Posit__787EE5A0">
             <End Role="Positions" EntitySet="Positions" />
@@ -377,7 +355,7 @@
             <End Role="CandidateCard" EntitySet="CandidateCard" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
-          <AssociationSet Name="FK__Grade__UserID__7D439ABD" Association="Self.FK__Grade__UserID__7D439ABD">
+          <AssociationSet Name="FK__Grade__UserID__49C3F6B7" Association="Self.FK__Grade__UserID__49C3F6B7">
             <End Role="Users" EntitySet="Users" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
@@ -464,17 +442,6 @@
                 <ScalarProperty Name="SpecialityID" ColumnName="SpecialityID" />
                 <ScalarProperty Name="SpecialityTitle" ColumnName="SpecialityTitle" />
                 <ScalarProperty Name="SpecialityInfo" ColumnName="SpecialityInfo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

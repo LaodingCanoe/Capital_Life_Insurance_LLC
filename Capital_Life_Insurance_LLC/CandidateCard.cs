@@ -19,7 +19,6 @@ namespace Capital_Life_Insurance_LLC
         {
             this.Grade = new HashSet<Grade>();
         }
-
         public string FIO
         {
             get
@@ -41,6 +40,30 @@ namespace Capital_Life_Insurance_LLC
                 return Bithday.ToString();
             }
         }
+
+        /*public string Education
+        {
+            get
+            {
+                return GetEducation(); // Получаем образование из метода
+            }
+        }
+
+        private string GetEducation()
+        {
+            // Логика для получения образования
+            *//*using (var context = new Capital_Life_Insurance_LLCEntities())
+            {
+                var education = (from ce in context.CandidateEducation
+                                 join e in context.Education
+                                 on ce.Education equals e.EducationID
+                                 where ce.Candidate == this.CandidateID
+                                 select e.EducationName).FirstOrDefault();
+
+                return education ?? "Нет данных";
+            }*//*
+        }*/
+
 
         public int CandidateID { get; set; }
         public string FirstName { get; set; }

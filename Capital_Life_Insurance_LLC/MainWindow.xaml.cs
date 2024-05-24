@@ -25,6 +25,7 @@ namespace Capital_Life_Insurance_LLC
             InitializeComponent();
             MainFrame.Navigate(new LoginPage());
             Manager.MainFrame = MainFrame;
+
         }
 
         private void BackBT_Click(object sender, RoutedEventArgs e)

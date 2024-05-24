@@ -42,7 +42,6 @@ namespace Capital_Life_Insurance_LLC
             }
         }
 
-
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

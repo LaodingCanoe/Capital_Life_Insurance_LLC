@@ -29,6 +29,8 @@ namespace Capital_Life_Insurance_LLC
         public LoginPage()
         {
             InitializeComponent();
+            LoginTB.Text = "egor123";
+            PasswordTB.Password = "qwerty1";
         }
 
         private void RegistrarionBT_Click(object sender, RoutedEventArgs e)
@@ -50,20 +52,21 @@ namespace Capital_Life_Insurance_LLC
 
         private async void LoginBT_Click(object sender, RoutedEventArgs e)
         {
-            var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-            currentUser = currentUser.Where(p => p.Login == LoginTB.Text && p.Password == PasswordTB.Password).ToList();
-            int userID = 0;
-            if (currentUser.Count() == 0)
+            var context = Capital_Life_Insurance_LLCEntities.GetContext();
+            var currentUser = context.Users
+                                     .Where(p => p.Login == LoginTB.Text && p.Password == PasswordTB.Password)
+                                     .ToList();
+
+            if (currentUser.Count == 0)
             {
                 MessageBox.Show("Введён не верный логин или пароль");
                 await Task.Run(() => LoginBtn_Sleep());
             }
             else
             {
-                foreach (Users user in currentUser)
-                {
-                    userID = user.UserID;
-                }
+                var user = currentUser.First();
+                int userID = user.UserID;
+
                 if (currentUser.Count == 0)
                 {
                     MessageBox.Show("Данного пользователя не существует");
@@ -71,17 +74,19 @@ namespace Capital_Life_Insurance_LLC
                 }
                 else if (currentUser.Count == 1)
                 {
-                    currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-                    UserID.ID = currentUser[userID - 1].RoleID;
-                    if (currentUser[userID-1].RoleID == 2) 
+                    UserID.ID = user.RoleID;
+                    if (user.RoleID == 2)
                     {
                         Manager.MainFrame.Navigate(new UsersPage(userID - 1));
+                    }
+                    else if (user.RoleID == 4)
+                    {
+                        MessageBox.Show("Вам еще не выдана роль, для этого обратитесь к администратору");
                     }
                     else
                     {
                         Manager.MainFrame.Navigate(new СandidatePage(userID - 1));
                     }
-                    
                 }
             }
         }
@@ -90,5 +95,8 @@ namespace Capital_Life_Insurance_LLC
         {
             Manager.MainFrame.Navigate(new UserEditPage(null));
         }
+
+
+       
     }
 }
