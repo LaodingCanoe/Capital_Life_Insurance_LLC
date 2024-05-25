@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -18,37 +18,25 @@ using System.Windows.Shapes;
 namespace Capital_Life_Insurance_LLC
 {
     /// <summary>
-    /// Логика взаимодействия для UserEditPage.xaml
+    /// Логика взаимодействия для CandidateAddEditPage.xaml
     /// </summary>
-    /// Users UserSelected
-
-    public partial class UserEditPage : Page
+    public partial class CandidateAddEditPage : Page
     {
-        private Users _currentUsers = new Users();
-        public UserEditPage(Users UserSelected)
+        private CandidateCard _currenCandidate = new CandidateCard();
+        public CandidateAddEditPage(CandidateCard CandidateSelected)
         {
             InitializeComponent();
-            var _currentRole = Capital_Life_Insurance_LLCEntities.GetContext().Role.ToList();
-            RoleCB.ItemsSource = _currentRole;
-            if (UserSelected != null)
-            {
-                this._currentUsers = UserSelected;
-                LoginTBl.Visibility = Visibility.Hidden;
-                LoginTB.Visibility = Visibility.Hidden;
-                PasswordTBl.Visibility = Visibility.Hidden;
-                PasswordTB.Visibility = Visibility.Hidden;
-                DeleteBT.Visibility = Visibility.Visible;
-                RoleCB.SelectedIndex = UserSelected.RoleID-1;
-                
-            }
+            var _currentPosition = Capital_Life_Insurance_LLCEntities.GetContext().Positions.ToList();
             
-            DataContext = _currentUsers;
-            PhoneTB.Loaded += (s, e) =>
-            {
-                DataObject.AddPastingHandler(PhoneTB, PhoneNumberTextBox_Pasting);
-            };
+            PositionCB.ItemsSource = _currentPosition;
+            if (CandidateSelected != null) { 
+                _currenCandidate = CandidateSelected;
+                PositionCB.SelectedIndex = CandidateSelected.Position - 1;
+                DeleteBT.Visibility = Visibility.Visible;
+            }            
+            DataContext = _currenCandidate;
+        }
 
-        }        
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
@@ -60,14 +48,11 @@ namespace Capital_Life_Insurance_LLC
                 errors.AppendLine("Укажите верный номер телефона");
             if (!IsValidEmail(EmailTB.Text))
                 errors.AppendLine("Укажите верный email");
-            if (RoleCB.SelectedItem == null)
-                errors.AppendLine("Укажите роль пользователя");
-            if (_currentUsers.UserID == 0)
+            if (PositionCB.SelectedItem == null)
+                errors.AppendLine("Укажите желаемую должность");
+            if (Bithday.Text=="")
             {
-                if (PasswordTB.Password.Length < 6)
-                    errors.AppendLine("Пароль должен быть больше 6 символов");
-                if (!PasswordTB.Password.Any(char.IsDigit))
-                    errors.AppendLine("Пароль должен содержать цифры");
+                errors.AppendLine("Укаажите дату рождения");
             }
             if (errors.Length > 0)
             {
@@ -76,38 +61,46 @@ namespace Capital_Life_Insurance_LLC
             }
             else
             {
-                _currentUsers.FirstName = FirstNameTB.Text;
-                _currentUsers.Name = NameTB.Text;
-                _currentUsers.Patranomic = PatranomicTB.Text;
-                _currentUsers.Phone = PhoneTB.Text;
-                _currentUsers.Email = EmailTB.Text;
-                _currentUsers.RoleID = RoleCB.SelectedIndex+1;
-                if(_currentUsers.UserID == 0)
-                {
-                    _currentUsers.Login = LoginTB.Text;
-                    _currentUsers.Password = PasswordTB.Password;
-                    var AllUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-                    AllUsers = AllUsers.Where(p => p.Login == LoginTB.Text).ToList();
-                    if(AllUsers.Count>0)
-                    {
-                        MessageBox.Show("Данный пользователь уже существует");
-                    }
-                }                
-                if (_currentUsers.UserID == 0)
-                    Capital_Life_Insurance_LLCEntities.GetContext().Users.Add(_currentUsers);
+                _currenCandidate.FirstName = FirstNameTB.Text;
+                _currenCandidate.Name = NameTB.Text;
+                _currenCandidate.Patranomic = PatranomicTB.Text;
+                _currenCandidate.Phone = PhoneTB.Text;
+                _currenCandidate.Email = EmailTB.Text;
+                _currenCandidate.Position = PositionCB.SelectedIndex + 1;
+                _currenCandidate.Bithday = Convert.ToDateTime(Bithday.Text);
+                if (_currenCandidate.CandidateID == 0)
+                    Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Add(_currenCandidate);
                 try
                 {
                     Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Пользователь добавлен");
+                    MessageBox.Show("Кандидат добавлен");
                     Manager.MainFrame.GoBack();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message.ToString());
                 }
-                
             }
-            
+        }
+
+        private void DeleteBT_Click(object sender, RoutedEventArgs e)
+        {
+            var currentDelete = (sender as Button).DataContext as CandidateCard;
+            if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Remove(currentDelete);
+                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+                    Manager.MainFrame.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+
         }
         private bool IsValidEmail(string email)
         {
@@ -233,24 +226,13 @@ namespace Capital_Life_Insurance_LLC
             }
         }
 
-
-
-        private void DeleteBT_Click(object sender, RoutedEventArgs e)
+        private void ImageBT_Click(object sender, RoutedEventArgs e)
         {
-            var currentDelete = (sender as Button).DataContext as Users;
-            if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            OpenFileDialog myOpenFileDialog = new OpenFileDialog();
+            if (myOpenFileDialog.ShowDialog() == true)
             {
-                try
-                {
-                    Capital_Life_Insurance_LLCEntities.GetContext().Users.Remove(currentDelete);
-                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
-                    Manager.MainFrame.GoBack();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                }
+                _currenCandidate.PhotoPath = myOpenFileDialog.FileName;
+                PhotoIM.Source = new BitmapImage(new Uri(myOpenFileDialog.FileName));
             }
         }
     }
