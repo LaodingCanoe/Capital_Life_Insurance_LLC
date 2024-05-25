@@ -37,7 +37,7 @@ namespace Capital_Life_Insurance_LLC
         {
             Manager.MainFrame.Navigate(new RegistrationPage());
         }
-        async void LoginBtn_Sleep()
+        async void  LoginBtn_Sleep()
         {
             this.Dispatcher.Invoke((Action)(() =>
             {

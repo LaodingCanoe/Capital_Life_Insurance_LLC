@@ -6,27 +6,97 @@
 //     Изменения, вносимые в этот файл вручную, будут перезаписаны при повторном создании кода.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using System.ComponentModel;
 
 namespace Capital_Life_Insurance_LLC
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Quashions
+
+    public partial class Quashions : INotifyPropertyChanged
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Quashions()
         {
             this.Grade = new HashSet<Grade>();
         }
-    
+
+        private bool _isSelected;
+        private bool _isAnswerFirstSelected;
+        private bool _isAnswerSecondSelected;
+        private bool _isAnswerThirdSelected;
+
         public int QuashionID { get; set; }
         public string Title { get; set; }
         public string AnswerFirst { get; set; }
         public string AnswerSecond { get; set; }
         public string AnswerThrid { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        public bool IsAnswerFirstSelected
+        {
+            get { return _isAnswerFirstSelected; }
+            set
+            {
+                if (_isAnswerFirstSelected != value)
+                {
+                    _isAnswerFirstSelected = value;
+                    OnPropertyChanged(nameof(IsAnswerFirstSelected));
+                    OnPropertyChanged(nameof(IsAnswered));
+                }
+            }
+        }
+
+        public bool IsAnswerSecondSelected
+        {
+            get { return _isAnswerSecondSelected; }
+            set
+            {
+                if (_isAnswerSecondSelected != value)
+                {
+                    _isAnswerSecondSelected = value;
+                    OnPropertyChanged(nameof(IsAnswerSecondSelected));
+                    OnPropertyChanged(nameof(IsAnswered));
+                }
+            }
+        }
+
+        public bool IsAnswerThirdSelected
+        {
+            get { return _isAnswerThirdSelected; }
+            set
+            {
+                if (_isAnswerThirdSelected != value)
+                {
+                    _isAnswerThirdSelected = value;
+                    OnPropertyChanged(nameof(IsAnswerThirdSelected));
+                    OnPropertyChanged(nameof(IsAnswered));
+                }
+            }
+        }
+
+        public bool IsAnswered => IsAnswerFirstSelected || IsAnswerSecondSelected || IsAnswerThirdSelected;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
