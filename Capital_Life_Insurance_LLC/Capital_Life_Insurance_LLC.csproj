@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CandidateAddEditPage.xaml.cs">
+      <DependentUpon>CandidateAddEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CandidateCard.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
     <Compile Include="СandidatePage.xaml.cs">
       <DependentUpon>СandidatePage.xaml</DependentUpon>
     </Compile>
+    <Page Include="CandidateAddEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Capital_Life_Insurance_LLCPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
