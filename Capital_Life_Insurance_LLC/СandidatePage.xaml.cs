@@ -96,5 +96,10 @@ namespace Capital_Life_Insurance_LLC
         {
             UpdateCandidat();
         }
+
+        private void EditBT_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard));
+        }
     }
 }

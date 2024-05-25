@@ -6,15 +6,30 @@
 //     Изменения, вносимые в этот файл вручную, будут перезаписаны при повторном создании кода.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.Linq;
+
 namespace Capital_Life_Insurance_LLC
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
+
     
     public partial class CandidateCard
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CandidateCard()
+        {
+            this.Grade = new HashSet<Grade>();
+            this.CandidateEducation = new HashSet<CandidateEducation>();
+        }
+        
+        public string PositionsTitleString
+        {
+            get
+            {
+                return Positions.PositionsTitle;
+            }
+        }
         public string FIO
         {
             get
@@ -50,12 +65,14 @@ namespace Capital_Life_Insurance_LLC
                     return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
-        public CandidateCard()
+        public string Position_Name
         {
-            this.Grade = new HashSet<Grade>();
-            this.CandidateEducation = new HashSet<CandidateEducation>();
+            get
+            {
+                return Positions.PositionsTitle.ToString();
+            }
         }
-    
+
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

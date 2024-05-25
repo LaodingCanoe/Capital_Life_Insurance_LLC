@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Capital_Life_Insurance_LLC
 {
     /// <summary>
-    /// Логика взаимодействия для CandidateAddEditPage.xaml
+    /// Логика взаимодействия для Capital_Life_Insurance_LLCPage.xaml
     /// </summary>
-    public partial class CandidateAddEditPage : Page
+    public partial class Capital_Life_Insurance_LLCPage : Page
     {
-        public CandidateAddEditPage()
+        public Capital_Life_Insurance_LLCPage()
         {
             InitializeComponent();
         }
