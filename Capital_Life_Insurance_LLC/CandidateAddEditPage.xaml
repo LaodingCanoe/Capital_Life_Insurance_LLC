@@ -48,7 +48,7 @@
                 <TextBlock Text="Email: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <TextBox Name="EmailTB" FontFamily="HelveticaFont" Text="{Binding Email}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                 <TextBlock Text="Дата рождение:" FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <DatePicker Name="Bithday"  SelectedDate="{Binding Date, StringFormat=dd/MM/yyyy}" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ></DatePicker>
+                <DatePicker Name="Bithday"  SelectedDate="{Binding Bithday, StringFormat=dd/mm/yy}" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ></DatePicker>
                 <TextBlock Text="Желаемая должность: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <ComboBox Name="PositionCB" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" >
                     <ComboBox.ItemTemplate>

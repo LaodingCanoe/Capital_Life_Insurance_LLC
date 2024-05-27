@@ -46,7 +46,7 @@ namespace Capital_Life_Insurance_LLC
                 return Positions.PositionsTitle.ToString();
             }
         }
-        public string Date
+        public string DateToString
         {
             get
             {

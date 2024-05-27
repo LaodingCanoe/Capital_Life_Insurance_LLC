@@ -33,12 +33,19 @@ namespace Capital_Life_Insurance_LLC
                 _currenCandidate = CandidateSelected;
                 PositionCB.SelectedIndex = CandidateSelected.Position - 1;
                 DeleteBT.Visibility = Visibility.Visible;
-            }            
-            DataContext = _currenCandidate;
+                DataContext = _currenCandidate;
+            }
+            else
+            {
+                DataContext = _currenCandidate;
+                Bithday.Text = "01.01.1950";
+            }
+            
         }
 
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
+            /*
             StringBuilder errors = new StringBuilder();
             if (string.IsNullOrWhiteSpace(FirstNameTB.Text))
                 errors.AppendLine("Укажите фамилию");
@@ -53,6 +60,21 @@ namespace Capital_Life_Insurance_LLC
             if (Bithday.Text=="")
             {
                 errors.AppendLine("Укаажите дату рождения");
+            }*/
+            StringBuilder errors = new StringBuilder();
+            if (string.IsNullOrWhiteSpace(_currenCandidate.FirstName))
+                errors.AppendLine("Укажите фамилию");
+            if (string.IsNullOrWhiteSpace(_currenCandidate.Name))
+                errors.AppendLine("Укажите имя");
+            if (PhoneTB.Text.Length < 12)
+                errors.AppendLine("Укажите верный номер телефона");
+            if (!IsValidEmail(_currenCandidate.Email))
+                errors.AppendLine("Укажите верный email");
+            if (PositionCB.SelectedItem == null)
+                errors.AppendLine("Укажите желаемую должность");
+            if (Bithday.Text == "")
+            {
+                errors.AppendLine("Укаажите дату рождения");
             }
             if (errors.Length > 0)
             {
@@ -60,14 +82,14 @@ namespace Capital_Life_Insurance_LLC
                 return;
             }
             else
-            {
+            {/*
                 _currenCandidate.FirstName = FirstNameTB.Text;
                 _currenCandidate.Name = NameTB.Text;
                 _currenCandidate.Patranomic = PatranomicTB.Text;
                 _currenCandidate.Phone = PhoneTB.Text;
                 _currenCandidate.Email = EmailTB.Text;
                 _currenCandidate.Position = PositionCB.SelectedIndex + 1;
-                _currenCandidate.Bithday = Convert.ToDateTime(Bithday.Text);
+                _currenCandidate.Bithday = Convert.ToDateTime(Bithday.Text);*/  // Convert.ToDateTime(Bithday.Text);
                 if (_currenCandidate.CandidateID == 0)
                     Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Add(_currenCandidate);
                 try

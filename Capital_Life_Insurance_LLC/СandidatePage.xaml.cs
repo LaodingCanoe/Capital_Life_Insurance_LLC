@@ -70,14 +70,7 @@ namespace Capital_Life_Insurance_LLC
 
         private void EditBT_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem menuItem)
-            {
-                var candidate = (menuItem.DataContext as CandidateCard);
-                if (candidate != null)
-                {
-                    Manager.MainFrame.Navigate(new CandidateAddEditPage(candidate));
-                }
-            }
+            Manager.MainFrame.Navigate(new CandidateAddEditPage(null));
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
@@ -87,7 +80,8 @@ namespace Capital_Life_Insurance_LLC
 
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new CandidateAddEditPage(null));
+            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard));
+            
         }
     }
 }

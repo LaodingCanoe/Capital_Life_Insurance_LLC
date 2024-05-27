@@ -132,13 +132,11 @@
                             <TextBlock Text="{Binding EduТName}"></TextBlock>
                         </StackPanel>
 
-                        <StackPanel Name="ButtonSP" Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Visibility="Hidden">
-                            <Button Name="EditProdBT" Content="Редактировать" HorizontalAlignment="Left"></Button>
+                        <StackPanel Name="ButtonSP" Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Visibility="Visible">
+                            <Button Content="Редактировать"  Name="Edit" Click="Edit_Click" HorizontalAlignment="Right" Style="{StaticResource RegularButton}"  Height="40" Width="160"></Button>
                             <Button Name="DeleteProdBT" Content="Удалить" HorizontalAlignment="Right"></Button>
                         </StackPanel>
-                        <StackPanel  Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
-                            <Button Content="Изменить" Name="Edit" Click="Edit_Click" HorizontalAlignment="Right" Style="{StaticResource RegularButton}"  Height="40" Width="160"></Button>
-                        </StackPanel>                        
+                                           
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
