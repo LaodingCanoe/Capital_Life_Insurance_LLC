@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,12 @@ namespace Capital_Life_Insurance_LLC
     public partial class СandidatePage : Page
     {
         List<CandidateCard> CandidateCardsPage = new List<CandidateCard>();
+        private int userId;
+
         public СandidatePage(int id)
         {
             InitializeComponent();
-
+            userId = id;
             var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
             userTB.Text = "Вы авторизированы как: " + currentUsers[id].FirstName.ToString() + " " + currentUsers[id].Name.ToString() + " " + currentUsers[id].Patranomic.ToString();
             userRoleTB.Text = "   Роль: " + currentUsers[id].UserRoleString.ToString();
@@ -34,7 +37,7 @@ namespace Capital_Life_Insurance_LLC
             FiterCB.SelectedIndex = 0;
             SortCB.SelectedIndex = 0;
         }
-
+        
         //Код для обновление страницы
         private void UpdateCandidat()
         {
@@ -104,7 +107,24 @@ namespace Capital_Life_Insurance_LLC
 
         private void Take_a_questionnaireBT_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new QuashionsPage());
+            var button = sender as Button;
+            if (button != null && button.CommandParameter != null)
+            {
+              /*  var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+                var CountQuashions = Capital_Life_Insurance_LLCEntities.GetContext().Quashions.Count();
+                var cirrentQuashions = Capital_Life_Insurance_LLCEntities.GetContext().Quashions.ToList();
+                Quashions _currentQuashions = new Quashions();
+                for (int i = 0; i < CountQuashions; i++)
+                {
+                    _currentQuashions.QuashionID = ;
+                    _currentQuashions.UserID = IDuser;
+                    _currentQuashions.QuashionID = NumberQuashion;
+                    _currentQuashions.Grade1 = 5;
+                }*/
+                int candidateId = (int)button.CommandParameter;
+                //var currentgrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+                Manager.MainFrame.Navigate(new QuashionsPage(candidateId, userId+1));
+            }
         }
     }
 }

@@ -1,11 +1,16 @@
 ﻿<Page x:Class="Capital_Life_Insurance_LLC.QuashionsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="QuashionsPage"  FontFamily="HelveticaFont" FontSize="20">
+
+    <Page.Resources>
+        <local:EqualityConverter x:Key="EqualityConverter"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,6 +31,7 @@
                 </ListBox.ItemsPanel>
             </ListBox>
             <Button Name="RightBT" Content="&gt;" Grid.Row="1" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="RightBT_Click"></Button>
+            <Button Name="SaveButton" Content="Сохранить результаты" Height="30" Width="200" Click="SaveButton_Click"></Button>
         </StackPanel>
 
         <ListView Grid.Column="1" Name="QuestionListView">
@@ -51,13 +57,12 @@
 
                         <TextBlock Text="{Binding AnswerThrid}" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="10 10 10 10"></TextBlock>
 
-                        <RadioButton Name="First" IsChecked="{Binding IsAnswerFirstSelected, Mode=TwoWay}" Grid.Column="2" Grid.Row="0" Style="{StaticResource RadioButtonForTest}" Click="RadioButton_Click"></RadioButton>
-                        <RadioButton Name="Second" IsChecked="{Binding IsAnswerSecondSelected, Mode=TwoWay}" Grid.Column="2" Grid.Row="1" Style="{StaticResource RadioButtonForTest}" Click="RadioButton_Click"></RadioButton>
-                        <RadioButton Name="Third" IsChecked="{Binding IsAnswerThirdSelected, Mode=TwoWay}" Grid.Column="2" Grid.Row="2" Style="{StaticResource RadioButtonForTest}" Click="RadioButton_Click"></RadioButton>
+                        <RadioButton Name="FirstRadioBTN" Grid.Column="2" Grid.Row="0" Style="{StaticResource RadioButtonForTest}"  Click="FirstRadioBTN_Click" IsChecked="{Binding First}" />
+                        <RadioButton Name="SecondRadioBTN" Grid.Column="2" Grid.Row="1"  Click="SecondRadioBTN_Click" IsChecked="{Binding Second}"/>
+                        <RadioButton Name="ThirdRadioBTN" Grid.Column="2" Grid.Row="2"  Click="ThirdRadioBTN_Click" Content="{Binding IsThirdSelected}" IsChecked="{Binding Thrid}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Name="SaveButton" Content="Сохранить результаты" Grid.Row="2" Height="30" Width="200" Visibility="Collapsed" Click="SaveButton_Click"></Button>
     </Grid>
 </Page>

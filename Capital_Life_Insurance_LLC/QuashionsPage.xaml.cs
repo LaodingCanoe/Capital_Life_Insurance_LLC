@@ -4,7 +4,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Capital_Life_Insurance_LLC
 {
@@ -12,16 +15,64 @@ namespace Capital_Life_Insurance_LLC
     {
         List<Quashions> CurrentPagelist = new List<Quashions>();
         List<Quashions> TableList;
+        List<Grade> GradeList;
         int CountRecords;
         int CountPage;
         int CurrentPage = 0;
+        int IDCandidate;
+        int IDuser;
 
-        public QuashionsPage()
+        int NumberQuashion = 1;
+
+        public QuashionsPage(int IDCandidate, int IDuser)
         {
             InitializeComponent();
+            this.IDCandidate = IDCandidate;
+            this.IDuser = IDuser;
+            
             TableList = Capital_Life_Insurance_LLCEntities.GetContext().Quashions.ToList();
+            GradeList = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+
+            // Загрузите сохраненные ответы
+            var savedAnswers = Capital_Life_Insurance_LLCEntities.GetContext().Grade
+                .Where(g => g.CandidateID == IDCandidate && g.UserID == IDuser)
+                .ToList();
+                
             CountRecords = TableList.Count;
             ChangePage(0, 0);
+        }
+
+        private List<QuashionCandidateDto> LoadData()
+        {
+            using (var context = Capital_Life_Insurance_LLCEntities.GetContext())
+            {
+                var query = from quashion in context.Quashions
+                            join grade in context.Grade on quashion.QuashionID equals grade.QuashionID into g
+                            from grade in g.DefaultIfEmpty()
+                            where grade.CandidateID == IDCandidate && grade.UserID == IDuser
+                            select new QuashionCandidateDto
+                            {
+                                Title = quashion.Title,
+                                AnswerFirst = quashion.AnswerFirst,
+                                AnswerSecond = quashion.AnswerSecond,
+                                AnswerThrid = quashion.AnswerThrid,
+                                First = grade != null && grade.Grade1 == 5,
+                                Second = grade != null && grade.Grade1 == 3,
+                                Thrid = grade != null && grade.Grade1 == 1
+                            };
+
+                return query.ToList();
+            }
+        }
+
+        private string Grade(int? q)
+        {
+            var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+            string GradeCandidate;
+            currentGrade = currentGrade.Where(p => p.QuashionID == q && p.UserID == IDuser && p.CandidateID == IDCandidate).ToList();
+            GradeCandidate = currentGrade.ToString();
+            return GradeCandidate;
+
         }
 
         private void ChangePage(int direction, int? selectedPage)
@@ -51,12 +102,12 @@ namespace Capital_Life_Insurance_LLC
                     case 1:
                         if (CurrentPage > 0)
                         {
-                            CurrentPage--;
                             min = CurrentPage + 1;
                             for (int i = CurrentPage; i < min; i++)
                             {
                                 CurrentPagelist.Add(TableList[i]);
                             }
+                            NumberQuashion++;
                         }
                         else
                         {
@@ -66,12 +117,12 @@ namespace Capital_Life_Insurance_LLC
                     case 2:
                         if (CurrentPage < CountPage - 1)
                         {
-                            CurrentPage++;
                             min = CurrentPage + 1;
                             for (int i = CurrentPage; i < min; i++)
                             {
                                 CurrentPagelist.Add(TableList[i]);
                             }
+                            NumberQuashion--;
                         }
                         else
                         {
@@ -90,111 +141,94 @@ namespace Capital_Life_Insurance_LLC
                 }
                 PageListBox.SelectedIndex = CurrentPage;
 
-                QuestionListView.ItemsSource = CurrentPagelist;
+                QuestionListView.ItemsSource = LoadData();
                 QuestionListView.Items.Refresh();
-
-                SaveButton.Visibility = TableList.All(q => q.IsAnswered) ? Visibility.Visible : Visibility.Collapsed;
             }
+
+           /* string GradeCandidate = Grade(selectedPage + 1);
+            switch (GradeCandidate)
+            {
+                case "5":
+                    {
+                        First.Is
+                    }
+                break ;
+            }*/
         }
 
         private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
             ChangePage(0, PageListBox.SelectedIndex);
+            NumberQuashion = PageListBox.SelectedIndex+1;
         }
 
         private void RightBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(2, null);
+            NumberQuashion = PageListBox.SelectedIndex + 1;
         }
 
         private void LeftBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(1, null);
+            NumberQuashion = PageListBox.SelectedIndex + 1;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var context = new Capital_Life_Insurance_LLCEntities())
-            {
-                foreach (var question in TableList)
-                {
-                    var grade = new Grade
-                    {
-                        QuashionID = question.QuashionID,
-                        Grade1 = question.IsAnswerFirstSelected ? 5 :
-                                 question.IsAnswerSecondSelected ? 3 : 1
-                    };
-                    context.Grade.Add(grade);
-                }
-                context.SaveChanges();
-            }
-
-            MessageBox.Show("Результаты успешно сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
+           
         }
 
-        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        private void FirstRadioBTN_Click(object sender, RoutedEventArgs e)
         {
-            
-                var radioButton = sender as RadioButton;
-                if (radioButton == null) return;
+            var currentGrades = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+            Grade _currentGrade = new Grade();
+            _currentGrade.CandidateID = IDCandidate;
+            _currentGrade.UserID = IDuser;
+            _currentGrade.QuashionID = NumberQuashion;
+            _currentGrade.Grade1 = 5;
+            Capital_Life_Insurance_LLCEntities.GetContext().Grade.Add(_currentGrade);
+            Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+            if (_currentGrade.QuashionID !=NumberQuashion && _currentGrade.CandidateID !=IDCandidate && _currentGrade.UserID!=IDuser)
+            {             
 
-                var question = radioButton.DataContext as Quashions;
-                if (question == null) return;
-
-                string answer = null;
-                switch (radioButton.Name)
-                {
-                    case "First":
-                        answer = nameof(question.IsAnswerFirstSelected);
-                        break;
-                    case "Second":
-                        answer = nameof(question.IsAnswerSecondSelected);
-                        break;
-                    case "Third":
-                        answer = nameof(question.IsAnswerThirdSelected);
-                        break;
-                    default:
-                        break;
-                }
-
-                if (answer != null)
-                {
-                foreach (var prop in typeof(Quashions).GetProperties())
-                {
-                    if (prop.Name.Contains("Answer"))
-                    {
-                        if (prop.Name != answer)
-                        {
-                            prop.SetValue(question, false);
-                        }
-                        else
-                        {
-                            prop.SetValue(question, true);
-                        }
-                    }
-                }
-                    radioButton.IsChecked = true;
-                    question.GetType().GetProperty(answer)?.SetValue(question, true);
-
-                    // Сохраняем выбранный ответ в базу данных
-                    using (var context = new Capital_Life_Insurance_LLCEntities())
-                    {
-                        var grade = new Grade
-                        {
-                            QuashionID = question.QuashionID,
-                            Grade1 = question.IsAnswerFirstSelected ? 5 :
-                                     question.IsAnswerSecondSelected ? 3 :
-                                     question.IsAnswerThirdSelected ? 1 : 0 // По умолчанию 0
-                        };
-                        context.Grade.Add(grade);
-                        context.SaveChanges();
-                    }
-                }
-
-                SaveButton.Visibility = TableList.All(q => q.IsAnswered) ? Visibility.Visible : Visibility.Collapsed;
-            
-            
+                
+            }
         }
 
+        private void SecondRadioBTN_Click(object sender, RoutedEventArgs e)
+        {
+            var currentGrades = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+            Grade _currentGrade = new Grade();
+            _currentGrade.CandidateID = IDCandidate;
+            _currentGrade.UserID = IDuser;
+            _currentGrade.QuashionID = NumberQuashion;
+            _currentGrade.Grade1 = 3;
+            Capital_Life_Insurance_LLCEntities.GetContext().Grade.Add(_currentGrade);
+            Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+        }
+
+        private void ThirdRadioBTN_Click(object sender, RoutedEventArgs e)
+        {
+            var currentGrades = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+            Grade _currentGrade = new Grade();
+            _currentGrade.CandidateID = IDCandidate;
+            _currentGrade.UserID = IDuser;
+            _currentGrade.QuashionID = NumberQuashion;
+            _currentGrade.Grade1 = 1;
+            Capital_Life_Insurance_LLCEntities.GetContext().Grade.Add(_currentGrade);
+            Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+        }
+    }
+
+    public class QuashionCandidateDto
+    {
+        public string Title { get; set; }
+        public string AnswerFirst { get; set; }
+        public string AnswerSecond { get; set; }
+        public string AnswerThrid { get; set; }
+        public bool First { get; set; }
+        public bool Second { get; set; }
+        public bool Thrid { get; set; }
     }
 }

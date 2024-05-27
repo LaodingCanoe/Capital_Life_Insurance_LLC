@@ -100,7 +100,7 @@
                                 </Binding>
                             </Image.Source>
                         </Image>
-                        <Button Style="{StaticResource RegularButton}" Height="40" Width="140" Grid.Column="0" Grid.Row="5" Content="Пройти анкетирование" Margin="5 5 5 5" Name="Take_a_questionnaireBT" Click="Take_a_questionnaireBT_Click"></Button>
+                        <Button Style="{StaticResource RegularButton}" Height="40" Width="140" Grid.Column="0" Grid.Row="5" Content="Пройти анкетирование" Margin="5 5 5 5" Name="Take_a_questionnaireBT" Click="Take_a_questionnaireBT_Click" CommandParameter="{Binding CandidateID}"></Button>
                         
                         <TextBlock Text="{Binding FIO}" FontWeight="Bold" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 0, 0"></TextBlock>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">

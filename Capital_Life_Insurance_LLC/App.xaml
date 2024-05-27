@@ -135,7 +135,7 @@
                                   Height="30"/>
                             </Grid>
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsChecked" Value="True">
+                                <Trigger Property="IsChecked" Value="true">
                                     <Setter TargetName="Border" Property="Background" Value="#0B57D0"/>
                                     <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
                                     <Setter TargetName="CheckMark" Property="Stroke" Value="White"/>

@@ -88,9 +88,11 @@
     <Compile Include="Education.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EqualityConverter.cs" />
     <Compile Include="Grade.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GradeClass.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
