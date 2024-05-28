@@ -17,7 +17,9 @@ namespace Capital_Life_Insurance_LLC
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Users()
         {
+
             this.CandidateCard = new HashSet<CandidateCard>();
+
             this.Grade = new HashSet<Grade>();
         }
         public string UserRoleString
@@ -30,7 +32,7 @@ namespace Capital_Life_Insurance_LLC
                 }
                 else
                 {
-                    return string.Empty; // или другое значение по умолчанию
+                    return string.Empty;
                 }
             }
         }
@@ -42,6 +44,7 @@ namespace Capital_Life_Insurance_LLC
                 return s;
             }
         }
+
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

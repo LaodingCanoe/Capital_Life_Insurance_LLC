@@ -45,10 +45,12 @@
                 <TextBlock Text="Телефон: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <TextBox Name="PhoneTB" FontFamily="HelveticaFont" Text="{Binding Phone}"  HorizontalAlignment="Left" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="3" Grid.Column="1" TextChanged="PhoneTB_TextChanged" PreviewTextInput="PhoneNumberTextBox_PreviewTextInput" PreviewKeyDown="PhoneNumberTextBox_PreviewKeyDown"></TextBox>
 
+
                 <TextBlock Text="Email: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <TextBox Name="EmailTB" FontFamily="HelveticaFont" Text="{Binding Email}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                 <TextBlock Text="Дата рождение:" FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <DatePicker Name="Bithday" Text="{Binding Date}" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ></DatePicker>
+
                 <TextBlock Text="Желаемая должность: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <ComboBox Name="PositionCB" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" >
                     <ComboBox.ItemTemplate>
@@ -57,6 +59,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+
                 <TextBlock Text="Выберите образованеи кандидата:" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <ListBox Name="MultiSelectListBox" SelectionMode="Multiple" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Margin="5 5 0 0">
                     <ListBox.ItemTemplate>
@@ -77,11 +80,13 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
+
                 <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Orientation="Vertical">
                     <TextBlock Text="Фото" FontSize="15" Height="20" Width="auto" Margin="5"></TextBlock>
                     <Image Name="PhotoIM" Stretch="UniformToFill" MinHeight="50" Height="150" Width="150"
                     HorizontalAlignment="Left" Margin="5">
                         <Image.Source>
+
                             <Binding Path="PhotoPath" >
                                 <Binding.TargetNullValue>
                                     <ImageSource>
@@ -89,6 +94,7 @@
                                     </ImageSource>
                                 </Binding.TargetNullValue>
                                 </Binding>
+
                         </Image.Source>
                     </Image>
                     <Button Name="ImageBT" Style="{StaticResource RegularButton}"  Content="Изменить" Margin="0, 0, 0, 10"  HorizontalAlignment="Left" Height="40" Width="160" VerticalAlignment="Bottom"  Click="ImageBT_Click" FontFamily="HelveticaFont"/>
@@ -97,6 +103,8 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
+
+
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -110,3 +118,4 @@
 
     </Grid>
 </Page>
+

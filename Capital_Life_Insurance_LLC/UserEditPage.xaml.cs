@@ -39,6 +39,7 @@ namespace Capital_Life_Insurance_LLC
                 PasswordTB.Visibility = Visibility.Hidden;
                 DeleteBT.Visibility = Visibility.Visible;
                 RoleCB.SelectedIndex = UserSelected.RoleID-1;
+                
             }
             
             DataContext = _currentUsers;

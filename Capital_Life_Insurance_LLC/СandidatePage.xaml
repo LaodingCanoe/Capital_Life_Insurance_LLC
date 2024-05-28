@@ -6,11 +6,11 @@
       xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="СandidatePage" FontFamily="HelveticaFont"  >
+      Title="СandidatePage" FontFamily="HelveticaFont">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -20,11 +20,13 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
+
         <WrapPanel Orientation="Horizontal" Grid.ColumnSpan="3"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
+
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Name="userTB"  FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
                     <TextBlock Name="userRoleTB" FontSize="16" HorizontalAlignment="left" VerticalAlignment="Center" Margin="0 0 10 0" ></TextBlock>
@@ -32,17 +34,17 @@
             </Grid>
         </WrapPanel>
 
+        <!-- Search and filter panel -->
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal">
             <StackPanel Orientation="Horizontal" Margin="0 5 0 5">
-
                 <StackPanel>
                     <TextBlock Text="Начните вводить для поиска" Margin="5, 0, 5, 0"></TextBlock>
                     <TextBox Width="250" Name="SearchTB" Margin="5, 0, 5, 0" TextChanged="SearchTB_TextChanged"></TextBox>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Выберите для фильтрации должности" Margin="5, 0, 5, 0" ></TextBlock>
-                    <ComboBox Name="FiterCB" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="FiterCB_SelectionChanged"  >
+                    <TextBlock Text="Выберите для фильтрации должности" Margin="5, 0, 5, 0"></TextBlock>
+                    <ComboBox Name="FiterCB" Width="250" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5, 0, 5, 0" SelectionChanged="FiterCB_SelectionChanged">
                         <ComboBoxItem Content="Всё"></ComboBoxItem>
                         <ComboBoxItem Content="Страховой агент"></ComboBoxItem>
                         <ComboBoxItem Content="Бухгалтер"></ComboBoxItem>
@@ -65,8 +67,18 @@
                 </StackPanel>
             </StackPanel>
         </WrapPanel>
-
-        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="CandidateList" >
+        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="CandidateList">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="ContextMenu">
+                        <Setter.Value>
+                            <ContextMenu>
+                                <MenuItem Header="Изменить" Name="EditBT" Click="EditBT_Click"/>
+                            </ContextMenu>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -126,11 +138,14 @@
                             <TextBlock Text="Средняя оценка"></TextBlock>
                             <TextBlock Text="{Binding GradeALL}" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
                         </StackPanel>
-
+                        <StackPanel  Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                            <Button Content="Изменить" Name="Edit" Click="Edit_Click" HorizontalAlignment="Right" Style="{StaticResource RegularButton}"  Height="40" Width="160"></Button>
+                        </StackPanel>                        
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right">
             <Button Style="{StaticResource RegularButton}" Name="AddBT" Content="Добавить" Click="AddBT_Click" Height="40" Width="140" Margin="5 5 5 5" HorizontalAlignment="Right" ></Button>
         </StackPanel>

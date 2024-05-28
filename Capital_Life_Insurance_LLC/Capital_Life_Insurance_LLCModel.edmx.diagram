@@ -4,6 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+
       <Diagram DiagramId="bb60d74f085d4e47a6093dfe28febf2b" Name="Diagram1">
         <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.CandidateCard" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.CandidateEducation" Width="1.5" PointX="9.375" PointY="4" IsExpanded="true" />
@@ -15,6 +16,7 @@
         <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Speciality" Width="1.5" PointX="7.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="Capital_Life_Insurance_LLCModel.Users" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+
         <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK__Candidate__Posit__787EE5A0" ManuallyRouted="false" />
         <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK__Grade__Candidate__7E37BEF6" ManuallyRouted="false" />
         <AssociationConnector Association="Capital_Life_Insurance_LLCModel.FK_CandidateCard_Users" ManuallyRouted="false" />
