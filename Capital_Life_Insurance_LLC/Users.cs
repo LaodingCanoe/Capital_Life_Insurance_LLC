@@ -19,7 +19,6 @@ namespace Capital_Life_Insurance_LLC
         {
             this.Grade = new HashSet<Grade>();
         }
-
         public string UserRoleString
         {
             get

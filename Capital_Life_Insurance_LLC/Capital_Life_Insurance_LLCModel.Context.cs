@@ -23,7 +23,7 @@ namespace Capital_Life_Insurance_LLC
             return _context;
         }
 
-        public Capital_Life_Insurance_LLCEntities()
+            public Capital_Life_Insurance_LLCEntities()
             : base("name=Capital_Life_Insurance_LLCEntities")
         {
         }

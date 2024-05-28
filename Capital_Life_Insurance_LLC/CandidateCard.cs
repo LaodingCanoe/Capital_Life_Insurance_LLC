@@ -9,9 +9,10 @@
 
 namespace Capital_Life_Insurance_LLC
 {
+    using System.Linq;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Windows;
 
     public partial class CandidateCard
     {
@@ -21,7 +22,6 @@ namespace Capital_Life_Insurance_LLC
             this.Grade = new HashSet<Grade>();
             this.CandidateEducation = new HashSet<CandidateEducation>();
         }
-
         public string FIO
         {
             get
@@ -57,7 +57,18 @@ namespace Capital_Life_Insurance_LLC
                     return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
+        public Visibility Vis
+        {
+            get
+            {
 
+                if (RoleId.ID == 3)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+
+            }
+        }
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

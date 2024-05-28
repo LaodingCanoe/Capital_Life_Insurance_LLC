@@ -93,7 +93,7 @@ namespace Capital_Life_Insurance_LLC
 
         private void A_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new UserEditPage(null));
+            Manager.MainFrame.Navigate(new CandidateAddEditPage(null));
         }
     }
 }

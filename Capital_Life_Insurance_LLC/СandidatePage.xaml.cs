@@ -19,6 +19,10 @@ namespace Capital_Life_Insurance_LLC
     /// <summary>
     /// Логика взаимодействия для СandidatePage.xaml
     /// </summary>
+    public static class RoleId
+    {
+        public static int ID = 0;
+    }
     public partial class СandidatePage : Page
     {
         List<CandidateCard> CandidateCardsPage = new List<CandidateCard>();
@@ -32,8 +36,12 @@ namespace Capital_Life_Insurance_LLC
                 userId = id;
                 var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
                 userTB.Text = "Вы авторизированы как: " + currentUsers[id].FirstName.ToString() + " " + currentUsers[id].Name.ToString() + " " + currentUsers[id].Patranomic.ToString();
+                RoleId.ID = currentUsers[id].RoleID;
                 userRoleTB.Text = "   Роль: " + currentUsers[id].UserRoleString.ToString();
-
+                if (RoleId.ID == 3)
+                    AddBT.Visibility = Visibility.Visible;
+                else
+                    AddBT.Visibility = Visibility.Collapsed;
                 CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
                 CandidateList.ItemsSource = CandidateCardsPage;
                 FiterCB.SelectedIndex = 0;
@@ -128,6 +136,18 @@ namespace Capital_Life_Insurance_LLC
                 //var currentgrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
                 Manager.MainFrame.Navigate(new QuashionsPage(candidateId, userId+1));
             }
+        }
+
+        private void EditBT_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard));
+            UpdateCandidat();
+        }
+
+        private void AddBT_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new CandidateAddEditPage(null));
+            UpdateCandidat();
         }
     }
 }
