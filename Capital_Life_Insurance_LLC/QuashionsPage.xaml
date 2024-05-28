@@ -31,7 +31,6 @@
                 </ListBox.ItemsPanel>
             </ListBox>
             <Button Name="RightBT" Content="&gt;" Grid.Row="1" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="RightBT_Click"></Button>
-            <Button Name="SaveButton" Content="Сохранить результаты" Height="30" Width="200" Click="SaveButton_Click"></Button>
         </StackPanel>
 
         <ListView Grid.Column="1" Name="QuestionListView">
@@ -58,8 +57,8 @@
                         <TextBlock Text="{Binding AnswerThrid}" Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" Margin="10 10 10 10"></TextBlock>
 
                         <RadioButton Name="FirstRadioBTN" Grid.Column="2" Grid.Row="0" Style="{StaticResource RadioButtonForTest}"  Click="FirstRadioBTN_Click" IsChecked="{Binding First}" />
-                        <RadioButton Name="SecondRadioBTN" Grid.Column="2" Grid.Row="1"  Click="SecondRadioBTN_Click" IsChecked="{Binding Second}"/>
-                        <RadioButton Name="ThirdRadioBTN" Grid.Column="2" Grid.Row="2"  Click="ThirdRadioBTN_Click" Content="{Binding IsThirdSelected}" IsChecked="{Binding Thrid}"/>
+                        <RadioButton Name="SecondRadioBTN" Grid.Column="2" Grid.Row="1"  Click="SecondRadioBTN_Click" Style="{StaticResource RadioButtonForTest}"  IsChecked="{Binding Second}"/>
+                        <RadioButton Name="ThirdRadioBTN" Grid.Column="2" Grid.Row="2"  Click="ThirdRadioBTN_Click" Content="{Binding IsThirdSelected}" Style="{StaticResource RadioButtonForTest}"  IsChecked="{Binding Thrid}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

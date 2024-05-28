@@ -12,8 +12,7 @@ namespace Capital_Life_Insurance_LLC
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Linq;
-
+    
     public partial class Capital_Life_Insurance_LLCEntities : DbContext
     {
         public static Capital_Life_Insurance_LLCEntities _context;
@@ -23,7 +22,7 @@ namespace Capital_Life_Insurance_LLC
                 _context = new Capital_Life_Insurance_LLCEntities();
             return _context;
         }
-        
+
         public Capital_Life_Insurance_LLCEntities()
             : base("name=Capital_Life_Insurance_LLCEntities")
         {

@@ -11,7 +11,7 @@ namespace Capital_Life_Insurance_LLC
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    
     public partial class Grade
     {
         public int GradeID { get; set; }
@@ -19,49 +19,7 @@ namespace Capital_Life_Insurance_LLC
         public int UserID { get; set; }
         public int QuashionID { get; set; }
         public Nullable<int> Grade1 { get; set; }
-
-        public bool First
-        {
-            get
-            {
-                if (this.Grade1 == 5) 
-                { 
-                    return true;
-                }
-                else { 
-                    return false;
-                }
-            }
-        }
-        public bool Second
-        {
-            get
-            {
-                if (this.Grade1 == 3)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        public bool Thrid
-        {
-            get
-            {
-                if (this.Grade1 == 1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
+    
         public virtual CandidateCard CandidateCard { get; set; }
         public virtual Users Users { get; set; }
         public virtual Quashions Quashions { get; set; }

@@ -26,16 +26,19 @@ namespace Capital_Life_Insurance_LLC
 
         public СandidatePage(int id)
         {
-            InitializeComponent();
-            userId = id;
-            var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-            userTB.Text = "Вы авторизированы как: " + currentUsers[id].FirstName.ToString() + " " + currentUsers[id].Name.ToString() + " " + currentUsers[id].Patranomic.ToString();
-            userRoleTB.Text = "   Роль: " + currentUsers[id].UserRoleString.ToString();
+            using (var context = new Capital_Life_Insurance_LLCEntities())
+            {
+                InitializeComponent();
+                userId = id;
+                var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
+                userTB.Text = "Вы авторизированы как: " + currentUsers[id].FirstName.ToString() + " " + currentUsers[id].Name.ToString() + " " + currentUsers[id].Patranomic.ToString();
+                userRoleTB.Text = "   Роль: " + currentUsers[id].UserRoleString.ToString();
 
-            CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();            
-            CandidateList.ItemsSource = CandidateCardsPage;
-            FiterCB.SelectedIndex = 0;
-            SortCB.SelectedIndex = 0;
+                CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
+                CandidateList.ItemsSource = CandidateCardsPage;
+                FiterCB.SelectedIndex = 0;
+                SortCB.SelectedIndex = 0;
+            }
         }
         
         //Код для обновление страницы

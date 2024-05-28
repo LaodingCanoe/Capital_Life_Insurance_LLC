@@ -6,14 +6,12 @@
 //     Изменения, вносимые в этот файл вручную, будут перезаписаны при повторном создании кода.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.ComponentModel;
-using System.Linq;
+
 namespace Capital_Life_Insurance_LLC
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Quashions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,66 +19,13 @@ namespace Capital_Life_Insurance_LLC
         {
             this.Grade = new HashSet<Grade>();
         }
-
+    
         public int QuashionID { get; set; }
         public string Title { get; set; }
         public string AnswerFirst { get; set; }
         public string AnswerSecond { get; set; }
         public string AnswerThrid { get; set; }
-
-        public string SelectedAnswer { get; set; }
-
-        public bool IsFirstSelected { get; set; }
-        public bool IsSecondSelected { get; set; }
-        public bool IsThirdSelected { get; set; }
-
-        
-
-        public bool Gr
-        {
-            get
-            {
-
-                string s = string.Join(", ", Grade.Select(ce => ce.Grade1));
-                if (s == "5")
-                {
-                    return true;
-                }
-                else
-                    return true;
-            }
-        }
-        /* public void SetAnswer(int answer)
-         {
-             IsFirstSelected = answer == 1;
-             IsSecondSelected = answer == 2;
-             IsThirdSelected = answer == 3;
-         }*/
-        /* public int First(int userID, int candidateID)
-         {
-             var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
-             currentGrade = currentGrade.Where(p => p.UserID == userID && p.GradeID == candidateID).ToList();
-             string num = currentGrade[0].Grade1.ToString();
-             if (num == "5")
-                 return 1;
-             else return 0;
-
-         }
-
-         public bool Second(int userID, int candidateID)
-         {
-             var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
-             currentGrade = currentGrade.Where(p => p.UserID == userID && p.GradeID == candidateID).ToList();
-             string num = currentGrade[0].Grade1.ToString();
-             if (num == "3")
-                 return true;
-             else return false;
-
-         }*/
-
-
-
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
     }
