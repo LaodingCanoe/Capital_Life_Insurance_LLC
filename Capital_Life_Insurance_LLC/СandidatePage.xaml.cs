@@ -46,7 +46,9 @@ namespace Capital_Life_Insurance_LLC
                 CandidateList.ItemsSource = CandidateCardsPage;
                 FiterCB.SelectedIndex = 0;
                 SortCB.SelectedIndex = 0;
+                UpdateCandidat();
             }
+            UpdateCandidat();
         }
         
         //Код для обновление страницы
@@ -101,6 +103,7 @@ namespace Capital_Life_Insurance_LLC
             CandidateList.ItemsSource = currentCandidate;
 
         }
+        
         private void FiterCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateCandidat();
@@ -136,17 +139,18 @@ namespace Capital_Life_Insurance_LLC
                 //var currentgrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
                 Manager.MainFrame.Navigate(new QuashionsPage(candidateId, userId+1));
             }
+            UpdateCandidat();
         }
 
         private void EditBT_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard));
+            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard, userId));
             UpdateCandidat();
         }
 
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new CandidateAddEditPage(null));
+            Manager.MainFrame.Navigate(new CandidateAddEditPage(null, userId));
             UpdateCandidat();
         }
     }

@@ -9,9 +9,10 @@
 
 namespace Capital_Life_Insurance_LLC
 {
-    using System.Linq;
     using System;
+    using System.Linq;
     using System.Collections.Generic;
+
     using System.Windows;
 
     public partial class CandidateCard
@@ -22,6 +23,7 @@ namespace Capital_Life_Insurance_LLC
             this.Grade = new HashSet<Grade>();
             this.CandidateEducation = new HashSet<CandidateEducation>();
         }
+
         public string FIO
         {
             get
@@ -57,6 +59,28 @@ namespace Capital_Life_Insurance_LLC
                     return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
+        public string GradeALL
+        {
+            get
+            {
+                if (this.Grade == null || !this.Grade.Any())
+                {
+                    return "Нет";
+                }
+
+                var grades = this.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
+
+                if (!grades.Any())
+                {
+                    return "Нет";
+                }
+                else
+                {
+                    return grades.Average().ToString("F1");
+                }
+            }
+        }
+
         public Visibility Vis
         {
             get
@@ -78,10 +102,12 @@ namespace Capital_Life_Insurance_LLC
         public System.DateTime Bithday { get; set; }
         public int Position { get; set; }
         public string PhotoPath { get; set; }
+        public int CreateUserID { get; set; }
     
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
+        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateEducation> CandidateEducation { get; set; }
     }

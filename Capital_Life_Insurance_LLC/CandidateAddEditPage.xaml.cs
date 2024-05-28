@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -23,23 +25,39 @@ namespace Capital_Life_Insurance_LLC
     public partial class CandidateAddEditPage : Page
     {
         private CandidateCard _currenCandidate = new CandidateCard();
-        public CandidateAddEditPage(CandidateCard CandidateSelected)
+        private int IDCandidate = 0;
+        private int IDUser = 0;
+        public CandidateAddEditPage(CandidateCard CandidateSelected, int id)
         {
             InitializeComponent();
+            var context = Capital_Life_Insurance_LLCEntities.GetContext();
+            var educations = context.Education.ToList();
             var _currentPosition = Capital_Life_Insurance_LLCEntities.GetContext().Positions.ToList();
-
+            MultiSelectListBox.ItemsSource = educations;
+            IDUser = id + 1;
             PositionCB.ItemsSource = _currentPosition;
             if (CandidateSelected != null)
             {
                 _currenCandidate = CandidateSelected;
+                IDCandidate = _currenCandidate.CandidateID;
                 PositionCB.SelectedIndex = CandidateSelected.Position - 1;
                 DeleteBT.Visibility = Visibility.Visible;
+
+                foreach (var candidateEducation in _currenCandidate.CandidateEducation)
+                {
+                    var education = educations.FirstOrDefault(e => e.EducationID == candidateEducation.Education);
+                    if (education != null)
+                    {
+                        MultiSelectListBox.SelectedItems.Add(education);
+                    }
+                }
             }
-            else 
+            else
             {
                 Bithday.Text = "01.01.1950";
             }
-            DataContext = _currenCandidate;
+            DataContext = _currenCandidate;           
+            
         }
 
         private void AddBT_Click(object sender, RoutedEventArgs e)
@@ -59,6 +77,10 @@ namespace Capital_Life_Insurance_LLC
             {
                 errors.AppendLine("Укаажите дату рождения");
             }
+            if (MultiSelectListBox.SelectedItems.Count == 0)
+            {
+                errors.AppendLine("Выбирите образование"); //скинуть Искандеру
+            }
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
@@ -73,9 +95,20 @@ namespace Capital_Life_Insurance_LLC
                 _currenCandidate.Email = EmailTB.Text;
                 _currenCandidate.Position = PositionCB.SelectedIndex + 1;
                 _currenCandidate.Bithday = Convert.ToDateTime(Bithday.Text);
+                _currenCandidate.CreateUserID = IDUser;
+                _currenCandidate.CandidateEducation.Clear();
+                foreach (var education in MultiSelectListBox.SelectedItems.Cast<Education>())
+                {
+                    _currenCandidate.CandidateEducation.Add(new CandidateEducation
+                    {
+                        Candidate = _currenCandidate.CandidateID,
+                        Education = education.EducationID
+                    });
+                }
                 if (_currenCandidate.CandidateID == 0)
                 {
                     Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Add(_currenCandidate);
+                    
                 }
                    
                 try
@@ -93,14 +126,35 @@ namespace Capital_Life_Insurance_LLC
 
         private void DeleteBT_Click(object sender, RoutedEventArgs e)
         {
+            //var currentDelete = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard;
+            //currentDelete = currentDelete.Where(p => p.CandidateID.ToString() == IDCandidate.ToString()).ToList();
             var currentDelete = (sender as Button).DataContext as CandidateCard;
             if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
-                    Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Remove(currentDelete);
-                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+                    using (var context = new Capital_Life_Insurance_LLCEntities())
+                    {
+                        // Загрузка текущего кандидата из базы данных
+                        var candidateToDelete = context.CandidateCard
+                            .Include(c => c.Grade) // Включение связанных записей Grade
+                            .FirstOrDefault(c => c.CandidateID == currentDelete.CandidateID);
+
+                        if (candidateToDelete != null)
+                        {
+                            // Удаление связанных записей из таблицы Grade
+                            context.Grade.RemoveRange(candidateToDelete.Grade);
+
+                            // Удаление записи из таблицы CandidateCard
+                            context.CandidateCard.Remove(candidateToDelete);
+
+                            // Сохранение изменений
+                            context.SaveChanges();
+                        }
+                    }
+
+                    MessageBox.Show("Кандидат и связанные записи удалены.");
                     Manager.MainFrame.GoBack();
                 }
                 catch (Exception ex)

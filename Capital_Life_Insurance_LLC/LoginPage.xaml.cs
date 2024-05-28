@@ -29,7 +29,7 @@ namespace Capital_Life_Insurance_LLC
         public LoginPage()
         {
             InitializeComponent();
-            LoginTB.Text = "iskan123";
+            LoginTB.Text = "danis123";
             PasswordTB.Password = "qwerty1";
         }
 
@@ -93,7 +93,7 @@ namespace Capital_Life_Insurance_LLC
 
         private void A_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new CandidateAddEditPage(null));
+            
         }
     }
 }

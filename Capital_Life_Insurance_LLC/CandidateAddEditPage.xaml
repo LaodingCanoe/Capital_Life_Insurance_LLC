@@ -57,12 +57,38 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <TextBlock Text="Выберите образованеи кандидата:" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <ListBox Name="MultiSelectListBox" SelectionMode="Multiple" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" Margin="5 5 0 0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding EducationLevel}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Foreground" Value="Blue"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
                 <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Orientation="Vertical">
                     <TextBlock Text="Фото" FontSize="15" Height="20" Width="auto" Margin="5"></TextBlock>
                     <Image Name="PhotoIM" Stretch="UniformToFill" MinHeight="50" Height="150" Width="150"
                     HorizontalAlignment="Left" Margin="5">
                         <Image.Source>
-                            <Binding Path="PhotoPath" TargetNullValue="Photo\picture.png"></Binding>
+                            <Binding Path="PhotoPath" >
+                                <Binding.TargetNullValue>
+                                    <ImageSource>
+                                        Res/picture.png
+                                    </ImageSource>
+                                </Binding.TargetNullValue>
+                                </Binding>
                         </Image.Source>
                     </Image>
                     <Button Name="ImageBT" Style="{StaticResource RegularButton}"  Content="Изменить" Margin="0, 0, 0, 10"  HorizontalAlignment="Left" Height="40" Width="160" VerticalAlignment="Bottom"  Click="ImageBT_Click" FontFamily="HelveticaFont"/>
