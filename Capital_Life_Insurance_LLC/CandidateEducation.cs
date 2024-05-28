@@ -14,13 +14,7 @@ namespace Capital_Life_Insurance_LLC
     
     public partial class CandidateEducation
     {
-        public string EducationNameString
-        {
-            get
-            {
-                return Education1.EducationLevel.ToString();
-            }
-        }
+
         public int CandidateEducationID { get; set; }
         public Nullable<int> Candidate { get; set; }
         public Nullable<int> Education { get; set; }

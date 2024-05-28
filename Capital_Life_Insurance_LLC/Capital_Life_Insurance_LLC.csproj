@@ -94,9 +94,11 @@
     <Compile Include="Education.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="EqualityConverter.cs" />
     <Compile Include="Grade.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GradeClass.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -106,6 +108,9 @@
     </Compile>
     <Compile Include="Quashions.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuashionsPage.xaml.cs">
+      <DependentUpon>QuashionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
@@ -135,10 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Capital_Life_Insurance_LLCPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +157,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="QuashionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RegistrationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -222,6 +228,9 @@
     <Resource Include="photo\1.jpg" />
     <Resource Include="photo\2.jpg" />
     <Resource Include="photo\3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="photo\picture.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">

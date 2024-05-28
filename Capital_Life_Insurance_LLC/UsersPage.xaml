@@ -36,17 +36,18 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                            <StackPanel Orientation="Vertical" Grid.Row="0">
-                                <StackPanel Orientation="Horizontal">
-                                <TextBlock Name="FirstNameTB" Text="{Binding FirstName}" FontFamily="HelveticaFont" Margin="5, 0, 0, 0"></TextBlock>
-                                <TextBlock Name="NameTB" Text="{Binding Name}" FontFamily="HelveticaFont" Margin="5, 0, 0, 0"></TextBlock>
-                                <TextBlock Name="PatranomicTB" Text="{Binding Patranomic}" FontFamily="HelveticaFont" Margin="5, 0, 0, 0"></TextBlock>
+                        <Border BorderBrush="OrangeRed" BorderThickness="4" CornerRadius="10" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="5 5 5 5">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="FirstNameTB" Text="{Binding FirstName}" FontFamily="HelveticaFont" Margin="5, 0, 0, 0" FontWeight="Bold" FontSize="20"></TextBlock>
+                                <TextBlock Name="NameTB" Text="{Binding Name}" FontFamily="HelveticaFont" Margin="5, 0, 0, 0" FontWeight="Bold" FontSize="20"></TextBlock>
+                                <TextBlock Name="PatranomicTB" Text="{Binding Patranomic}" FontFamily="HelveticaFont" Margin="5, 0, 0, 0" FontWeight="Bold" FontSize="20"></TextBlock>
                             </StackPanel>
-                                <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Телефон: " FontFamily="HelveticaFont" Margin="5, 5, 0, 0"></TextBlock>
                                 <TextBlock Name="PhoneTB" FontFamily="HelveticaFont" Text="{Binding Phone}" Margin="5, 5, 0, 0"></TextBlock>
                             </StackPanel>
-                                <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Email: " FontFamily="HelveticaFont" Margin="5, 5, 0, 0"></TextBlock>
                                 <TextBlock Name="EmailTB" FontFamily="HelveticaFont" Text="{Binding Email}" Margin="5, 5, 0, 0"></TextBlock>
                             </StackPanel>
@@ -57,11 +58,11 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Роль: " FontFamily="HelveticaFont" Margin="5, 5, 0, 0"></TextBlock>
                                 <TextBlock Name="RoleTB" FontFamily="HelveticaFont" Text="{Binding UserRoleString}" Margin="5, 5, 0, 10"></TextBlock>
-                            </StackPanel>                               
-                        </StackPanel>                        
-                        <Button Name="EditBT" Style="{StaticResource RegularButton}" Grid.Row="0" Content="Редактировать" Margin="0, 0, 0, 0" Height="40" Width="160" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="EditBT_Click"  Grid.Column="1" FontFamily="HelveticaFont"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Name="EditBT" Style="{StaticResource RegularButton}" Grid.Row="0" Content="Редактировать" Margin="0 0 10 10" Height="40" Width="160" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="EditBT_Click"  Grid.Column="1" FontFamily="HelveticaFont"/>
 
-                    </Grid>
+                    </Grid> 
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

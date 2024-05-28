@@ -33,6 +33,7 @@ namespace Capital_Life_Insurance_LLC
         }
     
         public virtual DbSet<CandidateCard> CandidateCard { get; set; }
+        public virtual DbSet<CandidateEducation> CandidateEducation { get; set; }
         public virtual DbSet<Education> Education { get; set; }
         public virtual DbSet<Grade> Grade { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
@@ -41,6 +42,5 @@ namespace Capital_Life_Insurance_LLC
         public virtual DbSet<Speciality> Speciality { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<CandidateEducation> CandidateEducation { get; set; }
     }
 }

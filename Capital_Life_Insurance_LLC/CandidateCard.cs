@@ -12,11 +12,12 @@ namespace Capital_Life_Insurance_LLC
     using System;
     using System.Linq;
     using System.Collections.Generic;
-    using System.ComponentModel;
 
-   
 
-    public partial class CandidateCard 
+    using System.Windows;
+
+    public partial class CandidateCard
+
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CandidateCard()
@@ -24,14 +25,9 @@ namespace Capital_Life_Insurance_LLC
             this.Grade = new HashSet<Grade>();
             this.CandidateEducation = new HashSet<CandidateEducation>();
         }
-                
-        public string PositionsTitleString
-        {
-            get
-            {
-                return Positions.PositionsTitle;
-            }
-        }
+
+
+
         public string FIO
         {
             get
@@ -68,14 +64,41 @@ namespace Capital_Life_Insurance_LLC
                     return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
-        public string Position_Name
+
+        public string GradeALL
         {
             get
             {
-                return Positions.PositionsTitle.ToString();
+                if (this.Grade == null || !this.Grade.Any())
+                {
+                    return "Нет";
+                }
+
+                var grades = this.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
+
+                if (!grades.Any())
+                {
+                    return "Нет";
+                }
+                else
+                {
+                    return grades.Average().ToString("F1");
+                }
             }
         }
-        
+
+        public Visibility Vis
+        {
+            get
+            {
+
+                if (RoleId.ID == 3)
+                    return Visibility.Visible;
+                else
+                    return Visibility.Collapsed;
+
+            }
+        }
 
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
@@ -86,10 +109,12 @@ namespace Capital_Life_Insurance_LLC
         public System.DateTime Bithday { get; set; }
         public int Position { get; set; }
         public string PhotoPath { get; set; }
+        public int CreateUserID { get; set; }
     
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
+        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateEducation> CandidateEducation { get; set; }
     }
