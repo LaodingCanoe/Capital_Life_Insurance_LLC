@@ -225,7 +225,7 @@ namespace Capital_Life_Insurance_LLC
                 {
                     // Возможно, обновление существующей записи?
                     var existingGrade = currentGrade.First();
-                    existingGrade.Grade1 = 5;
+                    existingGrade.Grade1 = 3;
                     context.SaveChanges();
                 }
             }
@@ -257,7 +257,7 @@ namespace Capital_Life_Insurance_LLC
                 {
                     // Возможно, обновление существующей записи?
                     var existingGrade = currentGrade.First();
-                    existingGrade.Grade1 = 5;
+                    existingGrade.Grade1 = 1;
                     context.SaveChanges();
                 }
             }
