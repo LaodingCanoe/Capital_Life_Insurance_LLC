@@ -19,7 +19,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Text="Регестрация"  VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Grid.Column="1"></TextBlock>
+        <TextBlock Text="Регистрация"  VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Grid.Column="1"></TextBlock>
 
         <!-- Разметка всех параметров для регистрации, кроме логина и пароля -->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1">

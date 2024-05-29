@@ -42,6 +42,8 @@ namespace Capital_Life_Insurance_LLC
                     RoleId.ID = currentUser.RoleID;
                     userRoleTB.Text = "   Роль: " + currentUser.UserRoleString.ToString();
 
+                    
+
                     if (RoleId.ID == 3)
                     {
                         AddBT.Visibility = Visibility.Visible;
@@ -69,7 +71,8 @@ namespace Capital_Life_Insurance_LLC
         public void UpdateCandidat()
         {
             var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
-            currentCandidate = currentCandidate.Where(p => p.CreateUserID == userId).ToList();
+            if (RoleId.ID == 3)
+                currentCandidate = currentCandidate.Where(p => p.CreateUserID == userId).ToList();
 
             if (FiterCB.SelectedIndex == 1)
             {
