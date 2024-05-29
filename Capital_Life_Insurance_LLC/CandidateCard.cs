@@ -42,7 +42,7 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-                return Bithday.ToString();
+                return Bithday.ToString("dd.MM.yyyy");
             }
         }
         public string EduТName
@@ -56,7 +56,7 @@ namespace Capital_Life_Insurance_LLC
                     return "Нет";
                 }
                 else
-                    return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
+                    return string.Join("\n", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
         public string GradeALL

@@ -20,12 +20,15 @@ namespace Capital_Life_Insurance_LLC
     /// </summary>
     public partial class UsersPage : Page
     {
-        public UsersPage(int ID)
+        private int ID = 0;
+        public UsersPage(int id)
         {
             InitializeComponent();
+            ID = id;
             var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-            UserNameTB.Text = "Вы авторизированы как: " + currentUsers[ID].FirstName.ToString() + " " + currentUsers[ID].Name.ToString() + " " + currentUsers[ID].Patranomic.ToString();
-            UserRoleTB.Text = "   Роль: " + currentUsers[ID].UserRoleString.ToString();
+            var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.UserID == id);
+            UserNameTB.Text = "Вы авторизированы как: " + currentUser.FirstName.ToString() + " " + currentUser.Name.ToString() + " " + currentUser.Patranomic.ToString();
+            UserRoleTB.Text = "   Роль: " + currentUser.UserRoleString.ToString();
             UsersList.ItemsSource = currentUsers;
             Update();
         }

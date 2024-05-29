@@ -47,5 +47,17 @@ namespace Capital_Life_Insurance_LLC
         {
 
         }
+
+        private void MainFrame_Navigated(object sender, NavigationEventArgs e)
+        {
+            if (e.Content is СandidatePage candidatePage)
+            {
+                candidatePage.UpdateCandidat();
+            }
+            if (e.Content is UsersPage usersPage)
+            {
+                usersPage.Update();
+            }
+        }
     }
 }

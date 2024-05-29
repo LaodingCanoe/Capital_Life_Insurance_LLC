@@ -77,7 +77,7 @@ namespace Capital_Life_Insurance_LLC
                     UserID.ID = user.RoleID;
                     if (user.RoleID == 2)
                     {
-                        Manager.MainFrame.Navigate(new UsersPage(userID - 1));
+                        Manager.MainFrame.Navigate(new UsersPage(userID));
                     }
                     else if (user.RoleID == 4)
                     {
@@ -91,9 +91,5 @@ namespace Capital_Life_Insurance_LLC
             }
         }
 
-        private void A_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }

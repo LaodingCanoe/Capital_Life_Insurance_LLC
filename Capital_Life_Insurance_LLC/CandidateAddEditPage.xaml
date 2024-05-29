@@ -19,12 +19,12 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Text="Кандидат" FontSize="25" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Center" FontFamily="HelveticaFont" HorizontalAlignment="Center"></TextBlock>
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition ></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -50,7 +50,7 @@
                 <TextBlock Text="Дата рождение:" FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <DatePicker Name="Bithday" Text="{Binding Date}" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" ></DatePicker>
                 <TextBlock Text="Желаемая должность: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
-                <ComboBox Name="PositionCB" FontFamily="HelveticaFont" FontSize="14"   Width="200" Height="30" Margin="5, 5, 0, 0" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" >
+                <ComboBox Name="PositionCB" FontFamily="HelveticaFont" FontSize="14"   Width="310" Height="30" Margin="5, 5, 0, 0" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <Label Content="{Binding PositionsTitle}" FontSize="14" FontFamily="HelveticaFont"></Label>
@@ -77,10 +77,10 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
-                <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Orientation="Vertical">
-                    <TextBlock Text="Фото" FontSize="15" Height="20" Width="auto" Margin="5"></TextBlock>
+                <StackPanel Grid.Column="2"  Grid.Row="0" Grid.RowSpan="7" Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock Text="Фото" FontSize="15" Height="20" Width="auto" Margin="5" HorizontalAlignment="Left"></TextBlock>
                     <Image Name="PhotoIM" Stretch="UniformToFill" MinHeight="50" Height="150" Width="150"
-                    HorizontalAlignment="Left" Margin="5">
+                    HorizontalAlignment="Right" Margin="5">
                         <Image.Source>
                             <Binding Path="PhotoPath" >
                                 <Binding.TargetNullValue>

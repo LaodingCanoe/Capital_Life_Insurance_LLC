@@ -33,28 +33,43 @@ namespace Capital_Life_Insurance_LLC
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
                 InitializeComponent();
-                userId = id;
+                userId = id+1;
+                var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.UserID == userId);
                 var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-                userTB.Text = "Вы авторизированы как: " + currentUsers[id].FirstName.ToString() + " " + currentUsers[id].Name.ToString() + " " + currentUsers[id].Patranomic.ToString();
-                RoleId.ID = currentUsers[id].RoleID;
-                userRoleTB.Text = "   Роль: " + currentUsers[id].UserRoleString.ToString();
-                if (RoleId.ID == 3)
-                    AddBT.Visibility = Visibility.Visible;
+                if (userId >= 0 && userId <= currentUsers.Count)
+                {
+                    userTB.Text = "Вы авторизированы как: " + currentUser.FirstName.ToString() + " " + currentUser.Name.ToString() + " " + currentUser.Patranomic.ToString();
+                    RoleId.ID = currentUser.RoleID;
+                    userRoleTB.Text = "   Роль: " + currentUser.UserRoleString.ToString();
+
+                    if (RoleId.ID == 3)
+                    {
+                        AddBT.Visibility = Visibility.Visible;
+                        CandidateCardsPage = CandidateCardsPage.Where(p => p.CreateUserID == userId).ToList();
+                    }
+                        
+                    else
+                        AddBT.Visibility = Visibility.Collapsed;
+
+                    CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
+                    CandidateList.ItemsSource = CandidateCardsPage;
+                    FiterCB.SelectedIndex = 0;
+                    SortCB.SelectedIndex = 0;
+                    UpdateCandidat();
+                }
                 else
-                    AddBT.Visibility = Visibility.Collapsed;
-                CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
-                CandidateList.ItemsSource = CandidateCardsPage;
-                FiterCB.SelectedIndex = 0;
-                SortCB.SelectedIndex = 0;
-                UpdateCandidat();
+                {
+                    MessageBox.Show("Некорректный идентификатор пользователя.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             UpdateCandidat();
         }
-        
+
         //Код для обновление страницы
-        private void UpdateCandidat()
+        public void UpdateCandidat()
         {
             var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
+            currentCandidate = currentCandidate.Where(p => p.CreateUserID == userId).ToList();
 
             if (FiterCB.SelectedIndex == 1)
             {

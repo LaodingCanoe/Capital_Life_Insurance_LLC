@@ -139,10 +139,10 @@ namespace Capital_Life_Insurance_LLC
             }
         }
 
-        // Обработчик для запрета ввода пробелов
+        // Обработчик для запрета ввода пробелов и цифр
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space || (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.OemMinus || e.Key == Key.OemPlus || e.Key == Key.OemQuestion || e.Key == Key.OemPeriod || e.Key == Key.OemComma || e.Key == Key.OemQuotes || e.Key == Key.OemSemicolon)
+            if (e.Key == Key.Space)
             {
                 e.Handled = true;
             }
@@ -151,7 +151,7 @@ namespace Capital_Life_Insurance_LLC
         // Обработчик для запрета вставки пробелов через клавиши (например, Ctrl+V)
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space || (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.OemMinus || e.Key == Key.OemPlus || e.Key == Key.OemQuestion || e.Key == Key.OemPeriod || e.Key == Key.OemComma || e.Key == Key.OemQuotes || e.Key == Key.OemSemicolon)
+            if (e.Key == Key.Space)
             {
                 e.Handled = true;
             }
