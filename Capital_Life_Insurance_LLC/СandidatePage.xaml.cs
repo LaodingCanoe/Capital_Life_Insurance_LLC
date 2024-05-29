@@ -155,7 +155,7 @@ namespace Capital_Life_Insurance_LLC
                 }*/
                 int candidateId = (int)button.CommandParameter;
                 //var currentgrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
-                Manager.MainFrame.Navigate(new QuashionsPage(candidateId, userId+1));
+                Manager.MainFrame.Navigate(new QuashionsPage(candidateId, userId));
             }
             UpdateCandidat();
         }
@@ -170,6 +170,11 @@ namespace Capital_Life_Insurance_LLC
         {
             Manager.MainFrame.Navigate(new CandidateAddEditPage(null, userId));
             UpdateCandidat();
+        }
+
+        private void EditQuashion_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new EditQuashionPage());
         }
     }
 }

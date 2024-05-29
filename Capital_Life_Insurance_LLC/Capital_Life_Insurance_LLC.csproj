@@ -88,6 +88,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EditQuashionPage.xaml.cs">
+      <DependentUpon>EditQuashionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Education.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
       <DependentUpon>СandidatePage.xaml</DependentUpon>
     </Compile>
     <Page Include="CandidateAddEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditQuashionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

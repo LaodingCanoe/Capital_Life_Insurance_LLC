@@ -134,5 +134,6 @@
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right">
             <Button Style="{StaticResource RegularButton}" Name="AddBT" Content="Добавить" Click="AddBT_Click" Height="40" Width="140" Margin="5 5 5 5" HorizontalAlignment="Right" ></Button>
         </StackPanel>
+        <Button Name="EditQuashion" Click="EditQuashion_Click" Content="Редактировать Анкету" Style="{StaticResource RegularButton}" Grid.Row="3" Grid.Column="0" Height="40" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 0 0 0"></Button>
     </Grid>
 </Page>
