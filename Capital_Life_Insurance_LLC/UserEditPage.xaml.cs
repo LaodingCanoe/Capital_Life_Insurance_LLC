@@ -90,20 +90,23 @@ namespace Capital_Life_Insurance_LLC
                     if(AllUsers.Count>0)
                     {
                         MessageBox.Show("Данный пользователь уже существует");
+                        
                     }
-                }                
-                if (_currentUsers.UserID == 0)
-                    Capital_Life_Insurance_LLCEntities.GetContext().Users.Add(_currentUsers);
-                try
-                {
-                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Пользователь добавлен");
-                    Manager.MainFrame.GoBack();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                }
+                    else
+                    {
+                        Capital_Life_Insurance_LLCEntities.GetContext().Users.Add(_currentUsers);
+                        try
+                        {
+                            Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+                            MessageBox.Show("Пользователь добавлен");
+                            Manager.MainFrame.GoBack();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message.ToString());
+                        }
+                    }
+                }                   
                 
             }
             
@@ -237,6 +240,7 @@ namespace Capital_Life_Insurance_LLC
         private void DeleteBT_Click(object sender, RoutedEventArgs e)
         {
             var currentDelete = (sender as Button).DataContext as Users;
+            
             if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {

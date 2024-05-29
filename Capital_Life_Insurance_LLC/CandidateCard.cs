@@ -14,6 +14,7 @@ namespace Capital_Life_Insurance_LLC
     using System.Collections.Generic;
 
     using System.Windows;
+    using System.Runtime.Remoting.Contexts;
 
     public partial class CandidateCard
     {
@@ -59,27 +60,136 @@ namespace Capital_Life_Insurance_LLC
                     return string.Join("\n", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
+        private string _gradeALL;
+        private string _gradeHR;
+        private string _gradeSupervisor;
+        public string GradeALL
+        {
+            get { return _gradeALL; }
+            set
+            {
+                _gradeALL = value;
+                // NotifyPropertyChanged here if you are using MVVM
+                // For example:
+                // OnPropertyChanged(nameof(GradeALL));
+            }
+        }
+        public string GradeSupervisor
+        {
+            get
+            {
+                return _gradeSupervisor;
+            }
+            set
+            {
+                _gradeSupervisor = value;
+            }
+        }
+
+
+        public string GradeHR
+        {
+            get
+            {
+                return _gradeHR;
+            }
+            set { _gradeHR = value; }
+        }
+        public double GradeALLSort
+        {
+            get 
+            { 
+                if (_gradeALL == "Нет")
+                {
+                    return 0;
+                }
+                else
+                    return Convert.ToDouble(_gradeALL); 
+            }
+            
+        }
+        /*
         public string GradeALL
         {
             get
             {
-                if (this.Grade == null || !this.Grade.Any())
+                using (var context = new Capital_Life_Insurance_LLCEntities())
                 {
-                    return "Нет";
-                }
+                    if (context.Grade == null || !context.Grade.Any())
+                    {
+                        return "Нет";
+                    }
 
-                var grades = this.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
+                    var grades = context.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
 
-                if (!grades.Any())
-                {
-                    return "Нет";
-                }
-                else
-                {
-                    return grades.Average().ToString("F1");
+                    if (!grades.Any())
+                    {
+                        return "Нет";
+                    }
+                    else
+                    {
+                        return grades.Average().ToString("F1");
+                    }
                 }
             }
         }
+        
+        public string GradeHR
+        {
+            get
+            {
+                using (var context = new Capital_Life_Insurance_LLCEntities())
+                {
+                    if (context.Grade == null || !context.Grade.Any())
+                    {
+                        return "Нет";
+                    }
+                    var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.FirstOrDefault();
+
+                    var grades = context.Grade
+                        .Where(g => g.UserID == currentCandidate.CreateUserID && g.Grade1.HasValue)
+                        .Select(g => g.Grade1.Value);
+
+                    if (!grades.Any())
+                    {
+                        return "Нет";
+                    }
+                    else
+                    {
+                        return grades.Sum().ToString("F1");
+                    }
+                }
+            }
+        }
+
+        public string GradeSupervisor
+        {
+            get
+            {
+                using (var context = new Capital_Life_Insurance_LLCEntities())
+                {
+                    var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.RoleID == 1);
+                    if (context.Grade == null || !context.Grade.Any())
+                    {
+                        return "Нет";
+                    }
+
+                    var grades = context.Grade
+                        .Where(g => g.UserID == currentUser.UserID && g.Grade1.HasValue)
+                        .Select(g => g.Grade1.Value);
+
+                    if (!grades.Any())
+                    {
+                        return "Нет";
+                    }
+                    else
+                    {
+                        return grades.Sum().ToString("F1");
+                    }
+                }
+            }
+        }*/
+
 
         public Visibility Vis
         {

@@ -160,6 +160,9 @@ namespace Capital_Life_Insurance_LLC
         {
             ChangePage(1, null);
             NumberQuashion = PageListBox.SelectedIndex + 1;
+            СandidatePage candidatePage = new СandidatePage(0);
+            candidatePage.UpdateCandidat();
+
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -262,6 +265,7 @@ namespace Capital_Life_Insurance_LLC
                 }
             }
         }
+
     }
 
     public class QuashionCandidateDto

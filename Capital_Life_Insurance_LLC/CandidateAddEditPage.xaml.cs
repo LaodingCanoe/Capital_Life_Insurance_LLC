@@ -77,10 +77,11 @@ namespace Capital_Life_Insurance_LLC
             {
                 errors.AppendLine("Укаажите дату рождения");
             }
+            /*
             if (MultiSelectListBox.SelectedItems.Count == 0)
             {
                 errors.AppendLine("Выбирите образование"); //скинуть Искандеру
-            }
+            }*/
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
@@ -139,12 +140,16 @@ namespace Capital_Life_Insurance_LLC
                         // Загрузка текущего кандидата из базы данных
                         var candidateToDelete = context.CandidateCard
                             .Include(c => c.Grade) // Включение связанных записей Grade
+                            .Include(c => c.CandidateEducation) // Включение связанных записей CandidateEducation
                             .FirstOrDefault(c => c.CandidateID == currentDelete.CandidateID);
 
                         if (candidateToDelete != null)
                         {
                             // Удаление связанных записей из таблицы Grade
                             context.Grade.RemoveRange(candidateToDelete.Grade);
+
+                            // Удаление связанных записей из таблицы CandidateEducation
+                            context.CandidateEducation.RemoveRange(candidateToDelete.CandidateEducation);
 
                             // Удаление записи из таблицы CandidateCard
                             context.CandidateCard.Remove(candidateToDelete);
@@ -156,6 +161,7 @@ namespace Capital_Life_Insurance_LLC
 
                     MessageBox.Show("Кандидат и связанные записи удалены.");
                     Manager.MainFrame.GoBack();
+                
                 }
                 catch (Exception ex)
                 {

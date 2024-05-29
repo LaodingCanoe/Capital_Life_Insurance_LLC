@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
         mc:Ignorable="d"
-        Title="ООО 'Капитал Лайф Страхование Жизни'" MinHeight="500" MinWidth="900" Height="500" Width="900" FontFamily="HelveticaFont" Icon="Res/logo.jpg">
+        Title="ООО 'Капитал Лайф Страхование Жизни'" MinHeight="700" MinWidth="1200" Height="700" Width="1200" FontFamily="HelveticaFont" Icon="Res/logo.jpg">
     
     <Grid>
         <Grid.ColumnDefinitions>

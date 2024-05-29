@@ -17,29 +17,32 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="180"></RowDefinition>
             <RowDefinition Height="180"></RowDefinition>
-            <RowDefinition Height="180"></RowDefinition>
+            <RowDefinition Height="190"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Grid.RowSpan="3" BorderBrush="Silver" BorderThickness="4" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5 5 5 5" Height="300" Width="389">
-            <TextBox Grid.RowSpan="3" Text="" Name="Title" LostFocus="TextBox_LostFocus" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="0" Margin="5 0 0 0"></TextBox>
-        </Border>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
+            <TextBlock></TextBlock>
+            <Border Grid.RowSpan="4" BorderBrush="Silver" BorderThickness="4" CornerRadius="10" VerticalAlignment="top" HorizontalAlignment="Left" Margin="5 5 5 0" Height="530" Width="389">
+                <TextBox Grid.RowSpan="3" Text="" Name="Title" LostFocus="TextBox_LostFocus" FontSize="20" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="0" Margin="5 0 0 0"></TextBox>
+            </Border>
+        </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="5 5 5 5">
             <TextBlock Text="Ответ на балл 5"></TextBlock>
-            <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10" Width="750" HorizontalAlignment="Left">
+            <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10" Width="750" Height="170" HorizontalAlignment="Left">
                 <TextBox Text="" Name="AnswerFirst" LostFocus="TextBox_LostFocus" TextWrapping="Wrap" FontSize="20" BorderThickness="0"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical" Margin="5 5 5 5">
             <TextBlock Text="Ответ на балл 3"></TextBlock>
-            <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10" Width="750" HorizontalAlignment="Left">
+            <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10" Height="170" Width="750" HorizontalAlignment="Left">
                 <TextBox Text="" Name="AnswerSecond" LostFocus="TextBox_LostFocus" TextWrapping="Wrap" FontSize="20" BorderThickness="0"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical" Margin="5 5 5 5">
             <TextBlock Text="Ответ на балл 1"></TextBlock>
-            <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10"  Width="750" HorizontalAlignment="Left">
+            <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10"  Width="750" Height="170" HorizontalAlignment="Left">
                 <TextBox Text="" Name="AnswerThid" LostFocus="TextBox_LostFocus" TextWrapping="Wrap" FontSize="20" BorderThickness="0"></TextBox>
             </Border>
         </StackPanel>
@@ -55,6 +58,6 @@
             </ListBox>
             <Button Name="RightBT" Content="&gt;" Grid.Row="1" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="RightBT_Click"></Button>
         </StackPanel>
-        <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Name="Save" Click="Save_Click" Content="Завершит изменения" Style="{StaticResource RegularButton}" Width="150" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Button>
+        <Button Grid.Column="1" Grid.Row="4" Name="Save" Click="Save_Click" Content="Завершить изменения" Style="{StaticResource RegularButton}" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 25 0"></Button>
     </Grid>
 </Page>

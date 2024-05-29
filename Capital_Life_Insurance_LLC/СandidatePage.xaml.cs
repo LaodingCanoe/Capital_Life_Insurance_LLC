@@ -23,40 +23,49 @@ namespace Capital_Life_Insurance_LLC
     {
         public static int ID = 0;
     }
+    
+    public static class UserHR
+    {
+        public static int ID = 0;
+    }
     public partial class СandidatePage : Page
     {
+        private int ID = 0;
         List<CandidateCard> CandidateCardsPage = new List<CandidateCard>();
-        private int userId;
 
         public СandidatePage(int id)
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
                 InitializeComponent();
-                userId = id+1;
-                var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.UserID == userId);
+                ID = id+1;
+                var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.UserID == ID);
                 var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
-                if (userId >= 0 && userId <= currentUsers.Count)
+                if (ID >= 0 && ID <= currentUsers.Count)
                 {
                     userTB.Text = "Вы авторизированы как: " + currentUser.FirstName.ToString() + " " + currentUser.Name.ToString() + " " + currentUser.Patranomic.ToString();
                     RoleId.ID = currentUser.RoleID;
                     userRoleTB.Text = "   Роль: " + currentUser.UserRoleString.ToString();
 
-                    
+
 
                     if (RoleId.ID == 3)
                     {
                         AddBT.Visibility = Visibility.Visible;
-                        CandidateCardsPage = CandidateCardsPage.Where(p => p.CreateUserID == userId).ToList();
+                        CandidateCardsPage = CandidateCardsPage.Where(p => p.CreateUserID == ID).ToList();
                     }
-                        
+
                     else
+                    {
                         AddBT.Visibility = Visibility.Collapsed;
+                        EditQuashion.Visibility = Visibility.Collapsed;
+                    }
 
                     CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
                     CandidateList.ItemsSource = CandidateCardsPage;
                     FiterCB.SelectedIndex = 0;
                     SortCB.SelectedIndex = 0;
+                    
                     UpdateCandidat();
                 }
                 else
@@ -72,7 +81,7 @@ namespace Capital_Life_Insurance_LLC
         {
             var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
             if (RoleId.ID == 3)
-                currentCandidate = currentCandidate.Where(p => p.CreateUserID == userId).ToList();
+                currentCandidate = currentCandidate.Where(p => p.CreateUserID == ID).ToList();
 
             if (FiterCB.SelectedIndex == 1)
             {
@@ -105,23 +114,118 @@ namespace Capital_Life_Insurance_LLC
             else if (FiterCB.SelectedIndex == 8)
             {
                 currentCandidate = currentCandidate.Where(p => p.PositionToString == "HR-специалист").ToList();
-            }
-
-            /* if (SortCB.SelectedIndex == 1)
-             {
-                 currentCandidate = currentCandidate.OrderBy(p => p.GenderCode == "ж").ToList();
-             }
-             else if (FiterCB.SelectedIndex == 2)
-             {
-                 currentCandidate = currentCandidate.Where(p => p.GenderCode == "м").ToList();
-             }*/
+            }           
 
             currentCandidate = currentCandidate.Where(p => p.FIO.ToLower().Contains(SearchTB.Text.ToLower()) || p.Phone.ToLower().Contains(SearchTB.Text.ToLower()) || p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
+            foreach (var candidate in currentCandidate)
+            {
+                candidate.GradeSupervisor = CalculateGradeSupervisor(candidate.CandidateID);
+            }
+            foreach (var candidate in currentCandidate)
+            {
+                candidate.GradeHR = CalculateGradeHR(candidate.CandidateID);
+            }
+            /*
+            if (RoleId.ID == 1) 
+            {
+                foreach (var candidate in currentCandidate)
+                {
+                    candidate.GradeSupervisor = CalculateGradeSupervisor(candidate.CandidateID);
+                }
+            }
+            if (RoleId.ID == 3)
+            {
+                foreach (var candidate in currentCandidate)
+                {
+                    candidate.GradeHR = CalculateGradeHR(candidate.CandidateID);
+                }
+            }*/;
+            foreach (var candidate in currentCandidate)
+            {
+                candidate.GradeALL = CalculateGradeAll(candidate.CandidateID);
+            }
 
+            if (SortCB.SelectedIndex == 1)
+            {
+                currentCandidate = currentCandidate.OrderBy(p => p.GradeALLSort).ToList();
+            }
+            else if (SortCB.SelectedIndex == 2) // Changed from FiterCB to SortCB
+            {
+                currentCandidate = currentCandidate.OrderByDescending(p => p.GradeALLSort).ToList();
+            }
             CandidateList.ItemsSource = currentCandidate;
 
         }
-        
+        public string CalculateGradeAll(int candidateId)
+        {
+            using (var context = new Capital_Life_Insurance_LLCEntities())
+            {
+                var candidate = context.CandidateCard.FirstOrDefault(c => c.CandidateID == candidateId);
+                if (candidate == null || candidate.Grade == null || !candidate.Grade.Any())
+                {
+                    return "Нет";
+                }
+
+                var grades = candidate.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
+
+                if (!grades.Any())
+                {
+                    return "Нет";
+                }
+                else
+                {
+                    return grades.Sum().ToString("F1");
+                }
+            }
+        }
+        public string CalculateGradeHR(int candidateId)
+        {
+            using (var context = new Capital_Life_Insurance_LLCEntities())
+            {
+                var hrUser = context.Users.FirstOrDefault(u => u.RoleID == 3); // Assuming RoleID 1 is for HR
+                if (context.Grade == null || !context.Grade.Any() || hrUser == null)
+                {
+                    return "Нет";
+                }
+                var grades = context.Grade
+                    .Where(g => g.UserID == hrUser.UserID && g.CandidateID == candidateId && g.Grade1.HasValue)
+                    .Select(g => g.Grade1.Value);
+
+                if (!grades.Any())
+                {
+                    return "Нет";
+                }
+                else
+                {
+                    return grades.Sum().ToString("F1"); // Using Average to give a more meaningful grade
+                }
+            }
+        }
+
+        public string CalculateGradeSupervisor(int candidateId)
+        {
+            using (var context = new Capital_Life_Insurance_LLCEntities())
+            {
+                var supervisorUser = context.Users.FirstOrDefault(u => u.RoleID == 1); // Assuming RoleID 2 is for Supervisor
+                if (context.Grade == null || !context.Grade.Any() || supervisorUser == null)
+                {
+                    return "Нет";
+                }
+
+                var grades = context.Grade
+                    .Where(g => g.UserID == supervisorUser.UserID && g.CandidateID == candidateId && g.Grade1.HasValue)
+                    .Select(g => g.Grade1.Value);
+
+                if (!grades.Any())
+                {
+                    return "Нет";
+                }
+                else
+                {
+                    return grades.Sum().ToString("F1"); // Using Average to give a more meaningful grade
+                }
+            }
+        }
         private void FiterCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateCandidat();
@@ -142,33 +246,21 @@ namespace Capital_Life_Insurance_LLC
             var button = sender as Button;
             if (button != null && button.CommandParameter != null)
             {
-              /*  var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
-                var CountQuashions = Capital_Life_Insurance_LLCEntities.GetContext().Quashions.Count();
-                var cirrentQuashions = Capital_Life_Insurance_LLCEntities.GetContext().Quashions.ToList();
-                Quashions _currentQuashions = new Quashions();
-                for (int i = 0; i < CountQuashions; i++)
-                {
-                    _currentQuashions.QuashionID = ;
-                    _currentQuashions.UserID = IDuser;
-                    _currentQuashions.QuashionID = NumberQuashion;
-                    _currentQuashions.Grade1 = 5;
-                }*/
                 int candidateId = (int)button.CommandParameter;
-                //var currentgrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
-                Manager.MainFrame.Navigate(new QuashionsPage(candidateId, userId));
+                Manager.MainFrame.Navigate(new QuashionsPage(candidateId, ID));
             }
             UpdateCandidat();
         }
 
         private void EditBT_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard, userId));
+            Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard, ID));
             UpdateCandidat();
         }
 
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new CandidateAddEditPage(null, userId));
+            Manager.MainFrame.Navigate(new CandidateAddEditPage(null, ID));
             UpdateCandidat();
         }
 
