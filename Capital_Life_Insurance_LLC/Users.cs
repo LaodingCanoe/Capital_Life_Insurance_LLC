@@ -42,6 +42,7 @@ namespace Capital_Life_Insurance_LLC
                 return s;
             }
         }
+
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
@@ -51,6 +52,7 @@ namespace Capital_Life_Insurance_LLC
         public string Login { get; set; }
         public string Password { get; set; }
         public int RoleID { get; set; }
+        public Nullable<double> UserWeightCoefficient { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CandidateCard> CandidateCard { get; set; }

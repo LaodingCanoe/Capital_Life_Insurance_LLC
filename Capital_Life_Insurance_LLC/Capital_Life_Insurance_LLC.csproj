@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Answers.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CandidateAddEditPage.xaml.cs">
       <DependentUpon>CandidateAddEditPage.xaml</DependentUpon>
     </Compile>
@@ -106,11 +109,11 @@
     <Compile Include="Positions.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Quashions.cs">
-      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="QuashionsPage.xaml.cs">
       <DependentUpon>QuashionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Question.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
@@ -236,16 +239,6 @@
     <Resource Include="photo\picture.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
-      <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Capital_Life_Insurance_LLCModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
-      <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
-    </Content>
     <Resource Include="photo\17.jpg" />
     <Resource Include="photo\18.jpg" />
     <Resource Include="photo\14.jpg" />
@@ -260,6 +253,18 @@
     <Resource Include="photo\7.jpg" />
     <Resource Include="photo\8.jpg" />
     <Resource Include="photo\9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Capital_Life_Insurance_LLCModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
+      <LastGenOutput>Capital_Life_Insurance_LLCModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

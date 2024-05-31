@@ -10,11 +10,9 @@
 namespace Capital_Life_Insurance_LLC
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
-
+    using System.Linq;
     using System.Windows;
-    using System.Runtime.Remoting.Contexts;
 
     public partial class CandidateCard
     {
@@ -24,7 +22,6 @@ namespace Capital_Life_Insurance_LLC
             this.Grade = new HashSet<Grade>();
             this.CandidateEducation = new HashSet<CandidateEducation>();
         }
-
         public string FIO
         {
             get
@@ -97,100 +94,17 @@ namespace Capital_Life_Insurance_LLC
         }
         public double GradeALLSort
         {
-            get 
-            { 
+            get
+            {
                 if (_gradeALL == "Нет")
                 {
                     return 0;
                 }
                 else
-                    return Convert.ToDouble(_gradeALL); 
+                    return Convert.ToDouble(_gradeALL);
             }
-            
+
         }
-        /*
-        public string GradeALL
-        {
-            get
-            {
-                using (var context = new Capital_Life_Insurance_LLCEntities())
-                {
-                    if (context.Grade == null || !context.Grade.Any())
-                    {
-                        return "Нет";
-                    }
-
-                    var grades = context.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
-
-                    if (!grades.Any())
-                    {
-                        return "Нет";
-                    }
-                    else
-                    {
-                        return grades.Average().ToString("F1");
-                    }
-                }
-            }
-        }
-        
-        public string GradeHR
-        {
-            get
-            {
-                using (var context = new Capital_Life_Insurance_LLCEntities())
-                {
-                    if (context.Grade == null || !context.Grade.Any())
-                    {
-                        return "Нет";
-                    }
-                    var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.FirstOrDefault();
-
-                    var grades = context.Grade
-                        .Where(g => g.UserID == currentCandidate.CreateUserID && g.Grade1.HasValue)
-                        .Select(g => g.Grade1.Value);
-
-                    if (!grades.Any())
-                    {
-                        return "Нет";
-                    }
-                    else
-                    {
-                        return grades.Sum().ToString("F1");
-                    }
-                }
-            }
-        }
-
-        public string GradeSupervisor
-        {
-            get
-            {
-                using (var context = new Capital_Life_Insurance_LLCEntities())
-                {
-                    var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.RoleID == 1);
-                    if (context.Grade == null || !context.Grade.Any())
-                    {
-                        return "Нет";
-                    }
-
-                    var grades = context.Grade
-                        .Where(g => g.UserID == currentUser.UserID && g.Grade1.HasValue)
-                        .Select(g => g.Grade1.Value);
-
-                    if (!grades.Any())
-                    {
-                        return "Нет";
-                    }
-                    else
-                    {
-                        return grades.Sum().ToString("F1");
-                    }
-                }
-            }
-        }*/
-
-
         public Visibility Vis
         {
             get
@@ -203,6 +117,7 @@ namespace Capital_Life_Insurance_LLC
 
             }
         }
+
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }

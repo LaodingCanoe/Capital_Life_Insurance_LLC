@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Хранилище Capital_Life_Insurance_LLCModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="AnswerId" />
+          </Key>
+          <Property Name="AnswerId" Type="int" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="AnswerTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AnswerWeightCoefficient" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="CandidateCard">
           <Key>
             <PropertyRef Name="CandidateID" />
@@ -43,8 +52,8 @@
           <Property Name="GradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CandidateID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="QuashionID" Type="int" Nullable="false" />
-          <Property Name="Grade" Type="int" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="float" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -53,15 +62,13 @@
           <Property Name="PositionsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PositionsTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="Quashions">
+        <EntityType Name="Question">
           <Key>
-            <PropertyRef Name="QuashionID" />
+            <PropertyRef Name="QuestionID" />
           </Key>
-          <Property Name="QuashionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="AnswerFirst" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="AnswerSecond" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="AnswerThrid" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="QuashionWeightCoefficient" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -101,6 +108,7 @@
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="UserWeightCoefficient" Type="float" />
         </EntityType>
         <Association Name="FK__Candidate__Posit__787EE5A0">
           <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
@@ -150,6 +158,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Answers_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CandidateCard_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="CandidateCard" Type="Self.CandidateCard" Multiplicity="*" />
@@ -186,25 +206,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Grade_Quashions">
-          <End Role="Quashions" Type="Self.Quashions" Multiplicity="1" />
+        <Association Name="FK_Grade_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
           <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Quashions">
-              <PropertyRef Name="QuashionID" />
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionID" />
             </Principal>
             <Dependent Role="Grade">
-              <PropertyRef Name="QuashionID" />
+              <PropertyRef Name="QuestionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище Capital_Life_Insurance_LLCModelContainer">
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CandidateCard" EntityType="Self.CandidateCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CandidateEducation" EntityType="Self.CandidateEducation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Education" EntityType="Self.Education" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Quashions" EntityType="Self.Quashions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Speciality" EntityType="Self.Speciality" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -225,6 +246,10 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Answers_Question" Association="Self.FK_Answers_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
           <AssociationSet Name="FK_CandidateCard_Users" Association="Self.FK_CandidateCard_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="CandidateCard" EntitySet="CandidateCard" />
@@ -237,8 +262,8 @@
             <End Role="Education" EntitySet="Education" />
             <End Role="CandidateEducation" EntitySet="CandidateEducation" />
           </AssociationSet>
-          <AssociationSet Name="FK_Grade_Quashions" Association="Self.FK_Grade_Quashions">
-            <End Role="Quashions" EntitySet="Quashions" />
+          <AssociationSet Name="FK_Grade_Question" Association="Self.FK_Grade_Question">
+            <End Role="Question" EntitySet="Question" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
         </EntityContainer>
@@ -247,6 +272,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Capital_Life_Insurance_LLCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="AnswerId" />
+          </Key>
+          <Property Name="AnswerId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="AnswerTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AnswerWeightCoefficient" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Question" FromRole="Answers" ToRole="Question" />
+        </EntityType>
         <EntityType Name="CandidateCard">
           <Key>
             <PropertyRef Name="CandidateID" />
@@ -292,11 +327,11 @@
           <Property Name="GradeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CandidateID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="QuashionID" Type="Int32" Nullable="false" />
-          <Property Name="Grade1" Type="Int32" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="Grade1" Type="Double" />
           <NavigationProperty Name="CandidateCard" Relationship="Self.FK__Grade__Candidate__7E37BEF6" FromRole="Grade" ToRole="CandidateCard" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Grade__UserID__49C3F6B7" FromRole="Grade" ToRole="Users" />
-          <NavigationProperty Name="Quashions" Relationship="Self.FK_Grade_Quashions" FromRole="Grade" ToRole="Quashions" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_Grade_Question" FromRole="Grade" ToRole="Question" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -306,16 +341,15 @@
           <Property Name="PositionsTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="CandidateCard" Relationship="Self.FK__Candidate__Posit__787EE5A0" FromRole="Positions" ToRole="CandidateCard" />
         </EntityType>
-        <EntityType Name="Quashions">
+        <EntityType Name="Question">
           <Key>
-            <PropertyRef Name="QuashionID" />
+            <PropertyRef Name="QuestionID" />
           </Key>
-          <Property Name="QuashionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AnswerFirst" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AnswerSecond" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AnswerThrid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Grade" Relationship="Self.FK_Grade_Quashions" FromRole="Quashions" ToRole="Grade" />
+          <Property Name="QuashionWeightCoefficient" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Question" FromRole="Question" ToRole="Answers" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_Grade_Question" FromRole="Question" ToRole="Grade" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -356,10 +390,23 @@
           <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="UserWeightCoefficient" Type="Double" />
           <NavigationProperty Name="CandidateCard" Relationship="Self.FK_CandidateCard_Users" FromRole="Users" ToRole="CandidateCard" />
           <NavigationProperty Name="Grade" Relationship="Self.FK__Grade__UserID__49C3F6B7" FromRole="Users" ToRole="Grade" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Users__RoleID__3C69FB99" FromRole="Users" ToRole="Role" />
         </EntityType>
+        <Association Name="FK_Answers_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Candidate__Posit__787EE5A0">
           <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
           <End Role="CandidateCard" Type="Self.CandidateCard" Multiplicity="*" />
@@ -432,15 +479,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Grade_Quashions">
-          <End Role="Quashions" Type="Self.Quashions" Multiplicity="1" />
+        <Association Name="FK_Grade_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
           <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Quashions">
-              <PropertyRef Name="QuashionID" />
+            <Principal Role="Question">
+              <PropertyRef Name="QuestionID" />
             </Principal>
             <Dependent Role="Grade">
-              <PropertyRef Name="QuashionID" />
+              <PropertyRef Name="QuestionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -457,16 +504,21 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Capital_Life_Insurance_LLCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers" EntityType="Self.Answers" />
           <EntitySet Name="CandidateCard" EntityType="Self.CandidateCard" />
           <EntitySet Name="CandidateEducation" EntityType="Self.CandidateEducation" />
           <EntitySet Name="Education" EntityType="Self.Education" />
           <EntitySet Name="Grade" EntityType="Self.Grade" />
           <EntitySet Name="Positions" EntityType="Self.Positions" />
-          <EntitySet Name="Quashions" EntityType="Self.Quashions" />
+          <EntitySet Name="Question" EntityType="Self.Question" />
           <EntitySet Name="Role" EntityType="Self.Role" />
           <EntitySet Name="Speciality" EntityType="Self.Speciality" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Answers_Question" Association="Self.FK_Answers_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
           <AssociationSet Name="FK__Candidate__Posit__787EE5A0" Association="Self.FK__Candidate__Posit__787EE5A0">
             <End Role="Positions" EntitySet="Positions" />
             <End Role="CandidateCard" EntitySet="CandidateCard" />
@@ -491,8 +543,8 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
-          <AssociationSet Name="FK_Grade_Quashions" Association="Self.FK_Grade_Quashions">
-            <End Role="Quashions" EntitySet="Quashions" />
+          <AssociationSet Name="FK_Grade_Question" Association="Self.FK_Grade_Question">
+            <End Role="Question" EntitySet="Question" />
             <End Role="Grade" EntitySet="Grade" />
           </AssociationSet>
           <AssociationSet Name="FK__Users__RoleID__3C69FB99" Association="Self.FK__Users__RoleID__3C69FB99">
@@ -506,6 +558,16 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище Capital_Life_Insurance_LLCModelContainer" CdmEntityContainer="Capital_Life_Insurance_LLCEntities">
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.Answers">
+              <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="AnswerId" ColumnName="AnswerId" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="AnswerTitle" ColumnName="AnswerTitle" />
+                <ScalarProperty Name="AnswerWeightCoefficient" ColumnName="AnswerWeightCoefficient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CandidateCard">
             <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.CandidateCard">
               <MappingFragment StoreEntitySet="CandidateCard">
@@ -546,7 +608,7 @@
                 <ScalarProperty Name="GradeID" ColumnName="GradeID" />
                 <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="QuashionID" ColumnName="QuashionID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
                 <ScalarProperty Name="Grade1" ColumnName="Grade" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -559,14 +621,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Quashions">
-            <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.Quashions">
-              <MappingFragment StoreEntitySet="Quashions">
-                <ScalarProperty Name="QuashionID" ColumnName="QuashionID" />
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="Capital_Life_Insurance_LLCModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="AnswerFirst" ColumnName="AnswerFirst" />
-                <ScalarProperty Name="AnswerSecond" ColumnName="AnswerSecond" />
-                <ScalarProperty Name="AnswerThrid" ColumnName="AnswerThrid" />
+                <ScalarProperty Name="QuashionWeightCoefficient" ColumnName="QuashionWeightCoefficient" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -610,6 +670,7 @@
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserWeightCoefficient" ColumnName="UserWeightCoefficient" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

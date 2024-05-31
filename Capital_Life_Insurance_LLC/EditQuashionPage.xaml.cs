@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,12 +10,12 @@ namespace Capital_Life_Insurance_LLC
 {
     public partial class EditQuashionPage : Page
     {
-        private ObservableCollection<Quashions> CurrentPageList = new ObservableCollection<Quashions>();
+        private ObservableCollection<Question> CurrentPageList = new ObservableCollection<Question>();
         private Capital_Life_Insurance_LLCEntities context;
-        List<Quashions> TableList = new List<Quashions>();
-        int CurrentPage = 0;
-        int CountQuashion;
-        int CountPage;
+        private List<Question> TableList = new List<Question>();
+        private int CurrentPage = 0;
+        private int CountQuashion;
+        private int CountPage;
 
         public EditQuashionPage()
         {
@@ -28,11 +27,11 @@ namespace Capital_Life_Insurance_LLC
         {
             using (context = new Capital_Life_Insurance_LLCEntities())
             {
-                var query = from quashion in context.Quashions
-                            select quashion;
+                var query = from question in context.Question
+                            select question;
 
                 TableList = query.ToList();
-                CountQuashion = TableList.Count();
+                CountQuashion = TableList.Count;
                 CountPage = (int)Math.Ceiling((double)CountQuashion / 1);
 
                 PageListBox.ItemsSource = Enumerable.Range(1, CountPage).ToList();
@@ -73,12 +72,14 @@ namespace Capital_Life_Insurance_LLC
             if (TableList.Count > 0)
             {
                 CurrentPageList.Add(TableList[CurrentPage]);
-                var quashion = CurrentPageList[0];
+                var question = CurrentPageList[0];
+                Title.Text = question.Title;
 
-                Title.Text = quashion.Title;
-                AnswerFirst.Text = quashion.AnswerFirst;
-                AnswerSecond.Text = quashion.AnswerSecond;
-                AnswerThid.Text = quashion.AnswerThrid;
+                using (context = new Capital_Life_Insurance_LLCEntities())
+                {
+                    var answers = context.Answers.Where(x => x.QuestionID == question.QuestionID).ToList();
+                    AnswerList.ItemsSource = answers;
+                }
             }
         }
 
@@ -86,21 +87,23 @@ namespace Capital_Life_Insurance_LLC
         {
             using (var dbContext = new Capital_Life_Insurance_LLCEntities())
             {
-                var quashionInDatabase = dbContext.Quashions.Find(TableList[CurrentPage].QuashionID);
-                if (quashionInDatabase != null)
+                var questionInDatabase = dbContext.Question.Find(TableList[CurrentPage].QuestionID);
+                if (questionInDatabase != null)
                 {
-                    quashionInDatabase.Title = Title.Text;
-                    quashionInDatabase.AnswerFirst = AnswerFirst.Text;
-                    quashionInDatabase.AnswerSecond = AnswerSecond.Text;
-                    quashionInDatabase.AnswerThrid = AnswerThid.Text;
+                    questionInDatabase.Title = Title.Text;
+
+                    var answersInDatabase = dbContext.Answers.Where(p => p.QuestionID == questionInDatabase.QuestionID).ToList();
+                    for (int i = 0; i < answersInDatabase.Count; i++)
+                    {
+                        var answerItem = (Answers)AnswerList.Items[i];
+                        answersInDatabase[i].AnswerTitle = answerItem.AnswerTitle;
+                        answersInDatabase[i].AnswerWeightCoefficient = answerItem.AnswerWeightCoefficient;
+                    }
 
                     dbContext.SaveChanges();
 
-                    // Обновляем локальные данные
+                    // Update local data
                     TableList[CurrentPage].Title = Title.Text;
-                    TableList[CurrentPage].AnswerFirst = AnswerFirst.Text;
-                    TableList[CurrentPage].AnswerSecond = AnswerSecond.Text;
-                    TableList[CurrentPage].AnswerThrid = AnswerThid.Text;
                 }
             }
         }
@@ -124,6 +127,7 @@ namespace Capital_Life_Insurance_LLC
         {
             ChangePage(-1);
         }
+
         private void RightBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(1);
