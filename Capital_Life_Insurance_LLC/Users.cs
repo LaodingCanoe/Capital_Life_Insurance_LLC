@@ -20,6 +20,7 @@ namespace Capital_Life_Insurance_LLC
             this.CandidateCard = new HashSet<CandidateCard>();
             this.Grade = new HashSet<Grade>();
         }
+
         public string UserRoleString
         {
             get

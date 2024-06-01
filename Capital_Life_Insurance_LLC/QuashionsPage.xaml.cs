@@ -1,29 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
-using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Navigation;
 
 namespace Capital_Life_Insurance_LLC
 {
     public partial class QuashionsPage : Page
     {
-        List<QuashionCandidateDto> CurrentPagelist = new List<QuashionCandidateDto>();
-        List<QuashionCandidateDto> TableList;
-        List<Grade> GradeList;
-        int CountRecords;
-        int CountPage;
-        int CurrentPage = 0;
-        int IDCandidate;
-        int IDuser;
-
-        int NumberQuashion = 1;
+        private List<QuashionCandidateDto> CurrentPagelist = new List<QuashionCandidateDto>();
+        private List<QuashionCandidateDto> TableList;
+        private int CountRecords;
+        private int CountPage;
+        private int CurrentPage = 0;
+        private int IDCandidate;
+        private int IDuser;
+        private int NumberQuashion = 1;
 
         public QuashionsPage(int IDCandidate, int IDuser)
         {
@@ -32,11 +26,11 @@ namespace Capital_Life_Insurance_LLC
             this.IDuser = IDuser;
 
             TableList = LoadData();
-            DataContext = this;  // Set the data context for binding
+            DataContext = this;
             ChangePage(0, 0);
         }
-
-        private List<QuashionCandidateDto> LoadData()
+        
+        public List<QuashionCandidateDto> LoadData()
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
@@ -61,32 +55,42 @@ namespace Capital_Life_Insurance_LLC
                         Title = g.First().question.Title,
                         Answers = g.Where(x => x.answer != null)
                                    .Select(x => new AnswerDto
-                                   {
+                                   {                                       
                                        AnswerId = x.answer.AnswerId,
                                        AnswerTitle = x.answer.AnswerTitle,
-                                       AnswerWeightCoefficient = x.answer.AnswerWeightCoefficient
+                                       AnswerWeightCoefficient = x.answer.AnswerWeightCoefficient,
+
+
+                                       IsSelected = RbSelected(x.question.QuestionID, x.answer.AnswerId,x.grade?.GradeID)
                                    }).ToList(),
-                        SelectedGrade = g.FirstOrDefault(x => x.grade != null)?.grade.Grade1 ?? 0.0
+                        SelectedGrade = g.FirstOrDefault(x => x.grade != null)?.grade.AnswersID ?? 0
                     }).ToList();
 
                 return result;
             }
         }
-
-
-
-
+       
+        private bool RbSelected(int q, int a, int? g)
+        {
+            var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+            if(g == null)
+                return false;
+            else
+            {
+                currentGrade = currentGrade.Where(p => p.GradeID == g && p.QuestionID == q && p.AnswersID == a).ToList();
+                if (currentGrade.Count == 0)
+                    return false;
+                else
+                    return true;
+            }            
+        }
         private void ChangePage(int direction, int? selectedPage)
         {
-            //TableList = LoadData();
-            //CurrentPage = TableList.Count;
-           
             CurrentPagelist.Clear();
             CountRecords = TableList.Count;
-            
             CountPage = (int)Math.Ceiling((double)CountRecords / 1);
 
-            var ifUpdate = true;
+            bool ifUpdate = true;
             int min;
             if (selectedPage.HasValue)
             {
@@ -171,12 +175,10 @@ namespace Capital_Life_Insurance_LLC
             NumberQuashion = PageListBox.SelectedIndex + 1;
             СandidatePage candidatePage = new СandidatePage(0);
             candidatePage.UpdateCandidat();
-
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            
         }
 
         private void SaveGrade(int selectedAnswerId, double answerWeightCoefficient)
@@ -202,18 +204,19 @@ namespace Capital_Life_Insurance_LLC
                             CandidateID = IDCandidate,
                             UserID = IDuser,
                             QuestionID = NumberQuashion,
-                            Grade1 = calculatedGrade
+                            AnswersID = selectedAnswerId  // Save the selected answer ID
                         };
                         context.Grade.Add(newGrade);
                     }
                     else
                     {
-                        currentGrade.Grade1 = calculatedGrade;
+                        currentGrade.AnswersID = selectedAnswerId;  // Update the existing record with the selected answer ID
                     }
                     context.SaveChanges();
                 }
             }
         }
+
 
         private void AnswerRadioButton_Click(object sender, RoutedEventArgs e)
         {
@@ -223,18 +226,13 @@ namespace Capital_Life_Insurance_LLC
                 SaveGrade(selectedAnswer.AnswerId, selectedAnswer.AnswerWeightCoefficient);
             }
         }
-
-
-
-
-
     }
 
     public class QuashionCandidateDto
     {
         public string Title { get; set; }
         public List<AnswerDto> Answers { get; set; }
-        public double SelectedGrade { get; set; }  // The calculated grade
+        public double SelectedGrade { get; set; }
     }
 
     public class AnswerDto
@@ -242,6 +240,7 @@ namespace Capital_Life_Insurance_LLC
         public int AnswerId { get; set; }
         public string AnswerTitle { get; set; }
         public double AnswerWeightCoefficient { get; set; }
+        public int? SelectedGrade { get; set; } = null;
+        public bool IsSelected { get; set; }
     }
-
 }

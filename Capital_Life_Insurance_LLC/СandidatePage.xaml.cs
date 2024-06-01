@@ -166,7 +166,7 @@ namespace Capital_Life_Insurance_LLC
                     return "Нет";
                 }
 
-                var grades = candidate.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
+                var grades = candidate.Grade.Where(g => g.AnswersID.HasValue).Select(g => g.AnswersID.Value);
 
                 if (!grades.Any())
                 {
@@ -188,8 +188,8 @@ namespace Capital_Life_Insurance_LLC
                     return "Нет";
                 }
                 var grades = context.Grade
-                    .Where(g => g.UserID == hrUser.UserID && g.CandidateID == candidateId && g.Grade1.HasValue)
-                    .Select(g => g.Grade1.Value);
+                    .Where(g => g.UserID == hrUser.UserID && g.CandidateID == candidateId && g.AnswersID.HasValue)
+                    .Select(g => g.AnswersID.Value);
 
                 if (!grades.Any())
                 {
@@ -213,8 +213,8 @@ namespace Capital_Life_Insurance_LLC
                 }
 
                 var grades = context.Grade
-                    .Where(g => g.UserID == supervisorUser.UserID && g.CandidateID == candidateId && g.Grade1.HasValue)
-                    .Select(g => g.Grade1.Value);
+                    .Where(g => g.UserID == supervisorUser.UserID && g.CandidateID == candidateId && g.AnswersID.HasValue)
+                    .Select(g => g.AnswersID.Value);
 
                 if (!grades.Any())
                 {

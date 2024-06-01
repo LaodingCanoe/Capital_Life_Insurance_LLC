@@ -18,8 +18,9 @@ namespace Capital_Life_Insurance_LLC
         public int CandidateID { get; set; }
         public int UserID { get; set; }
         public int QuestionID { get; set; }
-        public Nullable<double> Grade1 { get; set; }
+        public Nullable<int> AnswersID { get; set; }
     
+        public virtual Answers Answers { get; set; }
         public virtual CandidateCard CandidateCard { get; set; }
         public virtual Users Users { get; set; }
         public virtual Question Question { get; set; }

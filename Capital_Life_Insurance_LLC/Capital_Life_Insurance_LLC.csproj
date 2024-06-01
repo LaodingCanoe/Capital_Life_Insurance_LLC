@@ -232,27 +232,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="photo\1.jpg" />
+    <Resource Include="photo\10.jpg" />
     <Resource Include="photo\2.jpg" />
     <Resource Include="photo\3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="photo\picture.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="photo\17.jpg" />
-    <Resource Include="photo\18.jpg" />
-    <Resource Include="photo\14.jpg" />
-    <Resource Include="photo\15.jpg" />
-    <Resource Include="photo\16.jpg" />
-    <Resource Include="photo\10.jpg" />
-    <Resource Include="photo\11.jpg" />
-    <Resource Include="photo\13.jpg" />
     <Resource Include="photo\4.jpg" />
     <Resource Include="photo\5.jpg" />
     <Resource Include="photo\6.jpg" />
     <Resource Include="photo\7.jpg" />
     <Resource Include="photo\8.jpg" />
     <Resource Include="photo\9.jpg" />
+    <Resource Include="photo\picture.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Capital_Life_Insurance_LLCModel.Context.tt">

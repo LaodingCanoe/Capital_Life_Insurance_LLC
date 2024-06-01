@@ -6,7 +6,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1200"
-      MinHeight="700" MinWidth="1200"
       Title="QuashionsPage" FontFamily="HelveticaFont" FontSize="20">
 
     <Page.Resources>
@@ -16,20 +15,17 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <!-- ScrollViewer to make content scrollable -->
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <ListView x:Name="QuestionListView" ItemsSource="{Binding}">
+            <ListView x:Name="QuestionListView" ItemsSource="{Binding CurrentPagelist}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="10">
                             <!-- Question Text -->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Title}" FontWeight="Bold" TextWrapping="Wrap" Margin="0,5" MaxWidth="1000" Width="900"/>
-                                <TextBlock Text="Коэфицент:" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Margin="0,0,10,0"/>
-                            </StackPanel>
+                            <TextBlock Text="{Binding Title}" FontWeight="Bold" Margin="0,5" MaxWidth="1000" Width="900"/>
                             <!-- Answer Options -->
                             <ItemsControl ItemsSource="{Binding Answers}">
                                 <ItemsControl.ItemTemplate>
@@ -37,28 +33,22 @@
                                         <Grid Margin="5 15 0 15">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="100"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
 
-                                            <!-- Answer Text and Weight -->
-                                            <StackPanel Orientation="Horizontal" Grid.Column="0">
-                                                <TextBlock Text="{Binding AnswerTitle}" TextWrapping="Wrap" MaxWidth="900" Margin="0,0,10,0"/>
-                                                <TextBlock Text="" FontSize="20" TextWrapping="Wrap" MaxWidth="900" Margin="0,0,10,0"/>
-                                            </StackPanel>
-                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Grid.Column="1"> 
-                                                <TextBlock Text="{Binding AnswerWeightCoefficient}" FontSize="20" TextWrapping="Wrap" MaxWidth="900" Margin="0,0,10,0"/>
-                                            </StackPanel>
+                                            <!-- Answer Text -->
+                                            <TextBlock Grid.Column="0" Text="{Binding AnswerTitle}" TextWrapping="Wrap" MaxWidth="800" Margin="0,0,10,0"/>
+
+                                            <!-- Answer Weight Coefficient -->
+
                                             <!-- RadioButton -->
-                                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Vertical" Grid.Column="2">
-                                                <RadioButton Style="{StaticResource RadioButtonForTest}" GroupName="AnswersGroup"
-                                                     IsChecked="{Binding IsSelected}"
-                                                     Click="AnswerRadioButton_Click"
-                                                     Tag="{Binding AnswerId}" VerticalAlignment="Center"/>
-                                            </StackPanel>                                            
+                                            <RadioButton Grid.Column="2" GroupName="AnswersGroup" Style="{StaticResource RadioButtonForTest}"
+                                                         IsChecked="{Binding IsSelected}"
+                                                         Click="AnswerRadioButton_Click"
+                                                         Tag="{Binding AnswerId}" VerticalAlignment="Center"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -70,7 +60,7 @@
         </ScrollViewer>
 
         <!-- Pagination controls -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 5">
             <Button Name="LeftBT" Content="&lt;" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="LeftBT_Click"/>
             <ListBox MouseUp="PageListBox_MouseUp" FontSize="20" Name="PageListBox">
                 <ListBox.ItemsPanel>

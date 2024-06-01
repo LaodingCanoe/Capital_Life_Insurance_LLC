@@ -58,6 +58,10 @@ namespace Capital_Life_Insurance_LLC
             {
                 usersPage.Update();
             }
+            if(e.Content is QuashionsPage quashionsPage)
+            {
+                quashionsPage.LoadData();
+            }
         }
     }
 }

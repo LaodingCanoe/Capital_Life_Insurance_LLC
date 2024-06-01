@@ -53,7 +53,7 @@
           <Property Name="CandidateID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="QuestionID" Type="int" Nullable="false" />
-          <Property Name="Grade" Type="float" />
+          <Property Name="AnswersID" Type="int" />
         </EntityType>
         <EntityType Name="Positions">
           <Key>
@@ -66,7 +66,7 @@
           <Key>
             <PropertyRef Name="QuestionID" />
           </Key>
-          <Property Name="QuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="QuashionWeightCoefficient" Type="float" Nullable="false" />
         </EntityType>
@@ -206,6 +206,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Grade_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="0..1" />
+          <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="AnswerId" />
+            </Principal>
+            <Dependent Role="Grade">
+              <PropertyRef Name="AnswersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Grade_Question">
           <End Role="Question" Type="Self.Question" Multiplicity="1" />
           <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
@@ -262,6 +274,10 @@
             <End Role="Education" EntitySet="Education" />
             <End Role="CandidateEducation" EntitySet="CandidateEducation" />
           </AssociationSet>
+          <AssociationSet Name="FK_Grade_Answers" Association="Self.FK_Grade_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="Grade" EntitySet="Grade" />
+          </AssociationSet>
           <AssociationSet Name="FK_Grade_Question" Association="Self.FK_Grade_Question">
             <End Role="Question" EntitySet="Question" />
             <End Role="Grade" EntitySet="Grade" />
@@ -281,6 +297,7 @@
           <Property Name="AnswerTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AnswerWeightCoefficient" Type="Double" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="Self.FK_Answers_Question" FromRole="Answers" ToRole="Question" />
+          <NavigationProperty Name="Grade" Relationship="Self.FK_Grade_Answers" FromRole="Answers" ToRole="Grade" />
         </EntityType>
         <EntityType Name="CandidateCard">
           <Key>
@@ -328,7 +345,8 @@
           <Property Name="CandidateID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="QuestionID" Type="Int32" Nullable="false" />
-          <Property Name="Grade1" Type="Double" />
+          <Property Name="AnswersID" Type="Int32" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK_Grade_Answers" FromRole="Grade" ToRole="Answers" />
           <NavigationProperty Name="CandidateCard" Relationship="Self.FK__Grade__Candidate__7E37BEF6" FromRole="Grade" ToRole="CandidateCard" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Grade__UserID__49C3F6B7" FromRole="Grade" ToRole="Users" />
           <NavigationProperty Name="Question" Relationship="Self.FK_Grade_Question" FromRole="Grade" ToRole="Question" />
@@ -345,7 +363,7 @@
           <Key>
             <PropertyRef Name="QuestionID" />
           </Key>
-          <Property Name="QuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="QuashionWeightCoefficient" Type="Double" Nullable="false" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Question" FromRole="Question" ToRole="Answers" />
@@ -404,6 +422,18 @@
             </Principal>
             <Dependent Role="Answers">
               <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grade_Answers">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="0..1" />
+          <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="AnswerId" />
+            </Principal>
+            <Dependent Role="Grade">
+              <PropertyRef Name="AnswersID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -519,6 +549,10 @@
             <End Role="Question" EntitySet="Question" />
             <End Role="Answers" EntitySet="Answers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Grade_Answers" Association="Self.FK_Grade_Answers">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="Grade" EntitySet="Grade" />
+          </AssociationSet>
           <AssociationSet Name="FK__Candidate__Posit__787EE5A0" Association="Self.FK__Candidate__Posit__787EE5A0">
             <End Role="Positions" EntitySet="Positions" />
             <End Role="CandidateCard" EntitySet="CandidateCard" />
@@ -609,7 +643,7 @@
                 <ScalarProperty Name="CandidateID" ColumnName="CandidateID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-                <ScalarProperty Name="Grade1" ColumnName="Grade" />
+                <ScalarProperty Name="AnswersID" ColumnName="AnswersID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
