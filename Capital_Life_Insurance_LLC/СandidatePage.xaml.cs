@@ -15,15 +15,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Capital_Life_Insurance_LLC
-{
-    /// <summary>
-    /// Логика взаимодействия для СandidatePage.xaml
-    /// </summary>
+{  
     public static class RoleId
     {
         public static int ID = 0;
     }
-    
     public static class UserHR
     {
         public static int ID = 0;
@@ -38,7 +34,7 @@ namespace Capital_Life_Insurance_LLC
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
                 InitializeComponent();
-                ID = id+1;
+                ID = id + 1;
                 var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.UserID == ID);
                 var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
                 if (ID >= 0 && ID <= currentUsers.Count)
@@ -46,26 +42,20 @@ namespace Capital_Life_Insurance_LLC
                     userTB.Text = "Вы авторизированы как: " + currentUser.FirstName.ToString() + " " + currentUser.Name.ToString() + " " + currentUser.Patranomic.ToString();
                     RoleId.ID = currentUser.RoleID;
                     userRoleTB.Text = "   Роль: " + currentUser.UserRoleString.ToString();
-
-
-
                     if (RoleId.ID == 3)
                     {
                         AddBT.Visibility = Visibility.Visible;
                         CandidateCardsPage = CandidateCardsPage.Where(p => p.CreateUserID == ID).ToList();
                     }
-
                     else
                     {
                         AddBT.Visibility = Visibility.Collapsed;
                         EditQuashion.Visibility = Visibility.Collapsed;
                     }
-
                     CandidateCardsPage = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
                     CandidateList.ItemsSource = CandidateCardsPage;
                     FiterCB.SelectedIndex = 0;
                     SortCB.SelectedIndex = 0;
-                    
                     UpdateCandidat();
                 }
                 else
@@ -75,8 +65,6 @@ namespace Capital_Life_Insurance_LLC
             }
             UpdateCandidat();
         }
-
-        //Код для обновление страницы
         public void UpdateCandidat()
         {
             var currentCandidate = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.ToList();
@@ -114,8 +102,7 @@ namespace Capital_Life_Insurance_LLC
             else if (FiterCB.SelectedIndex == 8)
             {
                 currentCandidate = currentCandidate.Where(p => p.PositionToString == "HR-специалист").ToList();
-            }           
-
+            }
             currentCandidate = currentCandidate.Where(p => p.FIO.ToLower().Contains(SearchTB.Text.ToLower()) || p.Phone.ToLower().Contains(SearchTB.Text.ToLower()) || p.Email.ToLower().Contains(SearchTB.Text.ToLower())).ToList();
             foreach (var candidate in currentCandidate)
             {
@@ -124,27 +111,11 @@ namespace Capital_Life_Insurance_LLC
             foreach (var candidate in currentCandidate)
             {
                 candidate.GradeHR = CalculateGradeHR(candidate.CandidateID);
-            }
-            /*
-            if (RoleId.ID == 1) 
-            {
-                foreach (var candidate in currentCandidate)
-                {
-                    candidate.GradeSupervisor = CalculateGradeSupervisor(candidate.CandidateID);
-                }
-            }
-            if (RoleId.ID == 3)
-            {
-                foreach (var candidate in currentCandidate)
-                {
-                    candidate.GradeHR = CalculateGradeHR(candidate.CandidateID);
-                }
-            }*/;
+            };
             foreach (var candidate in currentCandidate)
             {
                 candidate.GradeALL = CalculateGradeAll(candidate.CandidateID);
             }
-
             if (SortCB.SelectedIndex == 1)
             {
                 currentCandidate = currentCandidate.OrderBy(p => p.GradeALLSort).ToList();
@@ -154,7 +125,6 @@ namespace Capital_Life_Insurance_LLC
                 currentCandidate = currentCandidate.OrderByDescending(p => p.GradeALLSort).ToList();
             }
             CandidateList.ItemsSource = currentCandidate;
-
         }
         public string CalculateGradeAll(int candidateId)
         {
@@ -165,24 +135,67 @@ namespace Capital_Life_Insurance_LLC
                 {
                     return "Нет";
                 }
-
-                var grades = candidate.Grade.Where(g => g.AnswersID.HasValue).Select(g => g.AnswersID.Value);
-
-                if (!grades.Any())
+                var hrUser = context.Users.FirstOrDefault(u => u.RoleID == 3);
+                var supervisorUser = context.Users.FirstOrDefault(u => u.RoleID == 1);
+                if (hrUser == null || supervisorUser == null)
                 {
                     return "Нет";
                 }
-                else
+                var hrGrades = candidate.Grade.Where(g => g.UserID == hrUser.UserID && g.AnswersID.HasValue).Select(g => g.AnswersID.Value);
+                var supervisorGrades = candidate.Grade.Where(g => g.UserID == supervisorUser.UserID && g.AnswersID.HasValue).Select(g => g.AnswersID.Value);
+                if (!hrGrades.Any() && !supervisorGrades.Any())
                 {
-                    return grades.Sum().ToString("F1");
+                    return "Нет";
                 }
+                double totalScore = 0.0;
+                double maxPossibleScore = 0.0;
+                foreach (var answerId in hrGrades)
+                {
+                    var answer = context.Answers.FirstOrDefault(a => a.AnswerId == answerId);
+                    if (answer != null)
+                    {
+                        var question = context.Question.FirstOrDefault(q => q.QuestionID == answer.QuestionID);
+                        if (question != null)
+                        {
+                            double questionWeight = question.QuashionWeightCoefficient;
+                            double answerWeight = answer.AnswerWeightCoefficient;
+                            totalScore += questionWeight * answerWeight * 0.4;
+
+                            double maxAnswerWeight = context.Answers
+                                .Where(a => a.QuestionID == question.QuestionID)
+                                .Max(a => a.AnswerWeightCoefficient);
+                            maxPossibleScore += questionWeight * maxAnswerWeight * 0.4;
+                        }
+                    }
+                }
+                foreach (var answerId in supervisorGrades)
+                {
+                    var answer = context.Answers.FirstOrDefault(a => a.AnswerId == answerId);
+                    if (answer != null)
+                    {
+                        var question = context.Question.FirstOrDefault(q => q.QuestionID == answer.QuestionID);
+                        if (question != null)
+                        {
+                            double questionWeight = question.QuashionWeightCoefficient;
+                            double answerWeight = answer.AnswerWeightCoefficient;
+                            totalScore += questionWeight * answerWeight * 0.6;
+
+                            double maxAnswerWeight = context.Answers
+                                .Where(a => a.QuestionID == question.QuestionID)
+                                .Max(a => a.AnswerWeightCoefficient);
+                            maxPossibleScore += questionWeight * maxAnswerWeight * 0.6;
+                        }
+                    }
+                }
+                double convertedScore = totalScore * (100.0 / maxPossibleScore);
+                return convertedScore.ToString("F1");
             }
         }
         public string CalculateGradeHR(int candidateId)
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
-                var hrUser = context.Users.FirstOrDefault(u => u.RoleID == 3); // Assuming RoleID 1 is for HR
+                var hrUser = context.Users.FirstOrDefault(u => u.RoleID == 3);
                 if (context.Grade == null || !context.Grade.Any() || hrUser == null)
                 {
                     return "Нет";
@@ -190,39 +203,80 @@ namespace Capital_Life_Insurance_LLC
                 var grades = context.Grade
                     .Where(g => g.UserID == hrUser.UserID && g.CandidateID == candidateId && g.AnswersID.HasValue)
                     .Select(g => g.AnswersID.Value);
-
                 if (!grades.Any())
                 {
                     return "Нет";
                 }
                 else
                 {
-                    return grades.Sum().ToString("F1"); // Using Average to give a more meaningful grade
+                    double totalScore = 0.0;
+                    double maxPossibleScore = 0.0;
+                    foreach (var answerId in grades)
+                    {
+                        var answer = context.Answers.FirstOrDefault(a => a.AnswerId == answerId);
+                        if (answer != null)
+                        {
+                            var question = context.Question.FirstOrDefault(q => q.QuestionID == answer.QuestionID);
+                            if (question != null)
+                            {
+                                double questionWeight = question.QuashionWeightCoefficient;
+                                double answerWeight = answer.AnswerWeightCoefficient;
+                                totalScore += questionWeight * answerWeight * 0.4;
+
+                                double maxAnswerWeight = context.Answers
+                                    .Where(a => a.QuestionID == question.QuestionID)
+                                    .Max(a => a.AnswerWeightCoefficient);
+                                maxPossibleScore += questionWeight * maxAnswerWeight * 0.4;
+                            }
+                        }
+                    }
+                    double convertedScore = totalScore * (40.0 / maxPossibleScore);
+                    return convertedScore.ToString("F1");
                 }
             }
         }
-
         public string CalculateGradeSupervisor(int candidateId)
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
-                var supervisorUser = context.Users.FirstOrDefault(u => u.RoleID == 1); // Assuming RoleID 2 is for Supervisor
+                var supervisorUser = context.Users.FirstOrDefault(u => u.RoleID == 1);
                 if (context.Grade == null || !context.Grade.Any() || supervisorUser == null)
                 {
                     return "Нет";
                 }
-
                 var grades = context.Grade
                     .Where(g => g.UserID == supervisorUser.UserID && g.CandidateID == candidateId && g.AnswersID.HasValue)
                     .Select(g => g.AnswersID.Value);
-
                 if (!grades.Any())
                 {
                     return "Нет";
                 }
                 else
                 {
-                    return grades.Sum().ToString("F1"); // Using Average to give a more meaningful grade
+                    double totalScore = 0.0;
+                    double maxPossibleScore = 0.0;
+                    foreach (var answerId in grades)
+                    {
+                        var answer = context.Answers.FirstOrDefault(a => a.AnswerId == answerId);
+                        if (answer != null)
+                        {
+                            var question = context.Question.FirstOrDefault(q => q.QuestionID == answer.QuestionID);
+                            if (question != null)
+                            {
+                                double questionWeight = question.QuashionWeightCoefficient;
+                                double answerWeight = answer.AnswerWeightCoefficient;
+                                totalScore += questionWeight * answerWeight * 0.6;
+
+                                double maxAnswerWeight = context.Answers
+                                    .Where(a => a.QuestionID == question.QuestionID)
+                                    .Max(a => a.AnswerWeightCoefficient);
+
+                                maxPossibleScore += questionWeight * maxAnswerWeight * 0.6;
+                            }
+                        }
+                    }
+                    double convertedScore = totalScore * (60.0 / maxPossibleScore);
+                    return convertedScore.ToString("F1");
                 }
             }
         }
@@ -230,17 +284,14 @@ namespace Capital_Life_Insurance_LLC
         {
             UpdateCandidat();
         }
-
         private void SortCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateCandidat();
         }
-
         private void SearchTB_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateCandidat();
         }
-
         private void Take_a_questionnaireBT_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -251,19 +302,16 @@ namespace Capital_Life_Insurance_LLC
             }
             UpdateCandidat();
         }
-
         private void EditBT_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new CandidateAddEditPage((sender as Button).DataContext as CandidateCard, ID));
             UpdateCandidat();
         }
-
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new CandidateAddEditPage(null, ID));
             UpdateCandidat();
         }
-
         private void EditQuashion_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new EditQuashionPage());
