@@ -28,7 +28,6 @@ namespace Capital_Life_Insurance_LLC
     {
         private int ID = 0;
         List<CandidateCard> CandidateCardsPage = new List<CandidateCard>();
-
         public СandidatePage(int id)
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
@@ -120,7 +119,7 @@ namespace Capital_Life_Insurance_LLC
             {
                 currentCandidate = currentCandidate.OrderBy(p => p.GradeALLSort).ToList();
             }
-            else if (SortCB.SelectedIndex == 2) // Changed from FiterCB to SortCB
+            else if (SortCB.SelectedIndex == 2) 
             {
                 currentCandidate = currentCandidate.OrderByDescending(p => p.GradeALLSort).ToList();
             }

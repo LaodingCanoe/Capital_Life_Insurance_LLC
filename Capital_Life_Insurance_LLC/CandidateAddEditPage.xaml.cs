@@ -18,11 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Capital_Life_Insurance_LLC
-{
-    /// <summary>
-    /// Логика взаимодействия для CandidateAddEditPage.xaml
-    /// </summary>
-    public partial class CandidateAddEditPage : Page
+{    public partial class CandidateAddEditPage : Page
     {
         private CandidateCard _currenCandidate = new CandidateCard();
         private int IDCandidate = 0;
@@ -56,10 +52,8 @@ namespace Capital_Life_Insurance_LLC
             {
                 Bithday.Text = "01.01.1950";
             }
-            DataContext = _currenCandidate;           
-            
+            DataContext = _currenCandidate;
         }
-
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
@@ -77,11 +71,6 @@ namespace Capital_Life_Insurance_LLC
             {
                 errors.AppendLine("Укаажите дату рождения");
             }
-            /*
-            if (MultiSelectListBox.SelectedItems.Count == 0)
-            {
-                errors.AppendLine("Выбирите образование"); //скинуть Искандеру
-            }*/
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
@@ -108,10 +97,8 @@ namespace Capital_Life_Insurance_LLC
                 }
                 if (_currenCandidate.CandidateID == 0)
                 {
-                    Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Add(_currenCandidate);
-                    
-                }
-                   
+                    Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard.Add(_currenCandidate);                    
+                }                   
                 try
                 {                    
                     Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
@@ -124,11 +111,8 @@ namespace Capital_Life_Insurance_LLC
                 }
             }
         }
-
         private void DeleteBT_Click(object sender, RoutedEventArgs e)
         {
-            //var currentDelete = Capital_Life_Insurance_LLCEntities.GetContext().CandidateCard;
-            //currentDelete = currentDelete.Where(p => p.CandidateID.ToString() == IDCandidate.ToString()).ToList();
             var currentDelete = (sender as Button).DataContext as CandidateCard;
             if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -137,80 +121,58 @@ namespace Capital_Life_Insurance_LLC
                 {
                     using (var context = new Capital_Life_Insurance_LLCEntities())
                     {
-                        // Загрузка текущего кандидата из базы данных
                         var candidateToDelete = context.CandidateCard
-                            .Include(c => c.Grade) // Включение связанных записей Grade
-                            .Include(c => c.CandidateEducation) // Включение связанных записей CandidateEducation
+                            .Include(c => c.Grade) 
+                            .Include(c => c.CandidateEducation) 
                             .FirstOrDefault(c => c.CandidateID == currentDelete.CandidateID);
-
                         if (candidateToDelete != null)
                         {
-                            // Удаление связанных записей из таблицы Grade
                             context.Grade.RemoveRange(candidateToDelete.Grade);
-
-                            // Удаление связанных записей из таблицы CandidateEducation
                             context.CandidateEducation.RemoveRange(candidateToDelete.CandidateEducation);
-
-                            // Удаление записи из таблицы CandidateCard
                             context.CandidateCard.Remove(candidateToDelete);
-
-                            // Сохранение изменений
                             context.SaveChanges();
                         }
                     }
-
                     MessageBox.Show("Кандидат и связанные записи удалены.");
-                    Manager.MainFrame.GoBack();
-                
+                    Manager.MainFrame.GoBack();                
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message.ToString());
                 }
             }
-
         }
         private bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
-
             int atIndex = email.IndexOf('@');
             int dotIndex = email.LastIndexOf('.');
-
-            // Убедитесь, что @ находится перед точкой,
-            // и обе эти символы присутствуют, и после @ и точки есть символы
             return atIndex > 0 &&
-                   dotIndex > atIndex + 1 &&  // Проверяем, что после @ есть символ
-                   email.Length > dotIndex + 1 &&  // Проверяем, что после точки есть символ
-                   !email.Substring(dotIndex + 1).Contains('.'); // Проверяем, что после точки нет других точек
+                   dotIndex > atIndex + 1 &&  
+                   email.Length > dotIndex + 1 && 
+                   !email.Substring(dotIndex + 1).Contains('.');
         }
-
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-
             if (textBox.Text.Length > 0)
             {
                 int caretIndex = textBox.SelectionStart;
-                textBox.TextChanged -= TextBox_TextChanged; // Отписываемся от события, чтобы избежать рекурсии
+                textBox.TextChanged -= TextBox_TextChanged;
                 textBox.Text = char.ToUpper(textBox.Text[0]) + textBox.Text.Substring(1);
-                textBox.SelectionStart = caretIndex; // Устанавливаем курсор в то же положение
-                textBox.TextChanged += TextBox_TextChanged; // Повторно подписываемся на событие
+                textBox.SelectionStart = caretIndex;
+                textBox.TextChanged += TextBox_TextChanged;
             }
         }
 
-        // Обработчик для запрета ввода пробелов и цифр
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
                 e.Handled = true;
             }
-        }
-
-        // Обработчик для запрета вставки пробелов через клавиши (например, Ctrl+V)
+        }        
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -218,7 +180,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
         private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
@@ -239,7 +200,6 @@ namespace Capital_Life_Insurance_LLC
             Regex regex = new Regex(@"^[a-zA-Zа-яА-Я]+$"); // Только буквы
             return regex.IsMatch(text);
         }
-
         private void PhoneNumberTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -249,8 +209,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
-        // Обработчик для запрета вставки нецифровых символов через буфер обмена
         private void PhoneNumberTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
@@ -266,8 +224,6 @@ namespace Capital_Life_Insurance_LLC
                 e.CancelCommand();
             }
         }
-
-        // Обработчик для запрета ввода нецифровых символов через клавиши
         private void PhoneNumberTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -275,7 +231,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
         private bool IsTextNumber(string text)
         {
             Regex regex = new Regex(@"^[0-9]+$");
@@ -284,7 +239,6 @@ namespace Capital_Life_Insurance_LLC
         private void PhoneTB_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-
             if (!textBox.Text.StartsWith("+7"))
             {
                 textBox.TextChanged -= PhoneTB_TextChanged;
@@ -293,7 +247,6 @@ namespace Capital_Life_Insurance_LLC
                 textBox.TextChanged += PhoneTB_TextChanged;
             }
         }
-
         private void ImageBT_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog myOpenFileDialog = new OpenFileDialog();

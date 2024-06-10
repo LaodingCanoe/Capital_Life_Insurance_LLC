@@ -18,18 +18,15 @@ namespace Capital_Life_Insurance_LLC
         private int IDCandidate;
         private int IDuser;
         private int NumberQuashion = 1;
-
         public QuashionsPage(int IDCandidate, int IDuser)
         {
             InitializeComponent();
             this.IDCandidate = IDCandidate;
             this.IDuser = IDuser;
-
             TableList = LoadData();
             DataContext = this;
             ChangePage(0, 0);
-        }
-        
+        }        
         public List<QuashionCandidateDto> LoadData()
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
@@ -59,8 +56,6 @@ namespace Capital_Life_Insurance_LLC
                                        AnswerId = x.answer.AnswerId,
                                        AnswerTitle = x.answer.AnswerTitle,
                                        AnswerWeightCoefficient = x.answer.AnswerWeightCoefficient,
-
-
                                        IsSelected = RbSelected(x.question.QuestionID, x.answer.AnswerId,x.grade?.GradeID)
                                    }).ToList(),
                         SelectedGrade = g.FirstOrDefault(x => x.grade != null)?.grade.AnswersID ?? 0
@@ -68,8 +63,7 @@ namespace Capital_Life_Insurance_LLC
 
                 return result;
             }
-        }
-       
+        }       
         private bool RbSelected(int q, int a, int? g)
         {
             var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
@@ -142,7 +136,6 @@ namespace Capital_Life_Insurance_LLC
                         break;
                 }
             }
-
             if (ifUpdate)
             {
                 PageListBox.Items.Clear();
@@ -151,24 +144,20 @@ namespace Capital_Life_Insurance_LLC
                     PageListBox.Items.Add(i);
                 }
                 PageListBox.SelectedIndex = CurrentPage;
-
                 QuestionListView.ItemsSource = CurrentPagelist;
                 QuestionListView.Items.Refresh();
             }
         }
-
         private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
             ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
             NumberQuashion = PageListBox.SelectedIndex + 1;
         }
-
         private void RightBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(2, null);
             NumberQuashion = PageListBox.SelectedIndex + 1;
         }
-
         private void LeftBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(1, null);
@@ -176,11 +165,9 @@ namespace Capital_Life_Insurance_LLC
             СandidatePage candidatePage = new СandidatePage(0);
             candidatePage.UpdateCandidat();
         }
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
         }
-
         private void SaveGrade(int selectedAnswerId, double answerWeightCoefficient)
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
@@ -204,20 +191,18 @@ namespace Capital_Life_Insurance_LLC
                             CandidateID = IDCandidate,
                             UserID = IDuser,
                             QuestionID = NumberQuashion,
-                            AnswersID = selectedAnswerId  // Save the selected answer ID
+                            AnswersID = selectedAnswerId
                         };
                         context.Grade.Add(newGrade);
                     }
                     else
                     {
-                        currentGrade.AnswersID = selectedAnswerId;  // Update the existing record with the selected answer ID
+                        currentGrade.AnswersID = selectedAnswerId;
                     }
                     context.SaveChanges();
                 }
             }
         }
-
-
         private void AnswerRadioButton_Click(object sender, RoutedEventArgs e)
         {
             var radioButton = sender as RadioButton;
@@ -227,14 +212,12 @@ namespace Capital_Life_Insurance_LLC
             }
         }
     }
-
     public class QuashionCandidateDto
     {
         public string Title { get; set; }
         public List<AnswerDto> Answers { get; set; }
         public double SelectedGrade { get; set; }
     }
-
     public class AnswerDto
     {
         public int AnswerId { get; set; }

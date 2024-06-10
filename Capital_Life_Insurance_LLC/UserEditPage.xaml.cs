@@ -17,11 +17,6 @@ using System.Windows.Shapes;
 
 namespace Capital_Life_Insurance_LLC
 {
-    /// <summary>
-    /// Логика взаимодействия для UserEditPage.xaml
-    /// </summary>
-    /// Users UserSelected
-
     public partial class UserEditPage : Page
     {
         private Users _currentUsers = new Users();
@@ -39,14 +34,12 @@ namespace Capital_Life_Insurance_LLC
                 PasswordTB.Visibility = Visibility.Hidden;
                 DeleteBT.Visibility = Visibility.Visible;
                 RoleCB.SelectedIndex = UserSelected.RoleID-1;
-            }
-            
+            }            
             DataContext = _currentUsers;
             PhoneTB.Loaded += (s, e) =>
             {
                 DataObject.AddPastingHandler(PhoneTB, PhoneNumberTextBox_Pasting);
             };
-
         }        
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
@@ -106,28 +99,20 @@ namespace Capital_Life_Insurance_LLC
                             MessageBox.Show(ex.Message.ToString());
                         }
                     }
-                }                   
-                
+                }  
             }
-            
         }
         private bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
-
             int atIndex = email.IndexOf('@');
             int dotIndex = email.LastIndexOf('.');
-
-            // Убедитесь, что @ находится перед точкой,
-            // и обе эти символы присутствуют, и после @ и точки есть символы
             return atIndex > 0 &&
-                   dotIndex > atIndex + 1 &&  // Проверяем, что после @ есть символ
-                   email.Length > dotIndex + 1 &&  // Проверяем, что после точки есть символ
-                   !email.Substring(dotIndex + 1).Contains('.'); // Проверяем, что после точки нет других точек
+                   dotIndex > atIndex + 1 &&  
+                   email.Length > dotIndex + 1 && 
+                   !email.Substring(dotIndex + 1).Contains('.'); 
         }
-
-
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
@@ -135,14 +120,12 @@ namespace Capital_Life_Insurance_LLC
             if (textBox.Text.Length > 0)
             {
                 int caretIndex = textBox.SelectionStart;
-                textBox.TextChanged -= TextBox_TextChanged; // Отписываемся от события, чтобы избежать рекурсии
+                textBox.TextChanged -= TextBox_TextChanged; 
                 textBox.Text = char.ToUpper(textBox.Text[0]) + textBox.Text.Substring(1);
-                textBox.SelectionStart = caretIndex; // Устанавливаем курсор в то же положение
-                textBox.TextChanged += TextBox_TextChanged; // Повторно подписываемся на событие
+                textBox.SelectionStart = caretIndex; 
+                textBox.TextChanged += TextBox_TextChanged; 
             }
         }
-
-        // Обработчик для запрета ввода пробелов и цифр
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -150,8 +133,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
-        // Обработчик для запрета вставки пробелов через клавиши (например, Ctrl+V)
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -159,7 +140,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
         private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
@@ -177,7 +157,7 @@ namespace Capital_Life_Insurance_LLC
         }
         private bool IsTextAllowed(string text)
         {
-            Regex regex = new Regex(@"^[a-zA-Zа-яА-Я]+$"); // Только буквы
+            Regex regex = new Regex(@"^[a-zA-Zа-яА-Я]+$");
             return regex.IsMatch(text);
         }
 
@@ -190,8 +170,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
-        // Обработчик для запрета вставки нецифровых символов через буфер обмена
         private void PhoneNumberTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
@@ -207,8 +185,6 @@ namespace Capital_Life_Insurance_LLC
                 e.CancelCommand();
             }
         }
-
-        // Обработчик для запрета ввода нецифровых символов через клавиши
         private void PhoneNumberTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -216,7 +192,6 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
         private bool IsTextNumber(string text)
         {
             Regex regex = new Regex(@"^[0-9]+$");
@@ -234,13 +209,9 @@ namespace Capital_Life_Insurance_LLC
                 textBox.TextChanged += PhoneTB_TextChanged;
             }
         }
-
-
-
         private void DeleteBT_Click(object sender, RoutedEventArgs e)
         {
-            var currentDelete = (sender as Button).DataContext as Users;
-            
+            var currentDelete = (sender as Button).DataContext as Users;            
             if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {

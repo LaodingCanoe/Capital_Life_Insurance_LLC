@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CandidateAddEditPage">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -44,7 +43,6 @@
                 <TextBox Name="PatranomicTB" FontFamily="HelveticaFont" Text="{Binding Patranomic}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" TextChanged="TextBox_TextChanged" PreviewKeyDown="TextBox_PreviewKeyDown" KeyDown="TextBox_KeyDown" DataObject.Pasting="TextBox_Pasting"></TextBox>
                 <TextBlock Text="Телефон: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <TextBox Name="PhoneTB" FontFamily="HelveticaFont" Text="{Binding Phone}"  HorizontalAlignment="Left" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="3" Grid.Column="1" TextChanged="PhoneTB_TextChanged" PreviewTextInput="PhoneNumberTextBox_PreviewTextInput" PreviewKeyDown="PhoneNumberTextBox_PreviewKeyDown"></TextBox>
-
                 <TextBlock Text="Email: " FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
                 <TextBox Name="EmailTB" FontFamily="HelveticaFont" Text="{Binding Email}" Width="200" Height="25" Margin="5, 5, 0, 0" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left"></TextBox>
                 <TextBlock Text="Дата рождение:" FontFamily="HelveticaFont" Margin="5, 5, 5, 0" FontSize="14" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></TextBlock>
@@ -92,12 +90,9 @@
                         </Image.Source>
                     </Image>
                     <Button Name="ImageBT" Style="{StaticResource RegularButton}"  Content="Изменить" Margin="0, 0, 0, 10"  HorizontalAlignment="Left" Height="40" Width="160" VerticalAlignment="Bottom"  Click="ImageBT_Click" FontFamily="HelveticaFont"/>
-
-
                 </StackPanel>
             </Grid>
         </StackPanel>
-
         <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -105,8 +100,6 @@
             </Grid.ColumnDefinitions>
             <Button Name="AddBT" Style="{StaticResource AccentButton}" Grid.Column="0" Margin="0, 0, 0, 10" Content="Сохранить" Height="40" Width="150" VerticalAlignment="Bottom"  Click="AddBT_Click" FontFamily="HelveticaFont"/>
             <Button Name="DeleteBT" Style="{StaticResource RegularButton}" Visibility="Hidden" Grid.Column="1" Content="Удалить" Margin="0, 0, 0, 10" Height="40" Width="160" VerticalAlignment="Bottom"  Click="DeleteBT_Click" FontFamily="HelveticaFont"/>
-
         </Grid>
-
     </Grid>
 </Page>

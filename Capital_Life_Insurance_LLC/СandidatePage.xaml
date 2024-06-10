@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="СandidatePage" FontFamily="HelveticaFont"  >
-
+      Title="СandidatePage" FontFamily="HelveticaFont">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition ></ColumnDefinition>
@@ -64,9 +63,7 @@
                 </StackPanel>
             </StackPanel>
         </WrapPanel>
-
-        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="CandidateList" >
-
+        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Name="CandidateList">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -96,7 +93,6 @@
                                 </Binding>
                             </Image.Source>
                         </Image>
-
                         <TextBlock Text="{Binding FIO}" FontWeight="Bold" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Margin="0, 10, 0, 0"></TextBlock>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                             <TextBlock Text="Номер телефона: "></TextBlock>
@@ -120,7 +116,6 @@
                             <Button Style="{StaticResource RegularButton}" Height="40" Width="140" Content="Пройти анкетирование" Margin="5 5 5 5" Name="Take_a_questionnaireBT" Click="Take_a_questionnaireBT_Click" CommandParameter="{Binding CandidateID}"></Button>
                             <Button Style="{StaticResource RegularButton}" Name="EditBT" Visibility="{Binding Vis}" Content="Изменить" Height="40" Width="140" Margin="5 5 5 5"  HorizontalAlignment="Right" Click="EditBT_Click"></Button>
                         </StackPanel>
-
                         <StackPanel Grid.Column="3" Orientation="Vertical" Grid.RowSpan="6" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 20 0" >
                             <TextBlock Text="Общая оценка:" FontSize="14" HorizontalAlignment="Center"></TextBlock>
                             <TextBlock Text="{Binding GradeALL}" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
@@ -129,7 +124,6 @@
                             <TextBlock Text="Оценка HR:" FontSize="14" HorizontalAlignment="Center"></TextBlock>
                             <TextBlock Text="{Binding GradeHR}" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
                         </StackPanel>
-
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

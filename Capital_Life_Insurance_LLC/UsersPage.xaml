@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UsersPage" FontFamily="HelveticaFont" IsVisibleChanged="Page_IsVisibleChanged">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition ></ColumnDefinition>
@@ -61,13 +60,10 @@
                             </StackPanel>
                         </StackPanel>
                         <Button Name="EditBT" Style="{StaticResource RegularButton}" Grid.Row="0" Content="Редактировать" Margin="0 0 10 10" Height="40" Width="160" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="EditBT_Click"  Grid.Column="1" FontFamily="HelveticaFont"/>
-
                     </Grid> 
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <Button Name="AddBT" Style="{StaticResource AccentButton}" Grid.Row="3" Grid.Column="0" Content="Добавить" Margin="0, 5, 0, 5" Height="40" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" Click="AddBT_Click" FontFamily="HelveticaFont"/>
-
     </Grid>
-
 </Page>

@@ -12,12 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace Capital_Life_Insurance_LLC
 {
-    /// <summary>
-    /// Логика взаимодействия для UsersPage.xaml
-    /// </summary>
     public partial class UsersPage : Page
     {
         private int ID = 0;
@@ -34,18 +30,13 @@ namespace Capital_Life_Insurance_LLC
         }
         public void Update()
         {
-            UsersList.ItemsSource = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList(); 
-            
+            UsersList.ItemsSource = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();             
         }
-
-        
-
         private void EditBT_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new UserEditPage((sender as Button).DataContext as Users));
             Update();
         }
-
         private void UsersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Update();
@@ -54,8 +45,6 @@ namespace Capital_Life_Insurance_LLC
         {
             Update();
         }
-
-
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -68,9 +57,6 @@ namespace Capital_Life_Insurance_LLC
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
             Update();
-
-
-
         }
     }
 }

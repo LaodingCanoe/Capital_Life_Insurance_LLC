@@ -11,22 +11,17 @@
     <Page.Resources>
         <local:EqualityConverter x:Key="EqualityConverter"/>
     </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <!-- ScrollViewer to make content scrollable -->
         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <ListView x:Name="QuestionListView" ItemsSource="{Binding CurrentPagelist}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="10">
-                            <!-- Question Text -->
                             <TextBlock Text="{Binding Title}" FontWeight="Bold" Margin="0,5" MaxWidth="1000" Width="900"/>
-                            <!-- Answer Options -->
                             <ItemsControl ItemsSource="{Binding Answers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -38,13 +33,7 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
-
-                                            <!-- Answer Text -->
                                             <TextBlock Grid.Column="0" Text="{Binding AnswerTitle}" TextWrapping="Wrap" MaxWidth="800" Margin="0,0,10,0"/>
-
-                                            <!-- Answer Weight Coefficient -->
-
-                                            <!-- RadioButton -->
                                             <RadioButton Grid.Column="2" GroupName="AnswersGroup" Style="{StaticResource RadioButtonForTest}"
                                                          IsChecked="{Binding IsSelected}"
                                                          Click="AnswerRadioButton_Click"
@@ -58,8 +47,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollViewer>
-
-        <!-- Pagination controls -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 5">
             <Button Name="LeftBT" Content="&lt;" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="LeftBT_Click"/>
             <ListBox MouseUp="PageListBox_MouseUp" FontSize="20" Name="PageListBox">

@@ -67,9 +67,6 @@ namespace Capital_Life_Insurance_LLC
             set
             {
                 _gradeALL = value;
-                // NotifyPropertyChanged here if you are using MVVM
-                // For example:
-                // OnPropertyChanged(nameof(GradeALL));
             }
         }
         public string GradeSupervisor
@@ -110,16 +107,12 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-
                 if (RoleId.ID == 3)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;
-
             }
         }
-
-
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
@@ -129,8 +122,7 @@ namespace Capital_Life_Insurance_LLC
         public System.DateTime Bithday { get; set; }
         public int Position { get; set; }
         public string PhotoPath { get; set; }
-        public int CreateUserID { get; set; }
-    
+        public int CreateUserID { get; set; }    
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
