@@ -14,6 +14,7 @@ namespace Capital_Life_Insurance_LLC
     
     public partial class CandidateEducation
     {
+
         public int CandidateEducationID { get; set; }
         public Nullable<int> Candidate { get; set; }
         public Nullable<int> Education { get; set; }

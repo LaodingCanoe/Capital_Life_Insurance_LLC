@@ -1,9 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
+
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -21,6 +23,7 @@ namespace Capital_Life_Insurance_LLC
 {    public partial class CandidateAddEditPage : Page
     {
         private CandidateCard _currenCandidate = new CandidateCard();
+
         private int IDCandidate = 0;
         private int IDUser = 0;
         public CandidateAddEditPage(CandidateCard CandidateSelected, int id)
@@ -53,6 +56,7 @@ namespace Capital_Life_Insurance_LLC
                 Bithday.Text = "01.01.1950";
             }
             DataContext = _currenCandidate;
+
         }
         private void AddBT_Click(object sender, RoutedEventArgs e)
         {
@@ -67,10 +71,12 @@ namespace Capital_Life_Insurance_LLC
                 errors.AppendLine("Укажите верный email");
             if (PositionCB.SelectedItem == null)
                 errors.AppendLine("Укажите желаемую должность");
+
             if (Bithday.Text == "")
             {
                 errors.AppendLine("Укаажите дату рождения");
             }
+
             if (errors.Length > 0)
             {
                 MessageBox.Show(errors.ToString());
@@ -85,6 +91,7 @@ namespace Capital_Life_Insurance_LLC
                 _currenCandidate.Email = EmailTB.Text;
                 _currenCandidate.Position = PositionCB.SelectedIndex + 1;
                 _currenCandidate.Bithday = Convert.ToDateTime(Bithday.Text);
+
                 _currenCandidate.CreateUserID = IDUser;
                 _currenCandidate.CandidateEducation.Clear();
                 foreach (var education in MultiSelectListBox.SelectedItems.Cast<Education>())
@@ -101,6 +108,7 @@ namespace Capital_Life_Insurance_LLC
                 }                   
                 try
                 {                    
+
                     Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
                     MessageBox.Show("Кандидат добавлен");
                     Manager.MainFrame.GoBack();
@@ -113,12 +121,14 @@ namespace Capital_Life_Insurance_LLC
         }
         private void DeleteBT_Click(object sender, RoutedEventArgs e)
         {
+
             var currentDelete = (sender as Button).DataContext as CandidateCard;
             if (MessageBox.Show("Вы точно хотите выполнить удаление?", "Внимание!",
                         MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 try
                 {
+
                     using (var context = new Capital_Life_Insurance_LLCEntities())
                     {
                         var candidateToDelete = context.CandidateCard
@@ -134,7 +144,9 @@ namespace Capital_Life_Insurance_LLC
                         }
                     }
                     MessageBox.Show("Кандидат и связанные записи удалены.");
+
                     Manager.MainFrame.GoBack();                
+
                 }
                 catch (Exception ex)
                 {
@@ -257,4 +269,4 @@ namespace Capital_Life_Insurance_LLC
             }
         }
     }
-}
+

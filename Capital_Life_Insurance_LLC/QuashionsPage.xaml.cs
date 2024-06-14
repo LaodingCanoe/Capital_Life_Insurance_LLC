@@ -186,6 +186,7 @@ namespace Capital_Life_Insurance_LLC
 
                     if (currentGrade == null)
                     {
+
                         Grade newGrade = new Grade
                         {
                             CandidateID = IDCandidate,
@@ -199,6 +200,7 @@ namespace Capital_Life_Insurance_LLC
                     {
                         currentGrade.AnswersID = selectedAnswerId;
                     }
+
                     context.SaveChanges();
                 }
             }
@@ -209,6 +211,7 @@ namespace Capital_Life_Insurance_LLC
             if (radioButton != null && radioButton.DataContext is AnswerDto selectedAnswer)
             {
                 SaveGrade(selectedAnswer.AnswerId, selectedAnswer.AnswerWeightCoefficient);
+
             }
         }
     }

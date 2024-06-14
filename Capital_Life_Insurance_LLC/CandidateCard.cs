@@ -12,9 +12,11 @@ namespace Capital_Life_Insurance_LLC
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
     using System.Windows;
 
     public partial class CandidateCard
+
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CandidateCard()
@@ -22,6 +24,8 @@ namespace Capital_Life_Insurance_LLC
             this.Grade = new HashSet<Grade>();
             this.CandidateEducation = new HashSet<CandidateEducation>();
         }
+
+
 
         public string FIO
         {
@@ -42,6 +46,7 @@ namespace Capital_Life_Insurance_LLC
             get
             {
                 return Bithday.ToString("dd.MM.yyyy");
+
             }
         }
         public string EduТName
@@ -61,6 +66,7 @@ namespace Capital_Life_Insurance_LLC
         private string _gradeALL;
         private string _gradeHR;
         private string _gradeSupervisor;
+
         public string GradeALL
         {
             get { return _gradeALL; }
@@ -113,6 +119,7 @@ namespace Capital_Life_Insurance_LLC
                     return Visibility.Collapsed;
             }
         }
+
         public int CandidateID { get; set; }
         public string FirstName { get; set; }
         public string Name { get; set; }
