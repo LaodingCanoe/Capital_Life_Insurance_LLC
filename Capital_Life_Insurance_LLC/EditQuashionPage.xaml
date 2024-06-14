@@ -1,0 +1,90 @@
+﻿<Page x:Class="Capital_Life_Insurance_LLC.EditQuashionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1000"
+      Title="EditQuashionPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Title Section -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel   Orientation="Vertical" Margin="10">
+                <TextBlock Text="Название" FontSize="20" FontWeight="Bold" Margin="5"/>
+                <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="5">
+                    <TextBox Name="Title" LostFocus="TextBox_LostFocus" Width="750" FontSize="20" TextWrapping="Wrap" BorderThickness="0" Margin="5"/>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Коэффициент" FontSize="16" FontWeight="Bold" Margin="5"/>
+                <TextBox  Name="QuashionWeightCoefficient" FontSize="20" VerticalAlignment="Bottom" Margin="0 0 0 5" LostFocus="TextBox_LostFocus" Width="50"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10">
+                <Button Content="Добавить вопрос" Style="{StaticResource AccentButton}" Height="30" Width="150" Name="AddQuestion" Click="AddQuestion_Click" Margin="5"/>
+                <Button Content="Удалить вопрос" Style="{StaticResource RegularButton}" Height="30" Width="150" Name="DeleteQuestion" Click="DeleteQuestion_Click" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Answers List -->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="5">
+            <ListView Name="AnswerList" HorizontalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Orientation="Vertical" >
+                                <Border BorderBrush="Silver" BorderThickness="4" CornerRadius="10" Width="750" Height="150" HorizontalAlignment="Stretch" Margin="5">
+                                    <TextBox Text="{Binding AnswerTitle}" Name="AnswerTB" LostFocus="TextBox_LostFocus" TextWrapping="Wrap" FontSize="20" BorderThickness="0" Margin="5"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel  Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Orientation="Horizontal">
+                                <TextBox Text="{Binding AnswerWeightCoefficient}" VerticalAlignment="Center" Name="AnswerWeightTB" LostFocus="TextBox_LostFocus" FontSize="20" Margin="50 0 0 0" Width="50"/>
+                                <Button Content="-" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="Button_Click" Margin="50 0 0 0"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Добавить ответ" Name="AddAnswer" Click="AddAnswer_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </ScrollViewer>
+
+        <!-- Pagination controls -->
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Name="LeftBT" Content="&lt;" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="LeftBT_Click"/>
+            <ListBox MouseUp="PageListBox_MouseUp" FontSize="20" Name="PageListBox" Height="40">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <Button Name="RightBT" Content="&gt;" Style="{StaticResource AccentButton}" Height="30" Width="30" Click="RightBT_Click"/>
+        </StackPanel>
+
+        <!-- Save Button -->
+        <Button Grid.Row="2" Grid.Column="1" Name="Save" Click="Save_Click" Content="Завершить изменения" Style="{StaticResource RegularButton}" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 25 0"/>
+    </Grid>
+</Page>

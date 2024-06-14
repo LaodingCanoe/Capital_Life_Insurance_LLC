@@ -12,55 +12,22 @@ namespace Capital_Life_Insurance_LLC
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Question
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public Question()
         {
-
-            this.CandidateCard = new HashSet<CandidateCard>();
-
+            this.Answers = new HashSet<Answers>();
             this.Grade = new HashSet<Grade>();
         }
-
-        public string UserRoleString
-        {
-            get
-            {
-                if (Role != null)
-                {
-                    return Role.Role_Name.ToString();
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-        }
-        public string PhoneString
-        {
-            get
-            {
-                string s = Phone.ToString().Replace("+7", "");
-                return s;
-            }
-        }
-
-        public int UserID { get; set; }
-        public string FirstName { get; set; }
-        public string Name { get; set; }
-        public string Patranomic { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public int RoleID { get; set; }
-        public Nullable<double> UserWeightCoefficient { get; set; }
+    
+        public int QuestionID { get; set; }
+        public string Title { get; set; }
+        public double QuashionWeightCoefficient { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CandidateCard> CandidateCard { get; set; }
+        public virtual ICollection<Answers> Answers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
-        public virtual Role Role { get; set; }
     }
 }

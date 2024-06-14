@@ -1,83 +1,90 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
-using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Navigation;
 
 namespace Capital_Life_Insurance_LLC
 {
     public partial class QuashionsPage : Page
     {
-        List<QuashionCandidateDto> CurrentPagelist = new List<QuashionCandidateDto>();
-        List<QuashionCandidateDto> TableList;
-        List<Grade> GradeList;
-        int CountRecords;
-        int CountPage;
-        int CurrentPage = 0;
-        int IDCandidate;
-        int IDuser;
-
-        int NumberQuashion = 1;
-
+        private List<QuashionCandidateDto> CurrentPagelist = new List<QuashionCandidateDto>();
+        private List<QuashionCandidateDto> TableList;
+        private int CountRecords;
+        private int CountPage;
+        private int CurrentPage = 0;
+        private int IDCandidate;
+        private int IDuser;
+        private int NumberQuashion = 1;
         public QuashionsPage(int IDCandidate, int IDuser)
         {
-            using (var context = new Capital_Life_Insurance_LLCEntities())
-            {
-                InitializeComponent();
-                this.IDCandidate = IDCandidate;
-                this.IDuser = IDuser;
-
-                // Загрузите сохраненные ответы
-                /*
-                var savedAnswers = Capital_Life_Insurance_LLCEntities.GetContext().Grade
-                    .Where(g => g.CandidateID == IDCandidate && g.UserID == IDuser)
-                    .ToList();*/
-                TableList = LoadData();
-                ChangePage(0, 0);
-            }
-        }
-
-        private List<QuashionCandidateDto> LoadData()
+            InitializeComponent();
+            this.IDCandidate = IDCandidate;
+            this.IDuser = IDuser;
+            TableList = LoadData();
+            DataContext = this;
+            ChangePage(0, 0);
+        }        
+        public List<QuashionCandidateDto> LoadData()
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
-                var query = from quashion in context.Quashions
+                var query = from question in context.Question
+                            join answer in context.Answers on question.QuestionID equals answer.QuestionID into qa
+                            from answer in qa.DefaultIfEmpty()
                             join grade in context.Grade
-                            on new { quashion.QuashionID, CandidateID = IDCandidate, UserID = IDuser }
-                            equals new { grade.QuashionID, grade.CandidateID, grade.UserID } into g
+                            on new { QuestionID = question.QuestionID, CandidateID = IDCandidate, UserID = IDuser }
+                            equals new { grade.QuestionID, grade.CandidateID, grade.UserID } into g
                             from grade in g.DefaultIfEmpty()
-                            select new QuashionCandidateDto
+                            select new
                             {
-                                Title = quashion.Title,
-                                AnswerFirst = quashion.AnswerFirst,
-                                AnswerSecond = quashion.AnswerSecond,
-                                AnswerThrid = quashion.AnswerThrid,
-                                First = grade != null && grade.Grade1 == 5,
-                                Second = grade != null && grade.Grade1 == 3,
-                                Thrid = grade != null && grade.Grade1 == 1
+                                question,
+                                answer,
+                                grade
                             };
-                return query.ToList();
-            }
-        }
 
-       
+                var result = query.ToList()
+                    .GroupBy(x => x.question.QuestionID)
+                    .Select(g => new QuashionCandidateDto
+                    {
+                        Title = g.First().question.Title,
+                        Answers = g.Where(x => x.answer != null)
+                                   .Select(x => new AnswerDto
+                                   {                                       
+                                       AnswerId = x.answer.AnswerId,
+                                       AnswerTitle = x.answer.AnswerTitle,
+                                       AnswerWeightCoefficient = x.answer.AnswerWeightCoefficient,
+                                       IsSelected = RbSelected(x.question.QuestionID, x.answer.AnswerId,x.grade?.GradeID)
+                                   }).ToList(),
+                        SelectedGrade = g.FirstOrDefault(x => x.grade != null)?.grade.AnswersID ?? 0
+                    }).ToList();
+
+                return result;
+            }
+        }       
+        private bool RbSelected(int q, int a, int? g)
+        {
+            var currentGrade = Capital_Life_Insurance_LLCEntities.GetContext().Grade.ToList();
+            if(g == null)
+                return false;
+            else
+            {
+                currentGrade = currentGrade.Where(p => p.GradeID == g && p.QuestionID == q && p.AnswersID == a).ToList();
+                if (currentGrade.Count == 0)
+                    return false;
+                else
+                    return true;
+            }            
+        }
         private void ChangePage(int direction, int? selectedPage)
         {
-            //TableList = LoadData();
-            //CurrentPage = TableList.Count;
-           
             CurrentPagelist.Clear();
             CountRecords = TableList.Count;
-            
             CountPage = (int)Math.Ceiling((double)CountRecords / 1);
 
-            var ifUpdate = true;
+            bool ifUpdate = true;
             int min;
             if (selectedPage.HasValue)
             {
@@ -129,7 +136,6 @@ namespace Capital_Life_Insurance_LLC
                         break;
                 }
             }
-
             if (ifUpdate)
             {
                 PageListBox.Items.Clear();
@@ -138,141 +144,89 @@ namespace Capital_Life_Insurance_LLC
                     PageListBox.Items.Add(i);
                 }
                 PageListBox.SelectedIndex = CurrentPage;
-
                 QuestionListView.ItemsSource = CurrentPagelist;
                 QuestionListView.Items.Refresh();
             }
         }
-
         private void PageListBox_MouseUp(object sender, MouseButtonEventArgs e)
         {
             ChangePage(0, Convert.ToInt32(PageListBox.SelectedItem.ToString()) - 1);
             NumberQuashion = PageListBox.SelectedIndex + 1;
         }
-
         private void RightBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(2, null);
             NumberQuashion = PageListBox.SelectedIndex + 1;
         }
-
         private void LeftBT_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(1, null);
             NumberQuashion = PageListBox.SelectedIndex + 1;
+            СandidatePage candidatePage = new СandidatePage(0);
+            candidatePage.UpdateCandidat();
         }
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            
         }
-
-        private void FirstRadioBTN_Click(object sender, RoutedEventArgs e)
+        private void SaveGrade(int selectedAnswerId, double answerWeightCoefficient)
         {
             using (var context = new Capital_Life_Insurance_LLCEntities())
             {
-                // Используем context для запроса
-                var currentGrade = context.Grade
-                    .Where(p => p.UserID == IDuser && p.CandidateID == IDCandidate && p.QuashionID == NumberQuashion)
-                    .ToList();
+                var user = context.Users.FirstOrDefault(u => u.UserID == IDuser);
+                var question = context.Question.FirstOrDefault(q => q.QuestionID == NumberQuashion);
 
-                if (currentGrade.Count() == 0)
+                if (user != null && question != null)
                 {
-                    Grade _currentGrade = new Grade
+                    double userWeightCoefficient = Convert.ToDouble(user.UserWeightCoefficient);
+                    double quashionWeightCoefficient = question.QuashionWeightCoefficient;
+                    double calculatedGrade = answerWeightCoefficient * quashionWeightCoefficient * userWeightCoefficient;
+
+                    var currentGrade = context.Grade
+                        .FirstOrDefault(g => g.UserID == IDuser && g.CandidateID == IDCandidate && g.QuestionID == NumberQuashion);
+
+                    if (currentGrade == null)
                     {
-                        CandidateID = IDCandidate,
-                        UserID = IDuser,
-                        QuashionID = NumberQuashion,
-                        Grade1 = 5
-                    };
-                    context.Grade.Add(_currentGrade);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    // Возможно, обновление существующей записи?
-                    var existingGrade = currentGrade.First();
-                    existingGrade.Grade1 = 5;
-                    context.SaveChanges();
-                }
-            }
 
-        }
-        
-        private void SecondRadioBTN_Click(object sender, RoutedEventArgs e)
-        {
-
-            using (var context = new Capital_Life_Insurance_LLCEntities())
-            {
-                // Используем context для запроса
-                var currentGrade = context.Grade
-                    .Where(p => p.UserID == IDuser && p.CandidateID == IDCandidate && p.QuashionID == NumberQuashion)
-                    .ToList();
-
-                if (currentGrade.Count() == 0)
-                {
-                    Grade _currentGrade = new Grade
+                        Grade newGrade = new Grade
+                        {
+                            CandidateID = IDCandidate,
+                            UserID = IDuser,
+                            QuestionID = NumberQuashion,
+                            AnswersID = selectedAnswerId
+                        };
+                        context.Grade.Add(newGrade);
+                    }
+                    else
                     {
-                        CandidateID = IDCandidate,
-                        UserID = IDuser,
-                        QuashionID = NumberQuashion,
-                        Grade1 = 3
-                    };
-                    context.Grade.Add(_currentGrade);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    // Возможно, обновление существующей записи?
-                    var existingGrade = currentGrade.First();
-                    existingGrade.Grade1 = 3;
+                        currentGrade.AnswersID = selectedAnswerId;
+                    }
+
                     context.SaveChanges();
                 }
             }
         }
-
-        private void ThirdRadioBTN_Click(object sender, RoutedEventArgs e)
+        private void AnswerRadioButton_Click(object sender, RoutedEventArgs e)
         {
-
-            using (var context = new Capital_Life_Insurance_LLCEntities())
+            var radioButton = sender as RadioButton;
+            if (radioButton != null && radioButton.DataContext is AnswerDto selectedAnswer)
             {
-                // Используем context для запроса
-                var currentGrade = context.Grade
-                    .Where(p => p.UserID == IDuser && p.CandidateID == IDCandidate && p.QuashionID == NumberQuashion)
-                    .ToList();
+                SaveGrade(selectedAnswer.AnswerId, selectedAnswer.AnswerWeightCoefficient);
 
-                if (currentGrade.Count() == 0)
-                {
-                    Grade _currentGrade = new Grade
-                    {
-                        CandidateID = IDCandidate,
-                        UserID = IDuser,
-                        QuashionID = NumberQuashion,
-                        Grade1 = 1
-                    };
-                    context.Grade.Add(_currentGrade);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    // Возможно, обновление существующей записи?
-                    var existingGrade = currentGrade.First();
-                    existingGrade.Grade1 = 1;
-                    context.SaveChanges();
-                }
             }
         }
     }
-
     public class QuashionCandidateDto
     {
         public string Title { get; set; }
-        public string AnswerFirst { get; set; }
-        public string AnswerSecond { get; set; }
-        public string AnswerThrid { get; set; }
-        public bool First { get; set; }
-        public bool Second { get; set; }
-        public bool Thrid { get; set; }
-        
+        public List<AnswerDto> Answers { get; set; }
+        public double SelectedGrade { get; set; }
+    }
+    public class AnswerDto
+    {
+        public int AnswerId { get; set; }
+        public string AnswerTitle { get; set; }
+        public double AnswerWeightCoefficient { get; set; }
+        public int? SelectedGrade { get; set; } = null;
+        public bool IsSelected { get; set; }
     }
 }

@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Answers.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CandidateAddEditPage.xaml.cs">
       <DependentUpon>CandidateAddEditPage.xaml</DependentUpon>
     </Compile>
@@ -88,8 +91,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Capital_Life_Insurance_LLCModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Capital_Life_Insurance_LLCPage.xaml.cs">
-      <DependentUpon>Capital_Life_Insurance_LLCPage.xaml</DependentUpon>
+
+    <Compile Include="EditQuashionPage.xaml.cs">
+      <DependentUpon>EditQuashionPage.xaml</DependentUpon>
+
     </Compile>
     <Compile Include="Education.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
@@ -106,11 +111,11 @@
     <Compile Include="Positions.cs">
       <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Quashions.cs">
-      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="QuashionsPage.xaml.cs">
       <DependentUpon>QuashionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Question.cs">
+      <DependentUpon>Capital_Life_Insurance_LLCModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
@@ -140,7 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
+    <Page Include="EditQuashionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -226,10 +234,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="photo\1.jpg" />
+    <Resource Include="photo\10.jpg" />
     <Resource Include="photo\2.jpg" />
     <Resource Include="photo\3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="photo\4.jpg" />
+    <Resource Include="photo\5.jpg" />
+    <Resource Include="photo\6.jpg" />
+    <Resource Include="photo\7.jpg" />
+    <Resource Include="photo\8.jpg" />
+    <Resource Include="photo\9.jpg" />
     <Resource Include="photo\picture.png" />
   </ItemGroup>
   <ItemGroup>

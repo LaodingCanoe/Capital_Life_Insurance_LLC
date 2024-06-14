@@ -16,10 +16,6 @@ using System.Windows.Shapes;
 
 namespace Capital_Life_Insurance_LLC
 {
-    /// <summary>
-    /// Логика взаимодействия для LoginPage.xaml
-    /// </summary>
-
     public static class UserID
     {
         public static int ID = 0;
@@ -29,8 +25,8 @@ namespace Capital_Life_Insurance_LLC
         public LoginPage()
         {
             InitializeComponent();
-            LoginTB.Text = "danis123";
-            PasswordTB.Password = "qwerty1";
+            //LoginTB.Text = "danis123";
+            //PasswordTB.Password = "qwerty1";
         }
 
         private void RegistrarionBT_Click(object sender, RoutedEventArgs e)
@@ -49,14 +45,12 @@ namespace Capital_Life_Insurance_LLC
                 LoginBT.IsEnabled = true;
             }));
         }
-
         private async void LoginBT_Click(object sender, RoutedEventArgs e)
         {
             var context = Capital_Life_Insurance_LLCEntities.GetContext();
             var currentUser = context.Users
                                      .Where(p => p.Login == LoginTB.Text && p.Password == PasswordTB.Password)
                                      .ToList();
-
             if (currentUser.Count == 0)
             {
                 MessageBox.Show("Введён не верный логин или пароль");
@@ -66,7 +60,6 @@ namespace Capital_Life_Insurance_LLC
             {
                 var user = currentUser.First();
                 int userID = user.UserID;
-
                 if (currentUser.Count == 0)
                 {
                     MessageBox.Show("Данного пользователя не существует");
@@ -77,7 +70,7 @@ namespace Capital_Life_Insurance_LLC
                     UserID.ID = user.RoleID;
                     if (user.RoleID == 2)
                     {
-                        Manager.MainFrame.Navigate(new UsersPage(userID - 1));
+                        Manager.MainFrame.Navigate(new UsersPage(userID));
                     }
                     else if (user.RoleID == 4)
                     {
@@ -91,11 +84,6 @@ namespace Capital_Life_Insurance_LLC
             }
         }
 
-        private void A_Click(object sender, RoutedEventArgs e)
-        {
 
-            
-
-        }
     }
 }

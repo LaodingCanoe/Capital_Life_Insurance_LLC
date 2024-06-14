@@ -17,11 +17,12 @@ namespace Capital_Life_Insurance_LLC
         public int GradeID { get; set; }
         public int CandidateID { get; set; }
         public int UserID { get; set; }
-        public int QuashionID { get; set; }
-        public Nullable<int> Grade1 { get; set; }
+        public int QuestionID { get; set; }
+        public Nullable<int> AnswersID { get; set; }
     
+        public virtual Answers Answers { get; set; }
         public virtual CandidateCard CandidateCard { get; set; }
         public virtual Users Users { get; set; }
-        public virtual Quashions Quashions { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

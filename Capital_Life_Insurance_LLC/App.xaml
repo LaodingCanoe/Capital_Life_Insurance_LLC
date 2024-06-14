@@ -108,43 +108,59 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="RadioButtonForTest" TargetType="RadioButton">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="RadioButton">
-                            <Grid Width="50" Height="50">
-                                <Border Name="Border"
-                                    BorderBrush="Black"
-                                    BorderThickness="2"
-                                    Background="White"
-                                    Width="50"
-                                    Height="50">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Width="50" Height="50">
+                            <Border Name="Border"
+                        BorderBrush="Black"
+                        BorderThickness="2"
+                        Background="White"
+                        Width="50"
+                        Height="50"
+                        CornerRadius="25">
+                                <!-- Делает Border круглым -->
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <Grid Name="CheckMarkContainer"
+                          Visibility="Hidden"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Width="30"
+                          Height="30">
+                                <!-- Использование Grid вместо Ellipse -->
+                                <Ellipse
+                            Stroke="Transparent"
+                            StrokeThickness="5"
+                            Width="30"
+                            Height="30" />
                                 <Path Name="CheckMark"
-                                  Data="M 12,25 L 20,33 L 38,15"
-                                  Stroke="Transparent"
-                                  StrokeThickness="5"
-                                  StrokeEndLineCap="Round"
-                                  StrokeStartLineCap="Round"
-                                  StrokeLineJoin="Round"
-                                  Visibility="Hidden"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  Stretch="Uniform"
-                                  Width="30"
-                                  Height="30"/>
+                              Data="M 12,25 L 20,33 L 38,15"
+                              Stroke="Transparent"
+                              StrokeThickness="5"
+                              StrokeEndLineCap="Round"
+                              StrokeStartLineCap="Round"
+                              StrokeLineJoin="Round"
+                              Stretch="Uniform"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Width="30"
+                              Height="30"/>
                             </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsChecked" Value="true">
-                                    <Setter TargetName="Border" Property="Background" Value="#0B57D0"/>
-                                    <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
-                                    <Setter TargetName="CheckMark" Property="Stroke" Value="White"/>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#0B57D0"/>
+                                <Setter TargetName="CheckMarkContainer" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="CheckMark" Property="Stroke" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
+
         <Style TargetType="ListBoxItem">
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="Background" Value="Transparent" />

@@ -11,21 +11,22 @@ namespace Capital_Life_Insurance_LLC
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Quashions
+    using System.Linq;
+
+    public partial class Answers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Quashions()
+        public Answers()
         {
             this.Grade = new HashSet<Grade>();
         }
+        
+        public int AnswerId { get; set; }
+        public int QuestionID { get; set; }
+        public string AnswerTitle { get; set; }
+        public double AnswerWeightCoefficient { get; set; }
     
-        public int QuashionID { get; set; }
-        public string Title { get; set; }
-        public string AnswerFirst { get; set; }
-        public string AnswerSecond { get; set; }
-        public string AnswerThrid { get; set; }
-    
+        public virtual Question Question { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Capital_Life_Insurance_LLC"
         mc:Ignorable="d"
-        Title="ООО 'Капитал Лайф Страхование Жизни'" MinHeight="500" MinWidth="900" Height="500" Width="900" FontFamily="HelveticaFont" Icon="Res/logo.jpg">
+        Title="ООО &quot;Капитал Лайф Страхование Жизни&quot;" MinHeight="700" MinWidth="1200" Height="700" Width="1200" FontFamily="HelveticaFont" Icon="Res/logo.jpg">
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -13,24 +13,18 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-           
-        </Grid.RowDefinitions>
-        
-        
+            <RowDefinition Height="*"/>           
+        </Grid.RowDefinitions>  
         <TextBlock Grid.Row="0" Background="OrangeRed"></TextBlock>
         <TextBlock Grid.Row="0" Background="White" Height="45" Margin="2.5 0 2.5 0"></TextBlock>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10 0 10 0" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Image Source="Res/logo.jpg" HorizontalAlignment="Left" Width="40" Height="40" ></Image>
-            <TextBlock Text="ООО 'Капитал Лайф Страхование Жизни'" Grid.Row="0" FontSize="40" Margin="10 0 0 0"/>
-            
+            <TextBlock Text="ООО &quot;Капитал Лайф Страхование Жизни&quot;" Grid.Row="0" FontSize="40" Margin="10 0 0 0"/>            
             <Button Name="BackBT" Style="{StaticResource RoundButton}" Width="45" Height="45" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,0,0,0" Click="BackBT_Click" Visibility="Hidden">
                 <Image Source="Res/back.png" Stretch="Uniform" />
             </Button>
         </StackPanel>
-
-        <Frame Grid.Row="1" Grid.RowSpan="2" Name="MainFrame" ContentRendered="MainFrame_ContentRendered" NavigationUIVisibility="Hidden"/>
-        
+        <Frame Grid.Row="1" Grid.RowSpan="2" Name="MainFrame" ContentRendered="MainFrame_ContentRendered" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated"/>        
         
     </Grid>
 </Window>

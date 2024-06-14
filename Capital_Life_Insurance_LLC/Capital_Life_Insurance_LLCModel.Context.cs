@@ -32,12 +32,13 @@ namespace Capital_Life_Insurance_LLC
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Answers> Answers { get; set; }
         public virtual DbSet<CandidateCard> CandidateCard { get; set; }
         public virtual DbSet<CandidateEducation> CandidateEducation { get; set; }
         public virtual DbSet<Education> Education { get; set; }
         public virtual DbSet<Grade> Grade { get; set; }
         public virtual DbSet<Positions> Positions { get; set; }
-        public virtual DbSet<Quashions> Quashions { get; set; }
+        public virtual DbSet<Question> Question { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Speciality> Speciality { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }

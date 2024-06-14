@@ -10,9 +10,8 @@
 namespace Capital_Life_Insurance_LLC
 {
     using System;
-    using System.Linq;
     using System.Collections.Generic;
-
+    using System.Linq;
 
     using System.Windows;
 
@@ -46,8 +45,8 @@ namespace Capital_Life_Insurance_LLC
         {
             get
             {
-                    return Bithday.ToString();
-                
+                return Bithday.ToString("dd.MM.yyyy");
+
             }
         }
         public string EduТName
@@ -61,42 +60,63 @@ namespace Capital_Life_Insurance_LLC
                     return "Нет";
                 }
                 else
-                    return string.Join(", ", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
+                    return string.Join("\n", CandidateEducation.Select(ce => ce.Education1.EducationLevel));
             }
         }
+        private string _gradeALL;
+        private string _gradeHR;
+        private string _gradeSupervisor;
 
         public string GradeALL
         {
+            get { return _gradeALL; }
+            set
+            {
+                _gradeALL = value;
+            }
+        }
+        public string GradeSupervisor
+        {
             get
             {
-                if (this.Grade == null || !this.Grade.Any())
-                {
-                    return "Нет";
-                }
-
-                var grades = this.Grade.Where(g => g.Grade1.HasValue).Select(g => g.Grade1.Value);
-
-                if (!grades.Any())
-                {
-                    return "Нет";
-                }
-                else
-                {
-                    return grades.Average().ToString("F1");
-                }
+                return _gradeSupervisor;
+            }
+            set
+            {
+                _gradeSupervisor = value;
             }
         }
 
+
+        public string GradeHR
+        {
+            get
+            {
+                return _gradeHR;
+            }
+            set { _gradeHR = value; }
+        }
+        public double GradeALLSort
+        {
+            get
+            {
+                if (_gradeALL == "Нет")
+                {
+                    return 0;
+                }
+                else
+                    return Convert.ToDouble(_gradeALL);
+            }
+
+        }
         public Visibility Vis
         {
             get
             {
-
                 if (RoleId.ID == 3)
                     return Visibility.Visible;
                 else
                     return Visibility.Collapsed;
-
             }
         }
 
@@ -109,8 +129,7 @@ namespace Capital_Life_Insurance_LLC
         public System.DateTime Bithday { get; set; }
         public int Position { get; set; }
         public string PhotoPath { get; set; }
-        public int CreateUserID { get; set; }
-    
+        public int CreateUserID { get; set; }    
         public virtual Positions Positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grade> Grade { get; set; }

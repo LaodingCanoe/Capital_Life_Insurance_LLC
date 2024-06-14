@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace Capital_Life_Insurance_LLC
 {
-    /// <summary>
-    /// Логика взаимодействия для RegistrationPage.xaml
-    /// </summary>
     public partial class RegistrationPage : Page
     {
         private Users _users = new Users();
@@ -27,7 +24,6 @@ namespace Capital_Life_Insurance_LLC
             InitializeComponent();
             DataContext = _users;
         }
-
         private void Registration_end_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
@@ -69,7 +65,7 @@ namespace Capital_Life_Insurance_LLC
                     {
                         Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
                         MessageBox.Show("Регистрация успешна");
-                        Manager.MainFrame.Navigate(new СandidatePage(_users.UserID - 1));
+                        Manager.MainFrame.GoBack();
                     }
                     catch (Exception ex)
                     {
@@ -82,18 +78,12 @@ namespace Capital_Life_Insurance_LLC
                 }
             }
         }
-
-        // Проверка корректности email
         private bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
-
             int atIndex = email.IndexOf('@');
             int dotIndex = email.LastIndexOf('.');
-
-            // Убедитесь, что @ находится перед точкой,
-            // и обе эти символы присутствуют, и после @ и точки есть символы
             return atIndex > 0 && dotIndex > atIndex && email.Length > dotIndex + 1;
         }
 
@@ -101,30 +91,25 @@ namespace Capital_Life_Insurance_LLC
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-
             if (textBox.Text.Length > 0)
             {
                 int caretIndex = textBox.SelectionStart;
-                textBox.TextChanged -= TextBox_TextChanged; // Отписываемся от события, чтобы избежать рекурсии
+                textBox.TextChanged -= TextBox_TextChanged;
                 textBox.Text = char.ToUpper(textBox.Text[0]) + textBox.Text.Substring(1);
-                textBox.SelectionStart = caretIndex; // Устанавливаем курсор в то же положение
-                textBox.TextChanged += TextBox_TextChanged; // Повторно подписываемся на событие
+                textBox.SelectionStart = caretIndex;
+                textBox.TextChanged += TextBox_TextChanged; 
             }
         }
-
-        // Обработчик для запрета ввода пробелов
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space || (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.OemMinus || e.Key == Key.OemPlus || e.Key == Key.OemQuestion || e.Key == Key.OemPeriod || e.Key == Key.OemComma || e.Key == Key.OemQuotes || e.Key == Key.OemSemicolon)
+            if (e.Key == Key.Space)
             {
                 e.Handled = true;
             }
         }
-        
-        // Обработчик для запрета вставки пробелов через клавиши (например, Ctrl+V)
         private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space || (e.Key >= Key.D0 && e.Key <= Key.D9) || (e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9) || e.Key == Key.OemMinus || e.Key == Key.OemPlus || e.Key == Key.OemQuestion || e.Key == Key.OemPeriod || e.Key == Key.OemComma || e.Key == Key.OemQuotes || e.Key == Key.OemSemicolon)
+            if (e.Key == Key.Space)
             {
                 e.Handled = true;
             }
@@ -150,18 +135,14 @@ namespace Capital_Life_Insurance_LLC
             Regex regex = new Regex(@"^[a-zA-Zа-яА-Я]+$"); // Только буквы
             return regex.IsMatch(text);
         }
-
         private void PhoneNumberTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-
             if (!IsTextNumber(e.Text) || textBox.Text.Length >= 10)
             {
                 e.Handled = true;
             }
         }
-
-        // Обработчик для запрета вставки нецифровых символов через буфер обмена
         private void PhoneNumberTextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
@@ -177,8 +158,6 @@ namespace Capital_Life_Insurance_LLC
                 e.CancelCommand();
             }
         }
-
-        // Обработчик для запрета ввода нецифровых символов через клавиши
         private void PhoneNumberTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
@@ -186,16 +165,11 @@ namespace Capital_Life_Insurance_LLC
                 e.Handled = true;
             }
         }
-
-        // Проверка допустимого текста (только цифры)
         private bool IsTextNumber(string text)
         {
-            Regex regex = new Regex(@"^[0-9]+$"); // Только цифры
+            Regex regex = new Regex(@"^[0-9]+$");
             return regex.IsMatch(text);
-        }
-
-        
+        }        
     }
-
 }
 
