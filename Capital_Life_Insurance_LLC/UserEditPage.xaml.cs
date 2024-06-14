@@ -73,7 +73,7 @@ namespace Capital_Life_Insurance_LLC
                 _currentUsers.Patranomic = PatranomicTB.Text;
                 _currentUsers.Phone = PhoneTB.Text;
                 _currentUsers.Email = EmailTB.Text;
-                _currentUsers.RoleID = RoleCB.SelectedIndex+1;
+                _currentUsers.RoleID = RoleCB.SelectedIndex + 1;
                 if(_currentUsers.UserID == 0)
                 {
                     _currentUsers.Login = LoginTB.Text;
@@ -83,7 +83,6 @@ namespace Capital_Life_Insurance_LLC
                     if(AllUsers.Count>0)
                     {
                         MessageBox.Show("Данный пользователь уже существует");
-                        
                     }
                     else
                     {
@@ -99,7 +98,13 @@ namespace Capital_Life_Insurance_LLC
                             MessageBox.Show(ex.Message.ToString());
                         }
                     }
-                }  
+                }
+                else
+                {
+                    Capital_Life_Insurance_LLCEntities.GetContext().SaveChanges();
+                    MessageBox.Show("Данные обновлены");
+                    Manager.MainFrame.GoBack();
+                }
             }
         }
         private bool IsValidEmail(string email)

@@ -21,16 +21,19 @@ namespace Capital_Life_Insurance_LLC
         {
             InitializeComponent();
             ID = id;
+            var _currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
+            UsersList.ItemsSource = _currentUser;
             var currentUsers = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
             var currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.FirstOrDefault(u => u.UserID == id);
             UserNameTB.Text = "Вы авторизированы как: " + currentUser.FirstName.ToString() + " " + currentUser.Name.ToString() + " " + currentUser.Patranomic.ToString();
             UserRoleTB.Text = "   Роль: " + currentUser.UserRoleString.ToString();
-            UsersList.ItemsSource = currentUsers;
+            
             Update();
         }
         public void Update()
         {
-            UsersList.ItemsSource = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();             
+            var _currentUser = Capital_Life_Insurance_LLCEntities.GetContext().Users.ToList();
+            UsersList.ItemsSource = _currentUser;
         }
         private void EditBT_Click(object sender, RoutedEventArgs e)
         {

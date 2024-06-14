@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -149,8 +150,8 @@ namespace Capital_Life_Insurance_LLC
             if (CurrentPageList.Count > 0)
             {
                 var currentQuestion = CurrentPageList[0];
-
                 int maxAnswerId;
+
                 using (var dbContext = new Capital_Life_Insurance_LLCEntities())
                 {
                     maxAnswerId = dbContext.Answers.Max(a => (int?)a.AnswerId) ?? 0;
@@ -170,9 +171,9 @@ namespace Capital_Life_Insurance_LLC
                     dbContext.SaveChanges();
                 }
 
-                LoadCurrentPage();
+                AnswersList.Add(newAnswer); // Добавление нового ответа в ObservableCollection
             }
-
+            LoadCurrentPage();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -183,16 +184,25 @@ namespace Capital_Life_Insurance_LLC
                 var answer = button.DataContext as Answers;
                 if (answer != null)
                 {
-                    using (var dbContext = new Capital_Life_Insurance_LLCEntities())
+                    try
                     {
-                        var answerInDatabase = dbContext.Answers.Find(answer.AnswerId);
-                        if (answerInDatabase != null)
+                        using (var dbContext = new Capital_Life_Insurance_LLCEntities())
                         {
-                            dbContext.Answers.Remove(answerInDatabase);
-                            dbContext.SaveChanges();
+                            var answerInDatabase = dbContext.Answers.Find(answer.AnswerId);
+                            if (answerInDatabase != null)
+                            {
+                                var gradesToRemove = dbContext.Grade.Where(g => g.AnswersID == answer.AnswerId).ToList();
+                                dbContext.Grade.RemoveRange(gradesToRemove);
+                                dbContext.Answers.Remove(answerInDatabase);
+                                dbContext.SaveChanges();
+                            }
                         }
+                        AnswersList.Remove(answer);
                     }
-                    LoadCurrentPage();
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при удалении ответа: {ex.Message}");
+                    }
                 }
             }
         }
@@ -219,6 +229,7 @@ namespace Capital_Life_Insurance_LLC
             }
 
             TableList.Add(newQuestion);
+            CurrentPageList.Add(newQuestion);
             CountQuashion++;
             CountPage = (int)Math.Ceiling((double)CountQuashion / 1);
             PageListBox.ItemsSource = Enumerable.Range(1, CountPage).ToList();
@@ -239,27 +250,52 @@ namespace Capital_Life_Insurance_LLC
                 {
                     using (var dbContext = new Capital_Life_Insurance_LLCEntities())
                     {
-                        var answersToRemove = dbContext.Answers.Where(a => a.QuestionID == currentQuestion.QuestionID).ToList();
-
-                        foreach (var answer in answersToRemove)
+                        using (var transaction = dbContext.Database.BeginTransaction())
                         {
-                            dbContext.Answers.Remove(answer);
-                        }
+                            try
+                            {
+                                var answersToRemove = dbContext.Answers.Where(a => a.QuestionID == currentQuestion.QuestionID).ToList();
 
-                        var questionToRemove = dbContext.Question.FirstOrDefault(q => q.QuestionID == currentQuestion.QuestionID);
-                        if (questionToRemove != null)
-                        {
-                            dbContext.Question.Remove(questionToRemove);
-                        }
+                                foreach (var answer in answersToRemove)
+                                {
+                                    var gradesToRemove = dbContext.Grade.Where(g => g.AnswersID == answer.AnswerId).ToList();
+                                    foreach (var grade in gradesToRemove)
+                                    {
+                                        dbContext.Grade.Remove(grade);
+                                    }
 
-                        dbContext.SaveChanges();
+                                    dbContext.Answers.Remove(answer);
+                                }
+
+                                var questionToRemove = dbContext.Question.FirstOrDefault(q => q.QuestionID == currentQuestion.QuestionID);
+                                if (questionToRemove != null)
+                                {
+                                    dbContext.Question.Remove(questionToRemove);
+                                }
+
+                                dbContext.SaveChanges();
+                                transaction.Commit();
+
+                                TableList.Remove(currentQuestion);
+                                CurrentPageList.Clear();
+                                CountQuashion--;
+                                CountPage = (int)Math.Ceiling((double)CountQuashion / 1);
+                                PageListBox.ItemsSource = Enumerable.Range(1, CountPage).ToList();
+                                ChangePage(0);
+                            }
+                            catch (DbUpdateException ex)
+                            {
+                                transaction.Rollback();
+                                var innerException = ex.InnerException?.InnerException?.Message ?? ex.Message;
+                                MessageBox.Show($"Ошибка при удалении вопроса: {innerException}");
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show($"Ошибка при удалении вопроса: {ex.Message}");
+                            }
+                        }
                     }
-
-                    TableList.Remove(currentQuestion);
-                    CountQuashion--;
-                    CountPage = (int)Math.Ceiling((double)CountQuashion / 1);
-                    PageListBox.ItemsSource = Enumerable.Range(1, CountPage).ToList();
-                    LoadCurrentPage();
                 }
             }
         }
